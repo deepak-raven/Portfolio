@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="scroll-smooth overflow-x-hidden">
 
 <head>
     <meta charset="UTF-8">
@@ -31,8 +31,47 @@
     </script>
 </head>
 
-<body class="bg-white text-brand-black font-sans antialiased selection:bg-black selection:text-white">
-    <div class="max-w-[1440px] mx-auto px-6 md:px-12 pt-8 selection:bg-neutral-800 selection:text-white pb-20">
+<body class="bg-[#f7f7f5] text-brand-black font-sans antialiased selection:bg-black selection:text-white relative">
+
+    <!-- Tactile Grain/Noise Overlay -->
+    <div
+        class="fixed inset-0 pointer-events-none z-[100] mix-blend-multiply opacity-[0.04] bg-[url('data:image/svg+xml,%3Csvg viewBox=%220 0 200 200%22 xmlns=%22http://www.w3.org/2000/svg%22%3E%3Cfilter id=%22noiseFilter%22%3E%3CfeTurbulence type=%22fractalNoise%22 baseFrequency=%220.85%22 numOctaves=%223%22 stitchTiles=%22stitch%22/%3E%3C/filter%3E%3Crect width=%22100%25%22 height=%22100%25%22 filter=%22url(%23noiseFilter)%22/%3E%3C/svg%3E')]">
+    </div>
+
+    <!-- Editorial Ambient Background behind Hero -->
+    <div
+        class="absolute top-0 left-0 w-full h-[120vh] -z-10 overflow-hidden pointer-events-none flex items-center justify-center">
+        <!-- Asymmetrical Hairline Grid -->
+        <div class="absolute top-0 left-[8%] md:left-[15%] w-[1px] h-full bg-black/10"></div>
+        <div class="absolute top-0 right-[8%] md:right-[20%] w-[1px] h-full bg-black/10"></div>
+        <div class="absolute top-[20%] md:top-[30%] left-0 w-full h-[1px] bg-black/10"></div>
+
+        <!-- Large Abstract Typography Watermarks -->
+        <div class="absolute top-[20%] -left-[10%] text-[24vw] font-serif italic text-black/[0.03] leading-none whitespace-nowrap select-none transform -rotate-90 origin-left image-float"
+            style="animation-duration: 20s;">
+            Portfolio
+        </div>
+        <div class="absolute top-[-5%] -right-[5%] text-[18vw] font-sans font-bold text-black/[0.03] leading-none whitespace-nowrap select-none tracking-tighter image-float"
+            style="animation-duration: 25s; animation-delay: -5s;">
+            2026
+        </div>
+
+        <!-- Distinctive Geometric Accents -->
+        <div class="absolute top-[10%] right-[10%] w-[20vw] max-w-[300px] aspect-square border border-black/10 rounded-full image-float"
+            style="animation-duration: 12s;"></div>
+        <div class="absolute bottom-[20%] left-[5%] w-[15vw] max-w-[200px] aspect-square border border-black/10 flex items-center justify-center image-float"
+            style="animation-duration: 18s; animation-delay: -3s; transform: rotate(15deg);">
+            <div class="w-1.5 h-1.5 bg-black/20 rounded-full"></div>
+        </div>
+
+        <!-- Subtle Gradient Backdrop -->
+        <div
+            class="absolute inset-0 bg-[radial-gradient(circle_at_20%_20%,_rgba(0,0,0,0.02)_0%,_transparent_40%),radial-gradient(circle_at_80%_80%,_rgba(0,0,0,0.02)_0%,_transparent_40%)] mix-blend-darken">
+        </div>
+    </div>
+
+    <div
+        class="max-w-[1440px] mx-auto px-6 md:px-12 pt-8 selection:bg-neutral-800 selection:text-white pb-20 relative z-10">
 
         <!-- Page Title -->
         <div class="text-center pt-8 pb-12">
@@ -120,7 +159,7 @@
                                     <!-- Content -->
                                     <div class="mt-4 md:mt-8">
                                         <h2
-                                            class="text-[24px] sm:text-[40px] md:text-[60px] lg:text-[80px] leading-[0.9] font-[300] tracking-tighter text-black/90">
+                                            class="text-[24px] sm:text-[40px] md:text-[60px] lg:text-[80px] leading-[0.9] font-[300] tracking-tighter text-transparent bg-clip-text bg-gradient-to-r from-gray-900 via-gray-500 to-black animate-gradient-text w-max">
                                             Hello
                                         </h2>
                                         <p
@@ -167,25 +206,33 @@
             <div class="grid grid-cols-1 md:grid-cols-12 gap-12">
                 <!-- Column 1: Text (Span 4) -->
                 <div class="md:col-span-4 pr-8 reveal-up delay-100">
-                    <h2 class="text-xl font-medium mb-6">About Me</h2>
-                    <p class="text-gray-500 text-sm leading-7 mb-12">
+                    <span class="text-[10px] font-bold uppercase tracking-[0.2em] text-black mb-4 block">About</span>
+                    <h2 class="text-3xl font-serif italic mb-6">Who we are</h2>
+                    <p class="text-black/60 text-sm leading-7 mb-12 max-w-[280px]">
                         Our creative Ad agency is ranked among the finest in the US. We cultivate smart ideas for
                         start-ups and seasoned players.
                     </p>
-                    <div class="opacity-40 hidden md:block mt-8">
+                    <div class="hidden md:block mt-8">
                         <!-- Decorative Curved Arrow -->
-                        <svg xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink"
-                            xmlns:svgjs="http://svgjs.dev/svgjs" viewBox="0 0 800 800">
-                            <g stroke-width="10" stroke="hsl(0, 0%, 75%)" fill="none" stroke-linecap="round"
+                        <svg class="text-[#bfbfbf]" xmlns="http://www.w3.org/2000/svg" version="1.1"
+                            xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:svgjs="http://svgjs.dev/svgjs"
+                            viewBox="0 0 800 800">
+                            <g stroke-width="10" stroke="currentColor" fill="none" stroke-linecap="round"
                                 stroke-linejoin="round"
                                 transform="matrix(-0.529919264233205,-0.848048096156426,0.848048096156426,-0.529919264233205,292.74846723071164,941.1869441558524)">
-                                <path d="M158.70144653320312 248.5Q935.7014465332031 268.5 461.7014465332031 551.5 "
+                                <!-- Drawn Line (No Marker) -->
+                                <path class="arrow-draw" pathLength="100"
+                                    d="M158.70144653320312 248.5Q935.7014465332031 268.5 461.7014465332031 551.5 ">
+                                </path>
+                                <!-- Arrow Marker Wrapper (No Stroke, Just Head) -->
+                                <path class="arrow-head-path" stroke="rgba(0,0,0,0)"
+                                    d="M158.70144653320312 248.5Q935.7014465332031 268.5 461.7014465332031 551.5 "
                                     marker-end="url(#SvgjsMarker3652)"></path>
                             </g>
                             <defs>
                                 <marker markerWidth="7.5" markerHeight="7.5" refX="3.75" refY="3.75"
                                     viewBox="0 0 7.5 7.5" orient="auto" id="SvgjsMarker3652">
-                                    <polygon points="0,7.5 3.75,3.75 0,0 7.5,3.75" fill="hsl(0, 0%, 75%)"></polygon>
+                                    <polygon points="0,7.5 3.75,3.75 0,0 7.5,3.75" fill="currentColor"></polygon>
                                 </marker>
                             </defs>
                         </svg>
@@ -194,52 +241,53 @@
 
                 <!-- Column 2: Stats Card & Portrait (Span 4) - Centered visual -->
                 <div class="md:col-span-4 relative flex flex-col items-center reveal-up delay-200">
-                    <!-- 120% Card - Floating effect -->
+                    <!-- 120% Card - Brutalist effect -->
                     <div
-                        class="bg-white p-8 rounded-xl shadow-xl w-full max-w-[280px] text-center z-10 -mb-12 relative border border-gray-50">
+                        class="bg-[#f7f7f5] p-6 w-full max-w-[280px] text-center z-10 -mb-12 relative border border-black backdrop-blur-md">
                         <div class="flex justify-center mb-4 text-black">
-                            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                stroke-width="1.5">
-                                <circle cx="12" cy="12" r="10" />
-                                <path d="M12 6v6l4 2" />
-                            </svg>
+                            <span class="text-xl">✦</span>
                         </div>
-                        <span class="block text-5xl font-bold mb-2 tracking-tighter">120%</span>
-                        <p class="text-[11px] text-gray-400 uppercase tracking-wide leading-relaxed">Average conversion
+                        <span class="block text-6xl font-serif italic mb-2 tracking-tighter">120<span
+                                class="text-3xl font-sans">%</span></span>
+                        <p class="text-[9px] text-black/60 uppercase tracking-widest leading-relaxed font-bold">Average
+                            conversion
                             rate <br> increase for my clients.</p>
                     </div>
 
                     <!-- Portrait Image -->
-                    <div class="w-full max-w-[280px] aspect-[4/5] overflow-hidden grayscale">
+                    <div class="w-full max-w-[280px] aspect-[4/5] overflow-hidden border border-black/10">
                         <img src="https://images.unsplash.com/photo-1542596594-649edbc13630?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80"
-                            alt="Smiling Portrait" class="w-full h-full object-cover">
+                            alt="Smiling Portrait"
+                            class="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-500 cursor-pointer hover:scale-105">
                     </div>
                 </div>
 
                 <!-- Column 3: Checklist (Span 4) -->
                 <div class="md:col-span-4 flex flex-col justify-center pl-4 reveal-up delay-300">
                     <!-- Small decorative image top right -->
-                    <div class="w-20 h-20 bg-gray-200 overflow-hidden mb-12 self-end hidden md:block">
+                    <div
+                        class="w-20 h-20 bg-gray-200 overflow-hidden mb-12 self-end hidden md:block border border-black/10">
                         <img src="https://images.unsplash.com/photo-1534308143481-c55f00be8bd7?ixlib=rb-1.2.1&auto=format&fit=crop&w=200&q=80"
-                            alt="Abstract" class="w-full h-full object-cover grayscale opacity-50">
+                            alt="Abstract"
+                            class="w-full h-full object-cover grayscale opacity-50 hover:grayscale-0 hover:opacity-100 transition-all duration-500 cursor-pointer">
                     </div>
 
                     <ul class="space-y-8 mt-4">
-                        <li class="flex gap-4 items-start">
-                            <span
-                                class="flex-shrink-0 w-6 h-6 bg-black text-white rounded-full flex items-center justify-center text-[10px] mt-1">✓</span>
+                        <li class="flex gap-4 items-start border-b border-black/10 pb-6">
+                            <span class="flex-shrink-0 text-lg mt-1 font-serif italic">01</span>
                             <div>
-                                <h4 class="font-bold text-sm mb-1">User Research</h4>
-                                <p class="text-xs text-gray-500 leading-relaxed">Systematic study of target users to
+                                <h4 class="font-bold text-sm mb-1 uppercase tracking-wider">User Research</h4>
+                                <p class="text-xs text-black/60 leading-relaxed font-medium">Systematic study of target
+                                    users to
                                     infer needs and insights.</p>
                             </div>
                         </li>
-                        <li class="flex gap-4 items-start">
-                            <span
-                                class="flex-shrink-0 w-6 h-6 bg-black text-white rounded-full flex items-center justify-center text-[10px] mt-1">✓</span>
+                        <li class="flex gap-4 items-start border-b border-black/10 pb-6">
+                            <span class="flex-shrink-0 text-lg mt-1 font-serif italic">02</span>
                             <div>
-                                <h4 class="font-bold text-sm mb-1">UI/UX Design</h4>
-                                <p class="text-xs text-gray-500 leading-relaxed">Creating intuitive and aesthetically
+                                <h4 class="font-bold text-sm mb-1 uppercase tracking-wider">UI/UX Design</h4>
+                                <p class="text-xs text-black/60 leading-relaxed font-medium">Creating intuitive and
+                                    aesthetically
                                     pleasing interfaces.</p>
                             </div>
                         </li>
@@ -283,37 +331,78 @@
     </div>
     </section>
 
+    <!-- Marquee Banner -->
+    <div
+        class="relative overflow-hidden bg-[#111] text-white py-12 border-y border-white/20 transform -rotate-1 origin-center z-20 my-24 scale-105 pointer-events-none w-full marquee-container">
+        <!-- First Set -->
+        <div class="flex whitespace-nowrap animate-marquee shrink-0 items-center">
+            <span class="text-[10px] md:text-sm font-bold uppercase tracking-[0.3em] px-12 text-white/50">Creative
+                Design</span>
+            <span class="w-16 md:w-24 h-[1px] bg-white opacity-20"></span>
+            <span
+                class="text-6xl md:text-8xl font-serif italic px-12 text-white tracking-tighter mix-blend-difference">Digital
+                Strategy</span>
+            <span class="w-16 md:w-24 h-[1px] bg-white opacity-20"></span>
+            <span class="text-[10px] md:text-sm font-bold uppercase tracking-[0.3em] px-12 text-white/50">Brand
+                Identity</span>
+            <span class="w-16 md:w-24 h-[1px] bg-white opacity-20"></span>
+            <span
+                class="text-6xl md:text-8xl font-serif italic px-12 text-white tracking-tighter mix-blend-difference">Art
+                Direction</span>
+            <span class="w-16 md:w-24 h-[1px] bg-white opacity-20"></span>
+        </div>
+
+        <!-- Duplicated Set for Seamless Loop -->
+        <div class="flex whitespace-nowrap animate-marquee shrink-0 items-center" aria-hidden="true">
+            <span class="text-[10px] md:text-sm font-bold uppercase tracking-[0.3em] px-12 text-white/50">Creative
+                Design</span>
+            <span class="w-16 md:w-24 h-[1px] bg-white opacity-20"></span>
+            <span
+                class="text-6xl md:text-8xl font-serif italic px-12 text-white tracking-tighter mix-blend-difference">Digital
+                Strategy</span>
+            <span class="w-16 md:w-24 h-[1px] bg-white opacity-20"></span>
+            <span class="text-[10px] md:text-sm font-bold uppercase tracking-[0.3em] px-12 text-white/50">Brand
+                Identity</span>
+            <span class="w-16 md:w-24 h-[1px] bg-white opacity-20"></span>
+            <span
+                class="text-6xl md:text-8xl font-serif italic px-12 text-white tracking-tighter mix-blend-difference">Art
+                Direction</span>
+            <span class="w-16 md:w-24 h-[1px] bg-white opacity-20"></span>
+        </div>
+    </div>
+
     <!-- Experience Section -->
     <section id="experience" class="py-24 reveal-up" style="padding-left: 24px; padding-right: 24px;">
         <div class="grid grid-cols-1 md:grid-cols-12 gap-16">
             <!-- Title Column -->
-            <div class="md:col-span-4 reveal-up delay-100">
+            <div class="md:col-span-4 reveal-up delay-100 border-r border-black/10 pr-8">
                 <!-- Small Decorative dot -->
-                <div class="w-2 h-2 bg-black rounded-full mb-6"></div>
-                <span class="text-xs font-bold uppercase tracking-[0.2em] text-gray-400 mb-4 block">Experience</span>
-                <h2 class="text-5xl font-serif italic leading-tight text-gray-900">Explain My<br>Design<br>Journey</h2>
+                <div class="w-2 h-2 bg-black rounded-none mb-6"></div>
+                <span class="text-[10px] font-bold uppercase tracking-[0.2em] text-black mb-4 block">Experience</span>
+                <h2 class="text-6xl font-serif italic leading-[0.9] text-brand-black tracking-tighter">
+                    My<br>Design<br>Journey</h2>
             </div>
 
             <!-- Timeline Column -->
-            <div class="md:col-span-8 flex flex-col justify-center">
+            <div class="md:col-span-8 flex flex-col justify-center border-t border-black/20">
                 <!-- Item 1 -->
                 <div
-                    class="group flex flex-col md:flex-row justify-between items-center py-8 border-b border-gray-100 hover:border-gray-300 transition-colors cursor-pointer reveal-up delay-100">
-                    <div class="flex items-center gap-6 w-full md:w-auto">
-                        <span class="text-sm font-medium text-gray-400 w-12">01/</span>
+                    class="group flex flex-col md:flex-row justify-between items-center py-10 border-b border-black/20 hover:border-black transition-colors cursor-pointer reveal-up delay-100">
+                    <div class="flex items-start gap-8 w-full md:w-auto">
+                        <span class="text-xs font-serif italic text-black/40 mt-2">01</span>
                         <div>
-                            <h3 class="text-2xl font-medium mb-1">Creative Director</h3>
-                            <p class="text-gray-400 text-sm">Design Agency, New York • 2023</p>
+                            <h3 class="text-3xl font-serif italic mb-2 group-hover:pl-4 transition-all duration-300">
+                                Creative Director</h3>
+                            <p class="text-black/60 text-xs font-bold uppercase tracking-widest">Design Agency, New York
+                                • 2023</p>
                         </div>
                     </div>
-                    <div class="flex items-center gap-6 mt-4 md:mt-0 w-full md:w-auto justify-between md:justify-end">
-                        <span
-                            class="px-4 py-1.5 border border-gray-200 rounded-full text-[10px] font-bold uppercase tracking-wider">Full
-                            Time</span>
+                    <div class="flex items-center gap-8 mt-6 md:mt-0 w-full md:w-auto justify-between md:justify-end">
+                        <span class="text-[10px] font-bold uppercase tracking-[0.2em] text-black">Full Time</span>
                         <div
-                            class="w-10 h-10 rounded-full border border-gray-200 flex items-center justify-center group-hover:bg-black group-hover:text-white transition-all transform group-hover:rotate-45">
-                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                stroke-width="2">
+                            class="w-12 h-12 border border-black/20 flex items-center justify-center group-hover:bg-black group-hover:text-white transition-all transform group-hover:scale-110">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="1.5">
                                 <path d="M7 17L17 7M17 7H7M17 7V17" />
                             </svg>
                         </div>
@@ -322,21 +411,22 @@
 
                 <!-- Item 2 -->
                 <div
-                    class="group flex flex-col md:flex-row justify-between items-center py-8 border-b border-gray-100 hover:border-gray-300 transition-colors cursor-pointer reveal-up delay-200">
-                    <div class="flex items-center gap-6 w-full md:w-auto">
-                        <span class="text-sm font-medium text-gray-400 w-12">02/</span>
+                    class="group flex flex-col md:flex-row justify-between items-center py-10 border-b border-black/20 hover:border-black transition-colors cursor-pointer reveal-up delay-200">
+                    <div class="flex items-start gap-8 w-full md:w-auto">
+                        <span class="text-xs font-serif italic text-black/40 mt-2">02</span>
                         <div>
-                            <h3 class="text-2xl font-medium mb-1">Senior Product Designer</h3>
-                            <p class="text-gray-400 text-sm">Tech Startup, San Francisco • 2021</p>
+                            <h3 class="text-3xl font-serif italic mb-2 group-hover:pl-4 transition-all duration-300">
+                                Senior Product Designer</h3>
+                            <p class="text-black/60 text-xs font-bold uppercase tracking-widest">Tech Startup, San
+                                Francisco • 2021</p>
                         </div>
                     </div>
-                    <div class="flex items-center gap-6 mt-4 md:mt-0 w-full md:w-auto justify-between md:justify-end">
-                        <span
-                            class="px-4 py-1.5 border border-gray-200 rounded-full text-[10px] font-bold uppercase tracking-wider">Remote</span>
+                    <div class="flex items-center gap-8 mt-6 md:mt-0 w-full md:w-auto justify-between md:justify-end">
+                        <span class="text-[10px] font-bold uppercase tracking-[0.2em] text-black">Remote</span>
                         <div
-                            class="w-10 h-10 rounded-full border border-gray-200 flex items-center justify-center group-hover:bg-black group-hover:text-white transition-all transform group-hover:rotate-45">
-                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                stroke-width="2">
+                            class="w-12 h-12 border border-black/20 flex items-center justify-center group-hover:bg-black group-hover:text-white transition-all transform group-hover:scale-110">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="1.5">
                                 <path d="M7 17L17 7M17 7H7M17 7V17" />
                             </svg>
                         </div>
@@ -345,21 +435,21 @@
 
                 <!-- Item 3 -->
                 <div
-                    class="group flex flex-col md:flex-row justify-between items-center py-8 border-b border-gray-100 hover:border-gray-300 transition-colors cursor-pointer reveal-up delay-300">
-                    <div class="flex items-center gap-6 w-full md:w-auto">
-                        <span class="text-sm font-medium text-gray-400 w-12">03/</span>
+                    class="group flex flex-col md:flex-row justify-between items-center py-10 border-b border-black/20 hover:border-black transition-colors cursor-pointer reveal-up delay-300">
+                    <div class="flex items-start gap-8 w-full md:w-auto">
+                        <span class="text-xs font-serif italic text-black/40 mt-2">03</span>
                         <div>
-                            <h3 class="text-2xl font-medium mb-1">UI/UX Designer</h3>
-                            <p class="text-gray-400 text-sm">Freelance • 2019</p>
+                            <h3 class="text-3xl font-serif italic mb-2 group-hover:pl-4 transition-all duration-300">
+                                UI/UX Designer</h3>
+                            <p class="text-black/60 text-xs font-bold uppercase tracking-widest">Freelance • 2019</p>
                         </div>
                     </div>
-                    <div class="flex items-center gap-6 mt-4 md:mt-0 w-full md:w-auto justify-between md:justify-end">
-                        <span
-                            class="px-4 py-1.5 border border-gray-200 rounded-full text-[10px] font-bold uppercase tracking-wider">Contract</span>
+                    <div class="flex items-center gap-8 mt-6 md:mt-0 w-full md:w-auto justify-between md:justify-end">
+                        <span class="text-[10px] font-bold uppercase tracking-[0.2em] text-black">Contract</span>
                         <div
-                            class="w-10 h-10 rounded-full border border-gray-200 flex items-center justify-center group-hover:bg-black group-hover:text-white transition-all transform group-hover:rotate-45">
-                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                stroke-width="2">
+                            class="w-12 h-12 border border-black/20 flex items-center justify-center group-hover:bg-black group-hover:text-white transition-all transform group-hover:scale-110">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="1.5">
                                 <path d="M7 17L17 7M17 7H7M17 7V17" />
                             </svg>
                         </div>
@@ -386,7 +476,7 @@
                         Consultation!</span>
                 </h2>
                 <a href="#"
-                    class="inline-block bg-white text-black px-8 py-3 rounded-full font-medium hover:bg-gray-100 transition-colors">
+                    class="magnetic inline-block bg-white text-black px-8 py-3 rounded-full font-medium hover:bg-gray-100 transition-colors shadow-2xl shadow-orange-500/30 font-bold z-20">
                     Book Now
                 </a>
             </div>
@@ -394,75 +484,87 @@
     </section>
 
     <!-- Latest Works Section -->
-    <section id="works" class="py-20 reveal-up">
-        <div class="text-center mb-16 reveal-up delay-100">
-            <span class="text-sm font-semibold uppercase tracking-wider text-gray-500 mb-2 block">Portfolio</span>
-            <h2 class="text-4xl font-serif italic">Latest Works</h2>
+    <section id="works" class="py-20 reveal-up border-y border-black/20 mt-12 bg-white">
+        <div class="text-center mb-16 reveal-up delay-100 pt-8">
+            <span class="text-[10px] font-bold uppercase tracking-[0.2em] text-black mb-4 block">Selected Works</span>
+            <h2 class="text-6xl font-serif italic tracking-tighter">Archive</h2>
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
             style="padding-right: 16px;padding-left: 16px;">
             <!-- Project 1 -->
-            <div class="group cursor-pointer reveal-up delay-100">
-                <div class="relative overflow-hidden rounded-2xl bg-gray-100 aspect-[4/3] mb-4">
+            <div class="group cursor-pointer reveal-up delay-100 flex flex-col">
+                <div class="relative overflow-hidden bg-[#f7f7f5] aspect-[4/3] mb-6 border border-black/10">
                     <img src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80"
                         alt="Project 1"
                         class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
-                    <div class="absolute inset-0 bg-black/10 group-hover:bg-black/20 transition-colors"></div>
+                    <div class="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors duration-500">
+                    </div>
                 </div>
-                <div class="flex justify-between items-center">
-                    <h3 class="text-lg font-bold group-hover:text-black transition-colors">Digital Agency Website</h3>
+                <div class="flex justify-between items-start border-t border-black/10 pt-4 mt-auto">
+                    <div>
+                        <h3 class="text-xl font-serif italic group-hover:text-black transition-colors mb-1">Digital
+                            Agency</h3>
+                        <p class="text-[10px] font-bold uppercase tracking-widest text-black/40">Web Design</p>
+                    </div>
                     <span
-                        class="w-8 h-8 flex items-center justify-center rounded-full border border-gray-200 group-hover:bg-black group-hover:text-white transition-all">↗</span>
+                        class="w-10 h-10 flex items-center justify-center border border-black/20 group-hover:bg-black group-hover:text-white transition-all">↗</span>
                 </div>
-                <p class="text-sm text-gray-400 mt-1">Web Design</p>
             </div>
 
             <!-- Project 2 -->
-            <div class="group cursor-pointer reveal-up delay-200">
-                <div class="relative overflow-hidden rounded-2xl bg-gray-100 aspect-[4/3] mb-4">
+            <div class="group cursor-pointer reveal-up delay-200 flex flex-col">
+                <div class="relative overflow-hidden bg-[#f7f7f5] aspect-[4/3] mb-6 border border-black/10">
                     <img src="https://images.unsplash.com/photo-1634152962476-4b8a00e1915c?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80"
                         alt="Project 2"
                         class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
-                    <div class="absolute inset-0 bg-black/10 group-hover:bg-black/20 transition-colors"></div>
+                    <div class="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors duration-500">
+                    </div>
                     <div
-                        class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+                        class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-500">
                         <div
-                            class="w-12 h-12 bg-white rounded-full flex items-center justify-center shadow-lg transform translate-y-4 group-hover:translate-y-0 transition-transform">
-                            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                            class="w-16 h-16 bg-white flex items-center justify-center transform scale-90 group-hover:scale-100 transition-transform duration-500 rounded-full">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
                                 <path d="M8 5v14l11-7z" />
                             </svg>
                         </div>
                     </div>
                 </div>
-                <div class="flex justify-between items-center">
-                    <h3 class="text-lg font-bold group-hover:text-black transition-colors">Mobile Banking App</h3>
+                <div class="flex justify-between items-start border-t border-black/10 pt-4 mt-auto">
+                    <div>
+                        <h3 class="text-xl font-serif italic group-hover:text-black transition-colors mb-1">Banking App
+                        </h3>
+                        <p class="text-[10px] font-bold uppercase tracking-widest text-black/40">App UI</p>
+                    </div>
                     <span
-                        class="w-8 h-8 flex items-center justify-center rounded-full border border-gray-200 group-hover:bg-black group-hover:text-white transition-all">↗</span>
+                        class="w-10 h-10 flex items-center justify-center border border-black/20 group-hover:bg-black group-hover:text-white transition-all">↗</span>
                 </div>
-                <p class="text-sm text-gray-400 mt-1">App Development / UI</p>
             </div>
 
             <!-- Project 3 -->
-            <div class="group cursor-pointer reveal-up delay-300">
-                <div class="relative overflow-hidden rounded-2xl bg-gray-100 aspect-[4/3] mb-4">
+            <div class="group cursor-pointer reveal-up delay-300 flex flex-col">
+                <div class="relative overflow-hidden bg-[#f7f7f5] aspect-[4/3] mb-6 border border-black/10">
                     <img src="https://images.unsplash.com/photo-1558655146-d09347e0b7a8?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80"
                         alt="Project 3"
                         class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
-                    <div class="absolute inset-0 bg-black/10 group-hover:bg-black/20 transition-colors"></div>
+                    <div class="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors duration-500">
+                    </div>
                 </div>
-                <div class="flex justify-between items-center">
-                    <h3 class="text-lg font-bold group-hover:text-black transition-colors">Brand Identity System</h3>
+                <div class="flex justify-between items-start border-t border-black/10 pt-4 mt-auto">
+                    <div>
+                        <h3 class="text-xl font-serif italic group-hover:text-black transition-colors mb-1">Identity
+                            System</h3>
+                        <p class="text-[10px] font-bold uppercase tracking-widest text-black/40">Branding</p>
+                    </div>
                     <span
-                        class="w-8 h-8 flex items-center justify-center rounded-full border border-gray-200 group-hover:bg-black group-hover:text-white transition-all">↗</span>
+                        class="w-10 h-10 flex items-center justify-center border border-black/20 group-hover:bg-black group-hover:text-white transition-all">↗</span>
                 </div>
-                <p class="text-sm text-gray-400 mt-1">Branding</p>
             </div>
         </div>
 
         <div class="text-center mt-12 reveal-up delay-100">
             <a href="#works"
-                class="inline-block px-8 py-3 border border-gray-200 rounded-full text-sm font-medium hover:bg-black hover:text-white transition-colors">View
+                class="magnetic inline-block px-8 py-3 border border-gray-200 rounded-full text-sm font-medium hover:bg-black hover:text-white transition-colors">View
                 All Works</a>
         </div>
     </section>
@@ -539,7 +641,7 @@
             brand that stands out.</p>
         <div class="flex justify-center reveal-up delay-300">
             <a href="#contact"
-                class="inline-flex items-center gap-3 border-b border-black pb-1 hover:opacity-70 transition-opacity text-xl font-medium">
+                class="magnetic inline-flex items-center gap-3 border-b border-black pb-1 hover:opacity-70 transition-opacity text-xl font-medium">
                 <span>Get in touch</span>
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                     <path d="M5 12h14M12 5l7 7-7 7" />
