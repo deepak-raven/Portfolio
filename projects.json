@@ -1,0 +1,23 @@
+[
+    {
+        "title": "Marvel Candy Crush",
+        "description": "A dynamic puzzle game intertwining nostalgic web game mechanics with an OOP architecture.",
+        "category": "Web Game / OOP",
+        "image": "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
+        "link": "#"
+    },
+    {
+        "title": "Text-to-Speech",
+        "description": "An intuitive application handling real-time API integrations for audio synthesis.",
+        "category": "App / API",
+        "image": "https://images.unsplash.com/photo-1590859586381-01f744e8c1c5?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
+        "link": "#"
+    },
+    {
+        "title": "Editorial Portfolio",
+        "description": "A brutalist, premium designer portfolio prioritizing raw aesthetics and typography.",
+        "category": "Design / Frontend",
+        "image": "https://images.unsplash.com/photo-1550745165-9bc0b252726f?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
+        "link": "#"
+    }
+]

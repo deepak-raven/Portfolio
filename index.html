@@ -31,7 +31,8 @@
     </script>
 </head>
 
-<body class="bg-[#f7f7f5] text-brand-black font-sans antialiased selection:bg-black selection:text-white relative">
+<body
+    class="bg-[#f7f7f5] text-brand-black font-sans antialiased selection:bg-black selection:text-white relative overflow-x-hidden">
 
     <!-- Tactile Grain/Noise Overlay -->
     <div
@@ -73,15 +74,14 @@
     <div
         class="max-w-[1440px] mx-auto px-6 md:px-12 pt-8 selection:bg-neutral-800 selection:text-white pb-20 relative z-10">
 
-        <!-- Page Title -->
-        <div class="text-center pt-8 pb-12">
-            <p class="text-xs font-semibold uppercase tracking-widest text-gray-500 mb-2">Design team here...</p>
-            <h1 class="text-4xl md:text-5xl font-medium tracking-tight">Personal Portfolio Website</h1>
-        </div>
+        <!-- Top spacing pushed down to compensate for missing heading -->
+        <div class="pt-8"></div>
 
         <!-- Laptop Frame -->
         <!-- Laptop Frame -->
-        <div class="laptop-container relative mx-auto mb-20 perspective-[2000px]"> <!-- Added perspective wrapper -->
+        <div
+            class="laptop-container relative mx-auto mb-32 mt-12 perspective-[2000px] transform scale-100 md:scale-125 origin-top">
+            <!-- Added scale wrapper -->
             <div class="mockup mockup-macbook loaded opened">
                 <div class="part top">
                     <img src="https://d1xm195wioio0k.cloudfront.net/images/mockup/macbook-top.svg" alt="" class="top">
@@ -90,35 +90,39 @@
 
                     <!-- Screen Content Container -->
                     <div class="screen-content bg-white overflow-hidden">
-                        <div class="h-full w-full relative overflow-y-auto no-scrollbar">
+                        <div class="h-full w-full relative overflow-y-auto no-scrollbar bg-[#f8f8f8]">
+                            <!-- Subtle noise overlay for the laptop screen -->
+                            <div class="absolute inset-0 opacity-[0.03] pointer-events-none z-0"
+                                style="background-image: url('data:image/svg+xml,%3Csvg viewBox=%220 0 200 200%22 xmlns=%22http://www.w3.org/2000/svg%22%3E%3Cfilter id=%22noiseFilter%22%3E%3CfeTurbulence type=%22fractalNoise%22 baseFrequency=%220.65%22 numOctaves=%223%22 stitchTiles=%22stitch%22/%3E%3C/filter%3E%3Crect width=%22100%25%22 height=%22100%25%22 filter=%22url(%23noiseFilter)%22/%3E%3C/svg%3E');">
+                            </div>
+
                             <!-- Inner Header -->
                             <header
-                                class="flex justify-between items-center py-2 px-4 md:py-3 md:px-4 absolute top-0 left-0 right-0 z-30 pointer-events-none w-full">
+                                class="flex justify-between items-center py-2 px-4 md:py-3 md:px-4 absolute top-0 left-0 right-0 z-30 pointer-events-none w-full border-b border-black/10">
                                 <div class="flex items-center gap-2 pointer-events-auto">
                                     <!-- Logo Placeholder -->
                                     <div
-                                        class="w-4 h-4 md:w-6 md:h-6 bg-black text-white rounded-md flex items-center justify-center font-bold text-[8px] md:text-xs">
+                                        class="w-4 h-4 md:w-6 md:h-6 bg-black text-white rounded-none flex items-center justify-center font-bold text-[8px] md:text-xs">
                                         DS</div>
                                 </div>
 
                                 <nav
-                                    class="hidden md:flex items-center gap-4 text-[8px] md:text-[10px] font-medium text-gray-600 pointer-events-auto">
-                                    <a href="#works" class="hover:text-black transition-colors">Works</a>
+                                    class="hidden md:flex items-center gap-4 text-[7px] md:text-[9px] font-bold uppercase tracking-widest text-black/60 pointer-events-auto">
+                                    <a href="#works" class="hover:text-black transition-colors">Projects</a>
                                     <a href="#about" class="hover:text-black transition-colors">About</a>
-                                    <a href="#insights" class="hover:text-black transition-colors">Insights</a>
-                                    <a href="#about" class="hover:text-black transition-colors">Services</a>
+                                    <a href="#education" class="hover:text-black transition-colors">Education</a>
                                 </nav>
 
                                 <a href="#contact"
-                                    class="hidden md:inline-flex items-center justify-center px-3 py-1 border border-gray-200 rounded-full text-[8px] font-medium hover:bg-black hover:text-white transition-all pointer-events-auto">
+                                    class="hidden md:inline-flex items-center justify-center px-3 py-1 border border-black text-[7px] md:text-[9px] font-bold uppercase tracking-widest hover:bg-black hover:text-white transition-all pointer-events-auto rounded-none">
                                     Get in touch
                                 </a>
 
                                 <!-- Mobile Menu Button -->
-                                <button class="md:hidden p-1 pointer-events-auto">
+                                <button class="md:hidden p-1 pointer-events-auto text-black">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24"
-                                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                        stroke-linejoin="round">
+                                        fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="square"
+                                        stroke-linejoin="miter">
                                         <line x1="3" y1="12" x2="21" y2="12"></line>
                                         <line x1="3" y1="6" x2="21" y2="6"></line>
                                         <line x1="3" y1="18" x2="21" y2="18"></line>
@@ -128,18 +132,28 @@
 
                             <!-- Hero Section placed inside Laptop -->
                             <section
-                                class="relative pt-8 md:pt-12 h-full grid grid-cols-12 gap-2 md:gap-4 items-end bg-[#f5f5f5] overflow-hidden">
+                                class="relative pt-8 md:pt-12 h-full grid grid-cols-12 gap-2 md:gap-4 items-end overflow-hidden">
+
+                                <!-- Editorial grid lines inside screen -->
+                                <div
+                                    class="absolute left-0 top-0 w-full h-full pointer-events-none grid grid-cols-12 gap-2 md:gap-4 px-4 md:px-12 z-0 opacity-10">
+                                    <div class="border-l border-black h-full col-span-1"></div>
+                                    <div class="border-l border-r border-black h-full col-span-10"></div>
+                                    <div class="border-r border-black h-full col-span-1"></div>
+                                </div>
+
                                 <!-- Vertical decorative line inside screen -->
-                                <div class="absolute left-4 md:left-8 top-10 bottom-0 w-px bg-gray-200 hidden xl:block">
+                                <div class="absolute left-4 md:left-8 top-10 bottom-0 w-px bg-black/20 hidden xl:block">
                                     <span
-                                        class="absolute top-8 -left-2 -rotate-90 text-[6px] text-gray-400 tracking-widest uppercase origin-center">Scroll</span>
+                                        class="absolute top-8 -left-2 -rotate-90 text-[6px] text-black font-bold tracking-[0.3em] uppercase origin-center">Scroll</span>
                                 </div>
 
                                 <!-- Left Side -->
-                                <div class="col-span-7 z-10 flex flex-col justify-center h-full relative pl-4 md:pl-12">
+                                <div
+                                    class="col-span-7 z-10 flex flex-col justify-center h-full relative pl-4 md:pl-12 pb-4 md:pb-8">
                                     <!-- Stats -->
                                     <div
-                                        class="absolute top-2 md:top-4 left-4 md:left-12 flex gap-2 md:gap-4 origin-top-left scale-[0.5] md:scale-90 opacity-80">
+                                        class="absolute top-2 md:top-4 left-4 md:left-12 flex gap-4 md:gap-6 origin-top-left scale-[0.5] md:scale-90 opacity-90 border-b border-black/20 pb-2">
                                         <div>
                                             <span
                                                 class="block text-xs md:text-sm font-serif italic font-bold">+200</span>
@@ -156,36 +170,40 @@
                                         </div>
                                     </div>
 
-                                    <!-- Content -->
-                                    <div class="mt-4 md:mt-8">
+                                    <div class="mt-4 md:mt-12">
                                         <h2
-                                            class="text-[24px] sm:text-[40px] md:text-[60px] lg:text-[80px] leading-[0.9] font-[300] tracking-tighter text-transparent bg-clip-text bg-gradient-to-r from-gray-900 via-gray-500 to-black animate-gradient-text w-max">
-                                            Hello
+                                            class="text-[24px] sm:text-[40px] md:text-[60px] lg:text-[70px] leading-[0.85] font-serif italic tracking-tighter text-black w-max pb-2 flex items-center min-h-[40px] sm:min-h-[50px] md:min-h-[70px]">
+                                            <span id="typewriter"></span><span
+                                                class="inline-block w-[2px] md:w-[4px] h-[20px] sm:h-[35px] md:h-[50px] lg:h-[60px] bg-black ml-1 md:ml-3 animate-[pulse_1s_ease-in-out_infinite]"></span>
                                         </h2>
                                         <p
-                                            class="mt-1 md:mt-4 ml-0.5 text-gray-500 max-w-[150px] md:max-w-[220px] text-[6px] md:text-[9px] leading-relaxed">
-                                            I'm a <span class="text-black font-semibold">Web Developer</span> based in
-                                            India.
-                                            specialized in UI/UX Design, Brand Strategy, & Webflow.
+                                            class="mt-2 md:mt-6 ml-0.5 text-black border-l-2 border-black pl-3 max-w-[150px] md:max-w-[260px] text-[7px] md:text-[10px] leading-relaxed">
+                                            I'm a <span
+                                                class="bg-black text-white px-1 py-0.5 font-bold uppercase tracking-widest text-[5px] md:text-[7px] mx-1">Web
+                                                Developer</span> creating
+                                            innovative web applications.<br>
+                                            Specialized in Python, JS, API Integration, and Front-end Development.
                                         </p>
                                     </div>
 
                                     <!-- Year -->
-                                    <div class="mt-4 md:mt-8 text-[6px] md:text-[8px] text-gray-400 pb-2 md:pb-0">
-                                        est 2025
+                                    <div class="mt-6 md:mt-10 flex items-center gap-2">
+                                        <span class="w-4 md:w-8 h-[1px] bg-black"></span>
+                                        <span
+                                            class="text-[6px] md:text-[8px] font-bold uppercase tracking-[0.2em] text-black pb-2 md:pb-0">
+                                            est 2025
+                                        </span>
                                     </div>
                                 </div>
 
                                 <!-- Right Side: Image -->
                                 <div
-                                    class="col-span-5 relative h-full flex items-end justify-center md:justify-end pr-2 md:pr-0">
+                                    class="col-span-5 relative h-full flex items-end justify-center md:justify-end z-10">
                                     <div
-                                        class="relative w-full max-w-[80px] md:max-w-[200px] aspect-[3/4] overflow-hidden bg-gray-200 bottom-0 origin-bottom scale-90 md:scale-100">
-                                        <img src="https://images.unsplash.com/photo-1534030347209-7147fd9e7f1a?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80"
-                                            alt="Portrait"
-                                            class="w-full h-full object-cover grayscale contrast-125 hover:grayscale-0 transition-all duration-700">
+                                        class="relative w-full max-w-[160px] md:max-w-[340px] origin-bottom transition-transform duration-500">
+                                        <img src="./profile.png" alt="Deepak S Portrait"
+                                            class="w-full h-auto object-bottom object-contain grayscale transition-all duration-700 hover:grayscale-[20%] mix-blend-multiply opacity-90 hover:opacity-100 scale-125 md:scale-130 origin-bottom">
                                     </div>
-                                </div>
                             </section>
                         </div>
                     </div>
@@ -207,10 +225,10 @@
                 <!-- Column 1: Text (Span 4) -->
                 <div class="md:col-span-4 pr-8 reveal-up delay-100">
                     <span class="text-[10px] font-bold uppercase tracking-[0.2em] text-black mb-4 block">About</span>
-                    <h2 class="text-3xl font-serif italic mb-6">Who we are</h2>
+                    <h2 class="text-3xl font-serif italic mb-6">Who I am</h2>
                     <p class="text-black/60 text-sm leading-7 mb-12 max-w-[280px]">
-                        Our creative Ad agency is ranked among the finest in the US. We cultivate smart ideas for
-                        start-ups and seasoned players.
+                        Computer Science Engineering student passionate about innovative web applications, AI, and
+                        continuous learning.
                     </p>
                     <div class="hidden md:block mt-8">
                         <!-- Decorative Curved Arrow -->
@@ -241,17 +259,16 @@
 
                 <!-- Column 2: Stats Card & Portrait (Span 4) - Centered visual -->
                 <div class="md:col-span-4 relative flex flex-col items-center reveal-up delay-200">
-                    <!-- 120% Card - Brutalist effect -->
+                    <!-- 3+ Card - Brutalist effect -->
                     <div
                         class="bg-[#f7f7f5] p-6 w-full max-w-[280px] text-center z-10 -mb-12 relative border border-black backdrop-blur-md">
                         <div class="flex justify-center mb-4 text-black">
                             <span class="text-xl">✦</span>
                         </div>
-                        <span class="block text-6xl font-serif italic mb-2 tracking-tighter">120<span
-                                class="text-3xl font-sans">%</span></span>
-                        <p class="text-[9px] text-black/60 uppercase tracking-widest leading-relaxed font-bold">Average
-                            conversion
-                            rate <br> increase for my clients.</p>
+                        <span class="block text-6xl font-serif italic mb-2 tracking-tighter">3<span
+                                class="text-3xl font-sans">+</span></span>
+                        <p class="text-[9px] text-black/60 uppercase tracking-widest leading-relaxed font-bold">Years of
+                            Coding<br> Experience.</p>
                     </div>
 
                     <!-- Portrait Image -->
@@ -276,19 +293,25 @@
                         <li class="flex gap-4 items-start border-b border-black/10 pb-6">
                             <span class="flex-shrink-0 text-lg mt-1 font-serif italic">01</span>
                             <div>
-                                <h4 class="font-bold text-sm mb-1 uppercase tracking-wider">User Research</h4>
-                                <p class="text-xs text-black/60 leading-relaxed font-medium">Systematic study of target
-                                    users to
-                                    infer needs and insights.</p>
+                                <h4 class="font-bold text-sm mb-1 uppercase tracking-wider">Web Development</h4>
+                                <p class="text-xs text-black/60 leading-relaxed font-medium">Front-end development with
+                                    HTML, CSS, JavaScript, and Tailwind.</p>
                             </div>
                         </li>
                         <li class="flex gap-4 items-start border-b border-black/10 pb-6">
                             <span class="flex-shrink-0 text-lg mt-1 font-serif italic">02</span>
                             <div>
-                                <h4 class="font-bold text-sm mb-1 uppercase tracking-wider">UI/UX Design</h4>
-                                <p class="text-xs text-black/60 leading-relaxed font-medium">Creating intuitive and
-                                    aesthetically
-                                    pleasing interfaces.</p>
+                                <h4 class="font-bold text-sm mb-1 uppercase tracking-wider">Core Programming</h4>
+                                <p class="text-xs text-black/60 leading-relaxed font-medium">Strong foundation in
+                                    Python, C, and Java.</p>
+                            </div>
+                        </li>
+                        <li class="flex gap-4 items-start border-b border-black/10 pb-6">
+                            <span class="flex-shrink-0 text-lg mt-1 font-serif italic">03</span>
+                            <div>
+                                <h4 class="font-bold text-sm mb-1 uppercase tracking-wider">Specialized Skills</h4>
+                                <p class="text-xs text-black/60 leading-relaxed font-medium">API Integration,
+                                    Git/GitHub, Prompt Engineering.</p>
                             </div>
                         </li>
                     </ul>
@@ -392,13 +415,17 @@
                         <span class="text-xs font-serif italic text-black/40 mt-2">01</span>
                         <div>
                             <h3 class="text-3xl font-serif italic mb-2 group-hover:pl-4 transition-all duration-300">
-                                Creative Director</h3>
-                            <p class="text-black/60 text-xs font-bold uppercase tracking-widest">Design Agency, New York
-                                • 2023</p>
+                                Freelance Web Developer</h3>
+                            <p
+                                class="text-black/60 text-xs font-bold uppercase tracking-widest mt-2 max-w-sm leading-relaxed">
+                                Independent • Present <br>
+                                <span class="font-medium text-black/40 normal-case tracking-normal block mt-2">Designing
+                                    and developing premium, high-converting web applications for diverse clients.</span>
+                            </p>
                         </div>
                     </div>
                     <div class="flex items-center gap-8 mt-6 md:mt-0 w-full md:w-auto justify-between md:justify-end">
-                        <span class="text-[10px] font-bold uppercase tracking-[0.2em] text-black">Full Time</span>
+                        <span class="text-[10px] font-bold uppercase tracking-[0.2em] text-black">Freelance</span>
                         <div
                             class="w-12 h-12 border border-black/20 flex items-center justify-center group-hover:bg-black group-hover:text-white transition-all transform group-hover:scale-110">
                             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
@@ -416,36 +443,18 @@
                         <span class="text-xs font-serif italic text-black/40 mt-2">02</span>
                         <div>
                             <h3 class="text-3xl font-serif italic mb-2 group-hover:pl-4 transition-all duration-300">
-                                Senior Product Designer</h3>
-                            <p class="text-black/60 text-xs font-bold uppercase tracking-widest">Tech Startup, San
-                                Francisco • 2021</p>
+                                Web Development Intern</h3>
+                            <p
+                                class="text-black/60 text-xs font-bold uppercase tracking-widest mt-2 max-w-sm leading-relaxed">
+                                Slytherin Private Solution Limited • Aug 2025 - Present <br>
+                                <span class="font-medium text-black/40 normal-case tracking-normal block mt-2">Assisted
+                                    in developing interactive web applications. Wrote clean, reusable code, and
+                                    optimized performance.</span>
+                            </p>
                         </div>
                     </div>
                     <div class="flex items-center gap-8 mt-6 md:mt-0 w-full md:w-auto justify-between md:justify-end">
-                        <span class="text-[10px] font-bold uppercase tracking-[0.2em] text-black">Remote</span>
-                        <div
-                            class="w-12 h-12 border border-black/20 flex items-center justify-center group-hover:bg-black group-hover:text-white transition-all transform group-hover:scale-110">
-                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                stroke-width="1.5">
-                                <path d="M7 17L17 7M17 7H7M17 7V17" />
-                            </svg>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Item 3 -->
-                <div
-                    class="group flex flex-col md:flex-row justify-between items-center py-10 border-b border-black/20 hover:border-black transition-colors cursor-pointer reveal-up delay-300">
-                    <div class="flex items-start gap-8 w-full md:w-auto">
-                        <span class="text-xs font-serif italic text-black/40 mt-2">03</span>
-                        <div>
-                            <h3 class="text-3xl font-serif italic mb-2 group-hover:pl-4 transition-all duration-300">
-                                UI/UX Designer</h3>
-                            <p class="text-black/60 text-xs font-bold uppercase tracking-widest">Freelance • 2019</p>
-                        </div>
-                    </div>
-                    <div class="flex items-center gap-8 mt-6 md:mt-0 w-full md:w-auto justify-between md:justify-end">
-                        <span class="text-[10px] font-bold uppercase tracking-[0.2em] text-black">Contract</span>
+                        <span class="text-[10px] font-bold uppercase tracking-[0.2em] text-black">Internship</span>
                         <div
                             class="w-12 h-12 border border-black/20 flex items-center justify-center group-hover:bg-black group-hover:text-white transition-all transform group-hover:scale-110">
                             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
@@ -483,172 +492,185 @@
         </div>
     </section>
 
-    <!-- Latest Works Section -->
-    <section id="works" class="py-20 reveal-up border-y border-black/20 mt-12 bg-white">
-        <div class="text-center mb-16 reveal-up delay-100 pt-8">
-            <span class="text-[10px] font-bold uppercase tracking-[0.2em] text-black mb-4 block">Selected Works</span>
-            <h2 class="text-6xl font-serif italic tracking-tighter">Archive</h2>
-        </div>
+    <!-- Latest Works Section — Redesigned Archive (On-Theme) -->
+    <section id="works" class="archive-section reveal-up">
 
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
-            style="padding-right: 16px;padding-left: 16px;">
-            <!-- Project 1 -->
-            <div class="group cursor-pointer reveal-up delay-100 flex flex-col">
-                <div class="relative overflow-hidden bg-[#f7f7f5] aspect-[4/3] mb-6 border border-black/10">
-                    <img src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80"
-                        alt="Project 1"
-                        class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
-                    <div class="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors duration-500">
-                    </div>
-                </div>
-                <div class="flex justify-between items-start border-t border-black/10 pt-4 mt-auto">
-                    <div>
-                        <h3 class="text-xl font-serif italic group-hover:text-black transition-colors mb-1">Digital
-                            Agency</h3>
-                        <p class="text-[10px] font-bold uppercase tracking-widest text-black/40">Web Design</p>
-                    </div>
-                    <span
-                        class="w-10 h-10 flex items-center justify-center border border-black/20 group-hover:bg-black group-hover:text-white transition-all">↗</span>
-                </div>
+        <!-- Decorative hairline vertical bars (matching site's ambient bg) -->
+        <div class="archive-grid-line archive-grid-line--left" aria-hidden="true"></div>
+        <div class="archive-grid-line archive-grid-line--right" aria-hidden="true"></div>
+
+        <!-- Large watermark typography (matching hero bg treatment) -->
+        <div class="archive-watermark" aria-hidden="true">Works</div>
+
+        <!-- Archive Header — Two col split, matching site's editorial grid -->
+        <div class="archive-header">
+            <div class="archive-header-left">
+                <!-- Decorative square dot (same as Experience section) -->
+                <div class="archive-dot"></div>
+                <span class="archive-eyebrow">Selected Works</span>
+                <h2 class="archive-title">Archive</h2>
+                <!-- Animated underline sweep -->
+                <div class="archive-title-line"></div>
             </div>
-
-            <!-- Project 2 -->
-            <div class="group cursor-pointer reveal-up delay-200 flex flex-col">
-                <div class="relative overflow-hidden bg-[#f7f7f5] aspect-[4/3] mb-6 border border-black/10">
-                    <img src="https://images.unsplash.com/photo-1634152962476-4b8a00e1915c?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80"
-                        alt="Project 2"
-                        class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
-                    <div class="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors duration-500">
-                    </div>
-                    <div
-                        class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-500">
-                        <div
-                            class="w-16 h-16 bg-white flex items-center justify-center transform scale-90 group-hover:scale-100 transition-transform duration-500 rounded-full">
-                            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-                                <path d="M8 5v14l11-7z" />
-                            </svg>
-                        </div>
-                    </div>
+            <div class="archive-header-right">
+                <div class="archive-count-display">
+                    <span class="archive-count-num" id="archive-count">00</span>
+                    <span class="archive-count-label">Projects</span>
                 </div>
-                <div class="flex justify-between items-start border-t border-black/10 pt-4 mt-auto">
-                    <div>
-                        <h3 class="text-xl font-serif italic group-hover:text-black transition-colors mb-1">Banking App
-                        </h3>
-                        <p class="text-[10px] font-bold uppercase tracking-widest text-black/40">App UI</p>
-                    </div>
-                    <span
-                        class="w-10 h-10 flex items-center justify-center border border-black/20 group-hover:bg-black group-hover:text-white transition-all">↗</span>
-                </div>
-            </div>
-
-            <!-- Project 3 -->
-            <div class="group cursor-pointer reveal-up delay-300 flex flex-col">
-                <div class="relative overflow-hidden bg-[#f7f7f5] aspect-[4/3] mb-6 border border-black/10">
-                    <img src="https://images.unsplash.com/photo-1558655146-d09347e0b7a8?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80"
-                        alt="Project 3"
-                        class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
-                    <div class="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors duration-500">
-                    </div>
-                </div>
-                <div class="flex justify-between items-start border-t border-black/10 pt-4 mt-auto">
-                    <div>
-                        <h3 class="text-xl font-serif italic group-hover:text-black transition-colors mb-1">Identity
-                            System</h3>
-                        <p class="text-[10px] font-bold uppercase tracking-widest text-black/40">Branding</p>
-                    </div>
-                    <span
-                        class="w-10 h-10 flex items-center justify-center border border-black/20 group-hover:bg-black group-hover:text-white transition-all">↗</span>
-                </div>
+                <p class="archive-sub">A curated record of ideas built into reality — each entry a chapter in an ongoing
+                    story of craft, code, and curiosity.</p>
             </div>
         </div>
 
-        <div class="text-center mt-12 reveal-up delay-100">
-            <a href="#works"
-                class="magnetic inline-block px-8 py-3 border border-gray-200 rounded-full text-sm font-medium hover:bg-black hover:text-white transition-colors">View
-                All Works</a>
+        <!-- Archive Row List -->
+        <div id="projects-grid" class="archive-list">
+            <div class="archive-loading">
+                <span class="archive-loading-dot"></span>
+                <span class="archive-loading-text">Retrieving Archive...</span>
+            </div>
         </div>
+
+        <!-- View All CTA -->
+        <div class="archive-cta-wrap">
+            <a href="https://github.com/deepak-raven" target="_blank" rel="noopener noreferrer"
+                class="archive-cta magnetic">
+                <span>View Full Archive</span>
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                    <path d="M7 17L17 7M17 7H7M17 7V17" />
+                </svg>
+            </a>
+        </div>
+
+        <!-- Footer Ticker Strip -->
+        <div class="archive-ticker-wrap">
+            <div class="archive-ticker-track">
+                <span>Open to Work</span><span class="archive-ticker-sep">✦</span>
+                <span>Available for Projects</span><span class="archive-ticker-sep">✦</span>
+                <span>Let's Collaborate</span><span class="archive-ticker-sep">✦</span>
+                <span>Web Dev · Python · API Integration</span><span class="archive-ticker-sep">✦</span>
+                <span>Open to Work</span><span class="archive-ticker-sep">✦</span>
+                <span>Available for Projects</span><span class="archive-ticker-sep">✦</span>
+                <span>Let's Collaborate</span><span class="archive-ticker-sep">✦</span>
+                <span>Web Dev · Python · API Integration</span><span class="archive-ticker-sep">✦</span>
+                <span>Open to Work</span><span class="archive-ticker-sep">✦</span>
+                <span>Available for Projects</span><span class="archive-ticker-sep">✦</span>
+            </div>
+        </div>
+
     </section>
 
-    <!-- Insights & Trends Section -->
-    <section id="insights" class="py-20 bg-[#f9f9f9] reveal-up">
-        <div class="text-center mb-16 reveal-up delay-100">
-            <span class="text-sm font-semibold uppercase tracking-wider text-gray-500 mb-2 block">Blog</span>
-            <h2 class="text-4xl font-serif italic">Design Insights & Trends</h2>
-        </div>
+    <!-- Education & Certifications Section -->
+    <section id="education" class="py-20 bg-[#f9f9f9] reveal-up">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-16 px-6 md:px-12 max-w-[1440px] mx-auto">
 
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
-            <!-- Blog 1 -->
-            <div class="bg-white rounded-2xl p-4 hover:shadow-lg transition-shadow reveal-up delay-100">
-                <div class="aspect-[4/3] rounded-xl overflow-hidden mb-4 bg-gray-100">
-                    <img src="https://images.unsplash.com/photo-1550751827-4bd374c3f58b?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80"
-                        alt="Blog 1"
-                        class="w-full h-full object-cover hover:scale-105 transition-transform duration-500">
-                </div>
-                <div class="px-2">
-                    <div class="flex items-center gap-2 mb-3">
-                        <span
-                            class="bg-black text-white text-[10px] uppercase font-bold px-2 py-1 rounded">Update</span>
-                        <span class="text-xs text-gray-400">Oct 2, 2023</span>
+            <!-- Education Column -->
+            <div class="reveal-up delay-100">
+                <span class="text-[10px] font-bold uppercase tracking-[0.2em] text-black mb-8 block">Education</span>
+                <div class="space-y-12">
+                    <div class="border-t border-black/20 pt-6">
+                        <h3 class="text-2xl font-serif italic mb-2">B.E. Computer Science Engineering</h3>
+                        <p class="text-[10px] font-bold uppercase tracking-widest text-black/60 mb-2">Jaya Engineering
+                            College • 2024 - 2028</p>
+                        <p class="text-sm font-medium text-black">CGPA: 8.5</p>
                     </div>
-                    <h3 class="text-lg font-bold leading-tight mb-2 hover:text-gray-600 cursor-pointer">The Art of
-                        Minimalist Web Design</h3>
+                    <div class="border-t border-black/20 pt-6">
+                        <h3 class="text-xl font-serif italic mb-2">Higher Secondary</h3>
+                        <p class="text-[10px] font-bold uppercase tracking-widest text-black/60">Govt Boys Higher
+                            Secondary School • 2024</p>
+                    </div>
                 </div>
             </div>
 
-            <!-- Blog 2 -->
-            <div class="bg-white rounded-2xl p-4 hover:shadow-lg transition-shadow reveal-up delay-200">
-                <div class="aspect-[4/3] rounded-xl overflow-hidden mb-4 bg-gray-100">
-                    <img src="https://images.unsplash.com/photo-1596468700201-a94f7250dfd1?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80"
-                        alt="Blog 2"
-                        class="w-full h-full object-cover hover:scale-105 transition-transform duration-500">
-                </div>
-                <div class="px-2">
-                    <div class="flex items-center gap-2 mb-3">
-                        <span
-                            class="bg-black text-white text-[10px] uppercase font-bold px-2 py-1 rounded">Design</span>
-                        <span class="text-xs text-gray-400">Sep 28, 2023</span>
+            <!-- Certifications Column -->
+            <div class="reveal-up delay-200">
+                <span
+                    class="text-[10px] font-bold uppercase tracking-[0.2em] text-black mb-8 block">Certifications</span>
+                <div class="space-y-12">
+                    <div class="border-t border-black/20 pt-6">
+                        <h3 class="text-2xl font-serif italic mb-2">Introduction to Python Programming</h3>
+                        <p class="text-[10px] font-bold uppercase tracking-widest text-black/60">Redhat Academy • Dec
+                            2024</p>
                     </div>
-                    <h3 class="text-lg font-bold leading-tight mb-2 hover:text-gray-600 cursor-pointer">Typography
-                        Trends in 2024</h3>
+                    <div class="border-t border-black/20 pt-6">
+                        <h3 class="text-xl font-serif italic mb-2">Python Intermediate</h3>
+                        <p class="text-[10px] font-bold uppercase tracking-widest text-black/60">Sololearn • Aug 2024
+                        </p>
+                    </div>
                 </div>
             </div>
 
-            <!-- Blog 3 -->
-            <div class="bg-white rounded-2xl p-4 hover:shadow-lg transition-shadow reveal-up delay-300">
-                <div class="aspect-[4/3] rounded-xl overflow-hidden mb-4 bg-gray-100">
-                    <img src="https://images.unsplash.com/photo-1531652750692-2b6d510006ce?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80"
-                        alt="Blog 3"
-                        class="w-full h-full object-cover hover:scale-105 transition-transform duration-500">
-                </div>
-                <div class="px-2">
-                    <div class="flex items-center gap-2 mb-3">
-                        <span class="bg-black text-white text-[10px] uppercase font-bold px-2 py-1 rounded">Tech</span>
-                        <span class="text-xs text-gray-400">Sep 15, 2023</span>
-                    </div>
-                    <h3 class="text-lg font-bold leading-tight mb-2 hover:text-gray-600 cursor-pointer">Future of
-                        Interactive Design</h3>
-                </div>
-            </div>
         </div>
     </section>
 
     <!-- CTA & Footer Section -->
     <section id="contact" class="py-32 text-center bg-gray-50 reveal-up">
-        <h2 class="text-6xl md:text-8xl font-serif italic mb-8 tracking-tight reveal-up delay-100">Let's bring it<br>to
+        <h2 class="text-6xl md:text-8xl font-serif italic mb-8 tracking-tight reveal-up delay-100">Let's bring it to
             life.</h2>
-        <p class="text-gray-500 mb-12 max-w-xl mx-auto text-lg reveal-up delay-200">Create your next project with us. We
+        <p class="text-gray-500 mb-4 max-w-xl mx-auto text-lg reveal-up delay-200">Create your next project with us. We
             help you to build a
             brand that stands out.</p>
-        <div class="flex justify-center reveal-up delay-300">
-            <a href="#contact"
-                class="magnetic inline-flex items-center gap-3 border-b border-black pb-1 hover:opacity-70 transition-opacity text-xl font-medium">
-                <span>Get in touch</span>
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M5 12h14M12 5l7 7-7 7" />
-                </svg>
-            </a>
+
+        <div class="flex justify-center flex-col items-center reveal-up delay-300 relative z-20 min-h-[300px]">
+            <div class="envelope-wrapper" id="envelope-wrapper"
+                onclick="document.getElementById('contact-modal').classList.add('active'); document.body.style.overflow='hidden';">
+                <div class="letter-image">
+                    <div class="animated-mail">
+                        <div class="back-fold"></div>
+                        <div class="letter">
+                            <div class="letter-border"></div>
+                            <div class="letter-content text-xl mt-4">
+                                <span class="font-serif italic font-bold">Get in touch</span>
+                            </div>
+                        </div>
+                        <div class="top-fold"></div>
+                        <div class="body"></div>
+                        <div class="left-fold"></div>
+                    </div>
+                    <div class="shadow"></div>
+                </div>
+            </div>
         </div>
     </section>
+
+    <!-- Paper Modal Overlay -->
+    <div id="contact-modal" class="paper-modal-overlay">
+        <div class="paper-modal text-left">
+            <div class="paper-close"
+                onclick="document.getElementById('contact-modal').classList.remove('active'); document.body.style.overflow='auto';">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                    <line x1="18" y1="6" x2="6" y2="18"></line>
+                    <line x1="6" y1="6" x2="18" y2="18"></line>
+                </svg>
+            </div>
+
+            <div class="flex flex-col">
+                <span class="text-[10px] font-bold uppercase tracking-[0.2em] text-black/50 mb-2">Write to me</span>
+                <h3 class="paper-title">Drop a line</h3>
+            </div>
+
+            <form class="paper-form" id="contact-form">
+                <div class="form-group">
+                    <input type="text" placeholder="Name" required>
+                </div>
+                <div class="form-group">
+                    <input type="email" placeholder="Email" required>
+                </div>
+                <div class="form-group">
+                    <textarea placeholder="Message..." required></textarea>
+                </div>
+                <div class="mt-8">
+                    <button type="submit"
+                        class="paper-submit-btn w-full flex justify-center items-center gap-3 py-3 group">
+                        <span>Send Message</span>
+                        <svg class="transition-transform duration-300 group-hover:translate-x-2" width="18" height="18"
+                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                            <path d="M5 12h14M12 5l7 7-7 7" />
+                        </svg>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
 
     <footer class="bg-black text-white py-20 px-6 md:px-12 reveal-up">
         <div
@@ -657,28 +679,30 @@
             <div class="flex flex-col gap-4">
                 <div
                     class="w-10 h-10 bg-white text-black rounded-lg flex items-center justify-center font-bold text-xl">
-                    M</div>
+                    DS</div>
                 <p class="text-gray-400 text-sm max-w-xs">Creating digital experiences that matter.</p>
             </div>
 
             <!-- Links -->
             <div class="flex gap-12 text-sm text-gray-400 font-medium">
-                <a href="#works" class="hover:text-white transition-colors">Works</a>
-                <a href="#about" class="hover:text-white transition-colors">About</a>
-                <a href="#insights" class="hover:text-white transition-colors">Insights</a>
-                <a href="#about" class="hover:text-white transition-colors">Services</a>
+                <a href="https://github.com/deepak-raven" target="_blank" rel="noopener noreferrer"
+                    class="hover:text-white transition-colors">GitHub</a>
+                <a href="https://linkedin.com/in/contact-deepak-s" target="_blank" rel="noopener noreferrer"
+                    class="hover:text-white transition-colors">LinkedIn</a>
             </div>
 
             <!-- Contact -->
             <div class="text-right">
-                <span class="block text-gray-500 text-xs uppercase tracking-wider mb-1">Contact Us</span>
+                <span class="block text-gray-500 text-xs uppercase tracking-wider mb-1">Contact</span>
                 <a href="mailto:deepak.me005@gmail.com"
-                    class="text-lg font-medium hover:text-gray-300 transition-colors">deepak.me005@gmail.com</a>
+                    class="text-lg font-medium hover:text-gray-300 transition-colors block">deepak.me005@gmail.com</a>
+                <a href="tel:9342238936"
+                    class="text-sm font-medium hover:text-gray-300 transition-colors block mt-1">+91 9342238936</a>
             </div>
         </div>
 
         <div class="flex flex-col md:flex-row justify-between items-center text-xs text-gray-600">
-            <span>© 2023 Kinova. All rights reserved.</span>
+            <span>© 2026 Deepak S. All rights reserved.</span>
             <div class="flex gap-6 mt-4 md:mt-0">
                 <a href="#" class="hover:text-gray-400 transition-colors">Privacy Policy</a>
                 <a href="#" class="hover:text-gray-400 transition-colors">Terms & Conditions</a>
