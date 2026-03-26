@@ -319,10 +319,29 @@
                     </ul>
                 </div>
             </div>
+
+            <!-- Logo Loop Animation -->
+            <div class="logo-loop mt-12 mb-0" id="logo-loop">
+                <div class="logo-loop-fade-left"></div>
+                <div class="logo-loop-fade-right"></div>
+                <div class="logo-loop-track" id="logo-loop-track">
+                    <ul class="logo-loop-list" id="logo-loop-seq">
+                        <li class="logo-loop-item"><img src="https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/python.svg" alt="Python"></li>
+                        <li class="logo-loop-item"><img src="https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/javascript.svg" alt="JavaScript"></li>
+                        <li class="logo-loop-item"><img src="https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/react.svg" alt="React"></li>
+                        <li class="logo-loop-item"><img src="https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/tailwindcss.svg" alt="Tailwind CSS"></li>
+                        <li class="logo-loop-item"><img src="https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/nodedotjs.svg" alt="Node.js"></li>
+                        <li class="logo-loop-item"><img src="https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/vercel.svg" alt="Vercel"></li>
+                        <li class="logo-loop-item"><img src="https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/git.svg" alt="Git"></li>
+                        <li class="logo-loop-item"><img src="https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/figma.svg" alt="Figma"></li>
+                        <li class="logo-loop-item"><img src="https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/java.svg" alt="Java"></li>
+                    </ul>
+                </div>
+            </div>
         </section>
 
         <!-- Projects Section -->
-        <section id="projects" class="py-24 reveal-up">
+        <section id="projects" class="reveal-up">
             <div class="flex flex-col md:flex-row justify-between items-end mb-16 gap-8">
                 <div class="max-w-xl">
                     <span class="text-[10px] font-bold uppercase tracking-[0.2em] text-black mb-4 block">Work</span>
@@ -333,49 +352,8 @@
                 </p>
             </div>
             
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-12">
-                <!-- Project 1 -->
-                <div class="reveal-up delay-100 h-[400px]">
-                    <figure class="tilted-card-figure">
-                        <div class="tilted-card-mobile-alert">Check on desktop for effects.</div>
-                        <div class="tilted-card-inner">
-                            <img src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Marvel Candy Crush" class="tilted-card-img">
-                            <div class="tilted-card-overlay">
-                                <h3 class="text-xl font-serif italic mb-1">Marvel Candy Crush</h3>
-                                <p class="text-[10px] uppercase tracking-widest opacity-80">Web Game / OOP</p>
-                            </div>
-                        </div>
-                        <figcaption class="tilted-card-caption">View Project</figcaption>
-                    </figure>
-                </div>
-                <!-- Project 2 -->
-                <div class="reveal-up delay-200 h-[400px]">
-                    <figure class="tilted-card-figure">
-                        <div class="tilted-card-mobile-alert">Check on desktop for effects.</div>
-                        <div class="tilted-card-inner">
-                            <img src="https://images.unsplash.com/photo-1543269664-56d93c1b41a6?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Text-to-Speech" class="tilted-card-img">
-                            <div class="tilted-card-overlay">
-                                <h3 class="text-xl font-serif italic mb-1">Text-to-Speech</h3>
-                                <p class="text-[10px] uppercase tracking-widest opacity-80">App / API</p>
-                            </div>
-                        </div>
-                        <figcaption class="tilted-card-caption">View Project</figcaption>
-                    </figure>
-                </div>
-                <!-- Project 3 -->
-                <div class="reveal-up delay-300 h-[400px]">
-                    <figure class="tilted-card-figure">
-                        <div class="tilted-card-mobile-alert">Check on desktop for effects.</div>
-                        <div class="tilted-card-inner">
-                            <img src="https://images.unsplash.com/photo-1550745165-9bc0b252726f?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Editorial Portfolio" class="tilted-card-img">
-                            <div class="tilted-card-overlay">
-                                <h3 class="text-xl font-serif italic mb-1">Editorial Portfolio</h3>
-                                <p class="text-[10px] uppercase tracking-widest opacity-80">Design / Frontend</p>
-                            </div>
-                        </div>
-                        <figcaption class="tilted-card-caption">View Project</figcaption>
-                    </figure>
-                </div>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-12" id="projects-grid">
+                <!-- Data will be loaded from projects.json -->
             </div>
         </section>
 

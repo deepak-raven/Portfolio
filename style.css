@@ -1284,4 +1284,73 @@ html {
   transform: translate(-50%, -120%) translateZ(60px); 
   transition: opacity 0.3s ease;
   white-space: nowrap;
-}
+}
+
+/* Logo Loop Styles */
+.logo-loop {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+    padding: 60px 0;
+    margin-top: 60px;
+    border-top: 1px solid rgba(0,0,0,0.05);
+}
+
+.logo-loop-track {
+    display: flex;
+    align-items: center;
+    width: max-content;
+    will-change: transform;
+    pointer-events: auto;
+}
+
+.logo-loop-list {
+    display: flex;
+    align-items: center;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.logo-loop-item {
+    flex: none;
+    margin-right: 80px; /* Gap of 80px */
+    height: 32px; /* logoHeight equivalent */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.logo-loop-item img, .logo-loop-item svg {
+    height: 100%;
+    max-width: 120px;
+    width: auto;
+    object-fit: contain;
+    filter: grayscale(1) opacity(0.4);
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.logo-loop-item:hover img {
+    filter: grayscale(0) opacity(1);
+    transform: scale(1.15);
+}
+
+.logo-loop-fade-left, .logo-loop-fade-right {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 15vw;
+    z-index: 2;
+    pointer-events: none;
+}
+
+.logo-loop-fade-left {
+    left: 0;
+    background: linear-gradient(to right, #f7f7f5 0%, transparent 100%);
+}
+
+.logo-loop-fade-right {
+    right: 0;
+    background: linear-gradient(to left, #f7f7f5 0%, transparent 100%);
+}
+

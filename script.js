@@ -7,15 +7,10 @@ document.addEventListener('DOMContentLoaded', () => {
         let currentProgress = 1; // Start closed
         let targetProgress = Math.max(0, Math.min(1, window.scrollY / 450));
 
-        // Easing function for buttery smooth updates
         const updateAnimation = () => {
-            // Lerp linearly interpolates the current value to the target value 
             currentProgress += (targetProgress - currentProgress) * 0.08;
-            
-            // Swing the screen block smoothly
             laptopBlock.style.transform = `translate3d(0, 0, 0) rotateY(-${currentProgress * 90}deg)`;
             
-            // Just make the lid appear ONLY when fully closed
             if (currentProgress >= 0.99) {
                 laptopTop.style.opacity = 1;
                 laptopTop.style.transform = 'scale(1)';
@@ -27,10 +22,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 laptopTop.style.opacity = 0;
                 laptopTop.style.zIndex = -5;
                 
-                // Trigger glare when moving
                 if (currentProgress > 0.01 && currentProgress < 0.99) {
                     laptopBlock.classList.add('glare-active');
-                    // Map progress to glare position (sweeps from -150% to 150%)
                     const glareX = -150 + (currentProgress * 300);
                     const glareY = -150 + (currentProgress * 300);
                     laptopBlock.style.setProperty('--glare-pos', `${glareX}% ${glareY}%`);
@@ -38,29 +31,24 @@ document.addEventListener('DOMContentLoaded', () => {
                     laptopBlock.classList.remove('glare-active');
                 }
             }
-
             requestAnimationFrame(updateAnimation);
         };
 
         window.addEventListener('scroll', () => {
-            // Fluid progress target from 0 (open) to 1 (closed) over 450px
             targetProgress = Math.max(0, Math.min(1, window.scrollY / 450));
         });
-
-        // Kick off the loop
         updateAnimation();
     }
 
-    // 2. Intersection Observer for Scroll Animations
-    const observer = new IntersectionObserver((entries, obs) => {
+    // 2. Reveal Up Observer
+    const revealObserver = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
                 entry.target.classList.add('active');
-                obs.unobserve(entry.target);
             }
         });
     }, { threshold: 0.1 });
-    document.querySelectorAll('.reveal-up').forEach(el => observer.observe(el));
+    document.querySelectorAll('.reveal-up').forEach(el => revealObserver.observe(el));
 
     // 3. Custom Cursor
     if (window.matchMedia("(pointer: fine)").matches) {
@@ -70,7 +58,8 @@ document.addEventListener('DOMContentLoaded', () => {
             document.body.appendChild(el);
             return el;
         };
-        const dot = createCursor('cursor-dot'), outline = createCursor('cursor-outline');
+        const dot = createCursor('cursor-dot');
+        const outline = createCursor('cursor-outline');
 
         window.addEventListener('mousemove', e => {
             dot.style.left = `${e.clientX}px`;
@@ -120,57 +109,10 @@ document.addEventListener('DOMContentLoaded', () => {
         })();
     }
 
-    // 6. Projects Fetch & Archive Logic
-    const projectsGrid = document.getElementById('projects-grid');
-    if (projectsGrid) {
-        const previewEl = Object.assign(document.createElement('div'), { className: 'archive-row-preview', innerHTML: '<img src="" alt="" />' });
-        document.body.appendChild(previewEl);
-        const previewImg = previewEl.querySelector('img');
-
-        document.addEventListener('mousemove', e => {
-            previewEl.style.left = `${e.clientX + 28}px`;
-            previewEl.style.top = `${e.clientY - 80}px`;
-        });
-
-        fetch('./projects.json').then(res => res.json()).then(repos => {
-            if (!repos?.length) throw new Error("No projects");
-            projectsGrid.innerHTML = '';
-
-            const countEl = document.getElementById('archive-count');
-            if (countEl) {
-                let c = 0;
-                const step = () => { countEl.textContent = String(++c).padStart(2, '0'); if (c < repos.length) requestAnimationFrame(step); };
-                setTimeout(step, 400);
-            }
-
-            repos.forEach((repo, i) => {
-                const row = Object.assign(document.createElement('a'), {
-                    className: 'archive-row', href: repo.link || '#', target: '_blank', rel: 'noopener noreferrer'
-                });
-                row.style.animationDelay = `${i * 120}ms`;
-                row.innerHTML = `
-                    <span class="archive-row-index">${String(i + 1).padStart(2, '0')}</span>
-                    <div class="archive-row-body">
-                        <h3 class="archive-row-title">${repo.title}</h3>
-                        <div class="archive-row-meta"><span class="archive-row-category">${repo.category}</span></div>
-                        <p class="archive-row-desc">${repo.description}</p>
-                    </div>
-                    <div class="archive-row-image-thumb"><img src="${repo.image || ''}" alt="${repo.title}" loading="lazy"></div>
-                    <div class="archive-row-arrow"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M7 17L17 7M17 7H7M17 7V17"/></svg></div>
-                `;
-                row.onmouseenter = () => { previewImg.src = repo.image || ''; previewEl.classList.add('visible'); };
-                row.onmouseleave = () => previewEl.classList.remove('visible');
-                projectsGrid.appendChild(row);
-            });
-        }).catch(err => {
-            console.error(err);
-            const isNoProj = err.message === "No projects";
-            projectsGrid.innerHTML = `<p style="padding:60px;text-align:center;color:rgba(${isNoProj ? "247,247,245,0.3" : "220,80,80,0.6"});font-size:10px;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;">${isNoProj ? "No projects found." : "Unable to load archive."}</p>`;
-        });
-    }
-
-    // 7. Contact Form Animation
-    const contactForm = document.getElementById('contact-form'), modal = document.getElementById('contact-modal'), env = document.getElementById('envelope-wrapper');
+    // 6. Contact Form Animation
+    const contactForm = document.getElementById('contact-form');
+    const modal = document.getElementById('contact-modal');
+    const env = document.getElementById('envelope-wrapper');
     if (contactForm && modal && env) {
         contactForm.addEventListener('submit', e => {
             e.preventDefault();
@@ -184,7 +126,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 modal.classList.remove('active', 'sending');
                 paper.classList.remove('folding');
                 document.body.style.overflow = 'auto';
-
                 env.classList.replace('is-receiving', 'is-sent');
 
                 setTimeout(() => {
@@ -207,16 +148,47 @@ document.addEventListener('DOMContentLoaded', () => {
                             env.classList.replace('is-sent', 'is-returning');
                             setTimeout(() => env.classList.remove('is-returning'), 1000);
                         }, 500);
-            }, 2500);
+                    }, 2500);
                 }, 1500);
             }, 700);
         });
     }
 
+    // 7. Dynamic Project Loader
+    const loadProjects = async () => {
+        const grid = document.getElementById('projects-grid');
+        if (!grid) return;
+
+        try {
+            const response = await fetch('projects.json');
+            const projects = await response.json();
+
+            grid.innerHTML = projects.map((project, index) => `
+                <div class="reveal-up delay-${(index + 1) * 100} h-[400px]">
+                    <figure class="tilted-card-figure">
+                        <div class="tilted-card-mobile-alert">Check on desktop for effects.</div>
+                        <div class="tilted-card-inner">
+                            <img src="${project.image}" alt="${project.title}" class="tilted-card-img">
+                            <div class="tilted-card-overlay">
+                                <h3 class="text-xl font-serif italic mb-1">${project.title}</h3>
+                                <p class="text-[10px] uppercase tracking-widest opacity-80">${project.category}</p>
+                            </div>
+                        </div>
+                        <figcaption class="tilted-card-caption">View Project</figcaption>
+                    </figure>
+                </div>
+            `).join('');
+
+            initTiltedCards();
+            grid.querySelectorAll('.reveal-up').forEach(el => revealObserver.observe(el));
+        } catch (error) {
+            console.error('Error loading projects:', error);
+        }
+    };
+
     // 8. Tilted Card Animation
     const initTiltedCards = () => {
         const cards = document.querySelectorAll('.tilted-card-figure');
-        
         cards.forEach(card => {
             const inner = card.querySelector('.tilted-card-inner');
             const caption = card.querySelector('.tilted-card-caption');
@@ -256,6 +228,82 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     };
 
-    initTiltedCards();
-});
+    // 9. Logo Loop Scroll Logic
+    const initLogoLoop = () => {
+        const loop = document.getElementById('logo-loop');
+        const track = document.getElementById('logo-loop-track');
+        const seq = document.getElementById('logo-loop-seq');
+        if (!loop || !track || !seq) return;
 
+        let seqWidth = 0;
+        let isHovered = false;
+        let speed = 60; 
+        let offset = 0;
+        let lastTimestamp = null;
+        let currentVelocity = speed;
+
+        const initializeTrack = () => {
+            seqWidth = seq.getBoundingClientRect().width;
+            if (seqWidth === 0) return;
+
+            const viewportWidth = loop.clientWidth;
+            const copiesNeeded = Math.ceil(viewportWidth / seqWidth) + 2;
+            
+            const originalSeq = seq.cloneNode(true);
+            track.innerHTML = '';
+            for (let i = 0; i < copiesNeeded; i++) {
+                const clone = originalSeq.cloneNode(true);
+                clone.removeAttribute('id');
+                if (i > 0) clone.setAttribute('aria-hidden', 'true');
+                track.appendChild(clone);
+            }
+        };
+
+        const animate = (timestamp) => {
+            if (!lastTimestamp) lastTimestamp = timestamp;
+            const deltaTime = (timestamp - lastTimestamp) / 1000;
+            lastTimestamp = timestamp;
+
+            const targetVelocity = isHovered ? 0 : speed;
+            const easingFactor = 1 - Math.exp(-deltaTime / 0.25);
+            currentVelocity += (targetVelocity - currentVelocity) * easingFactor;
+
+            if (seqWidth > 0) {
+                offset += currentVelocity * deltaTime;
+                offset = offset % seqWidth;
+                track.style.transform = `translate3d(${-offset}px, 0, 0)`;
+            }
+            requestAnimationFrame(animate);
+        };
+
+        loop.addEventListener('mouseenter', () => isHovered = true);
+        loop.addEventListener('mouseleave', () => isHovered = false);
+        window.addEventListener('resize', initializeTrack);
+        
+        const images = seq.querySelectorAll('img');
+        let loadedCount = 0;
+        const checkAllLoaded = () => {
+            loadedCount++;
+            if (loadedCount >= images.length) {
+                initializeTrack();
+                requestAnimationFrame(animate);
+            }
+        };
+
+        if (images.length === 0) {
+            initializeTrack();
+            requestAnimationFrame(animate);
+        } else {
+            images.forEach(img => {
+                if (img.complete) checkAllLoaded();
+                else {
+                    img.addEventListener('load', checkAllLoaded, { once: true });
+                    img.addEventListener('error', checkAllLoaded, { once: true });
+                }
+            });
+        }
+    };
+
+    loadProjects();
+    initLogoLoop();
+});
