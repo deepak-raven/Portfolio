@@ -4,8 +4,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const laptopBlock = document.querySelector('.laptop-block');
     const laptopTop = document.querySelector('.laptop-top');
     if (laptop && laptopBlock && laptopTop) {
-        let currentProgress = 0;
-        let targetProgress = 0;
+        let currentProgress = 1; // Start closed
+        let targetProgress = Math.max(0, Math.min(1, window.scrollY / 450));
 
         // Easing function for buttery smooth updates
         const updateAnimation = () => {
@@ -22,9 +22,21 @@ document.addEventListener('DOMContentLoaded', () => {
                 laptopTop.style.top = '0px';
                 laptopTop.style.left = '20px';
                 laptopTop.style.zIndex = 0;
+                laptopBlock.classList.remove('glare-active');
             } else {
                 laptopTop.style.opacity = 0;
                 laptopTop.style.zIndex = -5;
+                
+                // Trigger glare when moving
+                if (currentProgress > 0.01 && currentProgress < 0.99) {
+                    laptopBlock.classList.add('glare-active');
+                    // Map progress to glare position (sweeps from -150% to 150%)
+                    const glareX = -150 + (currentProgress * 300);
+                    const glareY = -150 + (currentProgress * 300);
+                    laptopBlock.style.setProperty('--glare-pos', `${glareX}% ${glareY}%`);
+                } else {
+                    laptopBlock.classList.remove('glare-active');
+                }
             }
 
             requestAnimationFrame(updateAnimation);
