@@ -207,9 +207,55 @@ document.addEventListener('DOMContentLoaded', () => {
                             env.classList.replace('is-sent', 'is-returning');
                             setTimeout(() => env.classList.remove('is-returning'), 1000);
                         }, 500);
-                    }, 2500);
+            }, 2500);
                 }, 1500);
             }, 700);
         });
     }
+
+    // 8. Tilted Card Animation
+    const initTiltedCards = () => {
+        const cards = document.querySelectorAll('.tilted-card-figure');
+        
+        cards.forEach(card => {
+            const inner = card.querySelector('.tilted-card-inner');
+            const caption = card.querySelector('.tilted-card-caption');
+            const rotateAmplitude = 12;
+            const scaleOnHover = 1.05;
+            let lastY = 0;
+            
+            card.addEventListener('mousemove', (e) => {
+                const rect = card.getBoundingClientRect();
+                const offsetX = e.clientX - rect.left - rect.width / 2;
+                const offsetY = e.clientY - rect.top - rect.height / 2;
+
+                const rotationX = (offsetY / (rect.height / 2)) * -rotateAmplitude;
+                const rotationY = (offsetX / (rect.width / 2)) * rotateAmplitude;
+
+                inner.style.transform = `rotateX(${rotationX}deg) rotateY(${rotationY}deg) scale(${scaleOnHover})`;
+                
+                if (caption) {
+                    const velocityY = offsetY - lastY;
+                    const rotateCap = -velocityY * 0.6;
+                    lastY = offsetY;
+
+                    caption.style.left = `${e.clientX - rect.left}px`;
+                    caption.style.top = `${e.clientY - rect.top}px`;
+                    caption.style.transform = `translate(-50%, -120%) rotate(${rotateCap}deg)`;
+                    caption.style.opacity = '1';
+                }
+            });
+
+            card.addEventListener('mouseleave', () => {
+                inner.style.transform = `rotateX(0deg) rotateY(0deg) scale(1)`;
+                if (caption) {
+                    caption.style.opacity = '0';
+                    caption.style.transform = `translate(-50%, -120%) rotate(0deg)`;
+                }
+            });
+        });
+    };
+
+    initTiltedCards();
 });
+

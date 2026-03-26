@@ -114,9 +114,8 @@
 
                                 <nav
                                     class="hidden md:flex items-center gap-4 text-[7px] md:text-[9px] font-bold uppercase tracking-widest text-black/60 pointer-events-auto">
-                                    <a href="#works" class="hover:text-black transition-colors">Projects</a>
+                                    <a href="#projects" class="hover:text-black transition-colors">Projects</a>
                                     <a href="#about" class="hover:text-black transition-colors">About</a>
-                                    <a href="#education" class="hover:text-black transition-colors">Education</a>
                                 </nav>
 
                                 <a href="#contact"
@@ -322,34 +321,64 @@
             </div>
         </section>
 
-        <!-- NEW: Showcase Grid Section (Missing in previous version) -->
-        <section class="py-12 pb-24 reveal-up">
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 h-[400px]">
-                <div class="bg-[#e8e6e1] h-full rounded-2xl overflow-hidden relative group reveal-up delay-100">
-                    <img src="https://images.unsplash.com/photo-1595341888016-a392ef81b7de?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80"
-                        class="w-full h-full object-cover opacity-80 mix-blend-multiply group-hover:scale-105 transition-transform duration-700">
-                    <div class="absolute bottom-6 left-6 text-2xl font-serif italic text-black/70">Nature</div>
+        <!-- Projects Section -->
+        <section id="projects" class="py-24 reveal-up">
+            <div class="flex flex-col md:flex-row justify-between items-end mb-16 gap-8">
+                <div class="max-w-xl">
+                    <span class="text-[10px] font-bold uppercase tracking-[0.2em] text-black mb-4 block">Work</span>
+                    <h2 class="text-6xl font-serif italic tracking-tighter leading-[0.9]">Selected<br>Projects</h2>
                 </div>
-                <div class="bg-gray-200 h-full rounded-2xl overflow-hidden relative group reveal-up delay-200">
-                    <!-- Center circle with play button look -->
-                    <div class="absolute inset-0 flex items-center justify-center z-10 pointer-events-none">
-                        <div
-                            class="w-16 h-16 bg-black/80 rounded-full flex items-center justify-center text-white backdrop-blur-sm">
-                            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-                                <path d="M8 5v14l11-7z" />
-                            </svg>
+                <p class="text-black/60 text-sm max-w-[300px] leading-relaxed">
+                    A collection of digital experiences where logic meets aesthetics, and performance meets purpose.
+                </p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-12">
+                <!-- Project 1 -->
+                <div class="reveal-up delay-100 h-[400px]">
+                    <figure class="tilted-card-figure">
+                        <div class="tilted-card-mobile-alert">Check on desktop for effects.</div>
+                        <div class="tilted-card-inner">
+                            <img src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Marvel Candy Crush" class="tilted-card-img">
+                            <div class="tilted-card-overlay">
+                                <h3 class="text-xl font-serif italic mb-1">Marvel Candy Crush</h3>
+                                <p class="text-[10px] uppercase tracking-widest opacity-80">Web Game / OOP</p>
+                            </div>
                         </div>
-                    </div>
-                    <img src="https://images.unsplash.com/photo-1629196914375-f7e48f477b6d?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80"
-                        class="w-full h-full object-cover grayscale group-hover:scale-105 transition-transform duration-700">
+                        <figcaption class="tilted-card-caption">View Project</figcaption>
+                    </figure>
                 </div>
-                <div class="bg-[#dcdcdc] h-full rounded-2xl overflow-hidden relative group reveal-up delay-300">
-                    <img src="https://images.unsplash.com/photo-1493663284031-b7e3aefcae8e?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80"
-                        class="w-full h-full object-cover grayscale opacity-90 group-hover:scale-105 transition-transform duration-700">
-                    <div class="absolute bottom-6 right-6 text-2xl font-serif italic text-black/70">Form</div>
+                <!-- Project 2 -->
+                <div class="reveal-up delay-200 h-[400px]">
+                    <figure class="tilted-card-figure">
+                        <div class="tilted-card-mobile-alert">Check on desktop for effects.</div>
+                        <div class="tilted-card-inner">
+                            <img src="https://images.unsplash.com/photo-1543269664-56d93c1b41a6?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Text-to-Speech" class="tilted-card-img">
+                            <div class="tilted-card-overlay">
+                                <h3 class="text-xl font-serif italic mb-1">Text-to-Speech</h3>
+                                <p class="text-[10px] uppercase tracking-widest opacity-80">App / API</p>
+                            </div>
+                        </div>
+                        <figcaption class="tilted-card-caption">View Project</figcaption>
+                    </figure>
+                </div>
+                <!-- Project 3 -->
+                <div class="reveal-up delay-300 h-[400px]">
+                    <figure class="tilted-card-figure">
+                        <div class="tilted-card-mobile-alert">Check on desktop for effects.</div>
+                        <div class="tilted-card-inner">
+                            <img src="https://images.unsplash.com/photo-1550745165-9bc0b252726f?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Editorial Portfolio" class="tilted-card-img">
+                            <div class="tilted-card-overlay">
+                                <h3 class="text-xl font-serif italic mb-1">Editorial Portfolio</h3>
+                                <p class="text-[10px] uppercase tracking-widest opacity-80">Design / Frontend</p>
+                            </div>
+                        </div>
+                        <figcaption class="tilted-card-caption">View Project</figcaption>
+                    </figure>
                 </div>
             </div>
         </section>
+
     </div>
 
     <!-- Marquee Banner -->
@@ -490,115 +519,9 @@
         </div>
     </section>
 
-    <!-- Latest Works Section — Redesigned Archive (On-Theme) -->
-    <section id="works" class="archive-section reveal-up">
 
-        <!-- Decorative hairline vertical bars (matching site's ambient bg) -->
-        <div class="archive-grid-line archive-grid-line--left" aria-hidden="true"></div>
-        <div class="archive-grid-line archive-grid-line--right" aria-hidden="true"></div>
 
-        <!-- Large watermark typography (matching hero bg treatment) -->
-        <div class="archive-watermark" aria-hidden="true">Works</div>
 
-        <!-- Archive Header — Two col split, matching site's editorial grid -->
-        <div class="archive-header">
-            <div class="archive-header-left">
-                <!-- Decorative square dot (same as Experience section) -->
-                <div class="archive-dot"></div>
-                <span class="archive-eyebrow">Selected Works</span>
-                <h2 class="archive-title">Archive</h2>
-                <!-- Animated underline sweep -->
-                <div class="archive-title-line"></div>
-            </div>
-            <div class="archive-header-right">
-                <div class="archive-count-display">
-                    <span class="archive-count-num" id="archive-count">00</span>
-                    <span class="archive-count-label">Projects</span>
-                </div>
-                <p class="archive-sub">A curated record of ideas built into reality — each entry a chapter in an ongoing
-                    story of craft, code, and curiosity.</p>
-            </div>
-        </div>
-
-        <!-- Archive Row List -->
-        <div id="projects-grid" class="archive-list">
-            <div class="archive-loading">
-                <span class="archive-loading-dot"></span>
-                <span class="archive-loading-text">Retrieving Archive...</span>
-            </div>
-        </div>
-
-        <!-- View All CTA -->
-        <div class="archive-cta-wrap">
-            <a href="https://github.com/deepak-raven" target="_blank" rel="noopener noreferrer"
-                class="archive-cta magnetic">
-                <span>View Full Archive</span>
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                    <path d="M7 17L17 7M17 7H7M17 7V17" />
-                </svg>
-            </a>
-        </div>
-
-        <!-- Footer Ticker Strip -->
-        <div class="archive-ticker-wrap">
-            <div class="archive-ticker-track">
-                <span>Open to Work</span><span class="archive-ticker-sep">✦</span>
-                <span>Available for Projects</span><span class="archive-ticker-sep">✦</span>
-                <span>Let's Collaborate</span><span class="archive-ticker-sep">✦</span>
-                <span>Web Dev · Python · API Integration</span><span class="archive-ticker-sep">✦</span>
-                <span>Open to Work</span><span class="archive-ticker-sep">✦</span>
-                <span>Available for Projects</span><span class="archive-ticker-sep">✦</span>
-                <span>Let's Collaborate</span><span class="archive-ticker-sep">✦</span>
-                <span>Web Dev · Python · API Integration</span><span class="archive-ticker-sep">✦</span>
-                <span>Open to Work</span><span class="archive-ticker-sep">✦</span>
-                <span>Available for Projects</span><span class="archive-ticker-sep">✦</span>
-            </div>
-        </div>
-
-    </section>
-
-    <!-- Education & Certifications Section -->
-    <section id="education" class="py-20 bg-[#f9f9f9] reveal-up">
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-16 px-6 md:px-12 max-w-[1440px] mx-auto">
-
-            <!-- Education Column -->
-            <div class="reveal-up delay-100">
-                <span class="text-[10px] font-bold uppercase tracking-[0.2em] text-black mb-8 block">Education</span>
-                <div class="space-y-12">
-                    <div class="border-t border-black/20 pt-6">
-                        <h3 class="text-2xl font-serif italic mb-2">B.E. Computer Science Engineering</h3>
-                        <p class="text-[10px] font-bold uppercase tracking-widest text-black/60 mb-2">Jaya Engineering
-                            College • 2024 - 2028</p>
-                        <p class="text-sm font-medium text-black">CGPA: 8.5</p>
-                    </div>
-                    <div class="border-t border-black/20 pt-6">
-                        <h3 class="text-xl font-serif italic mb-2">Higher Secondary</h3>
-                        <p class="text-[10px] font-bold uppercase tracking-widest text-black/60">Govt Boys Higher
-                            Secondary School • 2024</p>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Certifications Column -->
-            <div class="reveal-up delay-200">
-                <span
-                    class="text-[10px] font-bold uppercase tracking-[0.2em] text-black mb-8 block">Certifications</span>
-                <div class="space-y-12">
-                    <div class="border-t border-black/20 pt-6">
-                        <h3 class="text-2xl font-serif italic mb-2">Introduction to Python Programming</h3>
-                        <p class="text-[10px] font-bold uppercase tracking-widest text-black/60">Redhat Academy • Dec
-                            2024</p>
-                    </div>
-                    <div class="border-t border-black/20 pt-6">
-                        <h3 class="text-xl font-serif italic mb-2">Python Intermediate</h3>
-                        <p class="text-[10px] font-bold uppercase tracking-widest text-black/60">Sololearn • Aug 2024
-                        </p>
-                    </div>
-                </div>
-            </div>
-
-        </div>
-    </section>
 
     <!-- CTA & Footer Section -->
     <section id="contact" class="py-32 text-center bg-gray-50 reveal-up">
