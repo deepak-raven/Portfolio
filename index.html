@@ -31,7 +31,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="preload" as="image" href="./profile.png" fetchpriority="high">
     <link
-        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;1,400&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;1,400&family=DM+Serif+Display:ital@0;1&display=swap"
         rel="stylesheet">
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="tailwind-build.css">
@@ -104,12 +104,12 @@
         <!-- Top spacing pushed down to compensate for missing heading -->
         <div class="pt-8"></div>
 
-        <!-- Laptop Frame -->
+        <!-- Desktop Hero (Laptop Frame - Hidden on Mobile) -->
         <div
-            class="laptop-container flex justify-center items-center relative mx-auto mb-0 md:mb-32 mt-[-100px] md:mt-[-160px] perspective-[2000px] transform scale-100 md:scale-110 origin-center">
+            class="hidden md:flex laptop-container justify-center items-center relative mx-auto mb-20 md:mb-32 mt-[-50px] md:mt-[-160px] perspective-[2000px] transform scale-100 md:scale-110 origin-center">
             <!-- Fixed dimensions so rotation pivot is perfectly centered -->
             <div
-                class="laptop relative w-[800px] h-[640px] scale-[0.38] md:scale-[1.15] origin-center rotate-[-90deg] translate(-50%, -50%)">
+                class="laptop relative w-[800px] h-[640px] scale-[0.6] md:scale-[1.15] origin-center rotate-[-90deg] translate(-50%, -50%)">
                 <div class="laptop-bottom"><img
                         src="https://res.cloudinary.com/hanieldaniel/image/upload/f_auto,q_auto/v1553626587/codepen/base.png"
                         alt="Laptop Base Illustration" fetchpriority="high">
@@ -134,57 +134,32 @@
                             <header
                                 class="flex justify-between items-center py-2 px-4 md:py-3 md:px-4 absolute top-0 left-0 right-0 z-30 pointer-events-none w-full border-b border-black/10">
                                 <div class="flex items-center gap-2 pointer-events-auto">
-                                    <!-- Logo Placeholder -->
                                     <div
                                         class="w-4 h-4 md:w-6 md:h-6 bg-black text-white rounded-none flex items-center justify-center font-bold text-[8px] md:text-xs">
                                         DS</div>
                                 </div>
-
                                 <nav
                                     class="hidden md:flex items-center gap-4 text-[7px] md:text-[9px] font-bold uppercase tracking-widest text-black/60 pointer-events-auto">
                                     <a href="#projects" class="hover:text-black transition-colors">Projects</a>
                                     <a href="#about" class="hover:text-black transition-colors">About</a>
                                 </nav>
-
                                 <a href="#contact"
                                     class="hidden md:inline-flex items-center justify-center px-3 py-1 border border-black text-[7px] md:text-[9px] font-bold uppercase tracking-widest hover:bg-black hover:text-white transition-all pointer-events-auto rounded-none">
                                     Get in touch
                                 </a>
-
-                                <!-- Mobile Menu Button -->
-                                <button class="md:hidden p-1 pointer-events-auto text-black">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24"
-                                        fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="square"
-                                        stroke-linejoin="miter">
-                                        <line x1="3" y1="12" x2="21" y2="12"></line>
-                                        <line x1="3" y1="6" x2="21" y2="6"></line>
-                                        <line x1="3" y1="18" x2="21" y2="18"></line>
-                                    </svg>
-                                </button>
                             </header>
 
                             <!-- Hero Section placed inside Laptop -->
                             <section
                                 class="relative pt-8 md:pt-12 h-full grid grid-cols-12 gap-2 md:gap-4 items-end overflow-hidden">
-
-                                <!-- Editorial grid lines inside screen -->
                                 <div
                                     class="absolute left-0 top-0 w-full h-full pointer-events-none grid grid-cols-12 gap-2 md:gap-4 px-4 md:px-12 z-0 opacity-10">
                                     <div class="border-l border-black h-full col-span-1"></div>
                                     <div class="border-l border-r border-black h-full col-span-10"></div>
                                     <div class="border-r border-black h-full col-span-1"></div>
                                 </div>
-
-                                <!-- Vertical decorative line inside screen -->
-                                <div class="absolute left-4 md:left-8 top-10 bottom-0 w-px bg-black/20 hidden xl:block">
-                                    <span
-                                        class="absolute top-8 -left-2 -rotate-90 text-[6px] text-black font-bold tracking-[0.3em] uppercase origin-center">Scroll</span>
-                                </div>
-
-                                <!-- Left Side -->
                                 <div
                                     class="col-span-7 z-10 flex flex-col justify-center h-full relative pl-4 md:pl-12 pb-4 md:pb-8">
-                                    <!-- Stats -->
                                     <div
                                         class="absolute top-2 md:top-4 left-4 md:left-12 flex gap-4 md:gap-6 origin-top-left scale-[0.5] md:scale-90 opacity-90 border-b border-black/20 pb-2">
                                         <div>
@@ -192,66 +167,123 @@
                                                 class="block text-xs md:text-sm font-serif italic font-bold">+200</span>
                                             <span
                                                 class="text-[5px] md:text-[6px] text-gray-400 uppercase tracking-widest mt-0.5 block">Happy
-                                                <br> Clients</span>
+                                                Clients</span>
                                         </div>
                                         <div>
                                             <span
                                                 class="block text-xs md:text-sm font-serif italic font-bold">+50</span>
                                             <span
                                                 class="text-[5px] md:text-[6px] text-gray-400 uppercase tracking-widest mt-0.5 block">Projects
-                                                <br> Done</span>
+                                                Done</span>
                                         </div>
                                     </div>
-
                                     <div class="mt-4 md:mt-12">
                                         <h2
-                                            class="text-[24px] sm:text-[40px] md:text-[60px] lg:text-[70px] leading-[0.85] font-serif italic tracking-tighter text-black w-max pb-2 flex items-center min-h-[40px] sm:min-h-[50px] md:min-h-[70px]">
-                                            <span id="typewriter"></span><span
+                                            class="text-[24px] sm:text-[40px] md:text-[60px] lg:text-[70px] leading-[0.85] font-serif italic tracking-tighter text-black w-max pb-2 flex items-center min-h-[40px]">
+                                            <span class="typewriter-trigger"></span><span
                                                 class="inline-block w-[2px] md:w-[4px] h-[20px] sm:h-[35px] md:h-[50px] lg:h-[60px] bg-black ml-1 md:ml-3 animate-[pulse_1s_ease-in-out_infinite]"></span>
                                         </h2>
                                         <p
                                             class="mt-2 md:mt-6 ml-0.5 text-black border-l-2 border-black pl-3 max-w-[150px] md:max-w-[260px] text-[7px] md:text-[10px] leading-relaxed">
                                             I'm a <span
                                                 class="bg-black text-white px-1 py-0.5 font-bold uppercase tracking-widest text-[5px] md:text-[7px] mx-1">Web
-                                                Developer</span> creating
-                                            innovative web applications.<br>
-                                            Specialized in Python, JS, API Integration, and Front-end Development.
+                                                Developer</span> creating innovative web applications.
                                         </p>
                                     </div>
-
-                                    <!-- Year -->
                                     <div class="mt-6 md:mt-10 flex items-center gap-2">
                                         <span class="w-4 md:w-8 h-[1px] bg-black"></span>
                                         <span
-                                            class="text-[6px] md:text-[8px] font-bold uppercase tracking-[0.2em] text-black pb-2 md:pb-0">
-                                            est 2025
-                                        </span>
+                                            class="text-[6px] md:text-[8px] font-bold uppercase tracking-[0.2em] text-black pb-2 md:pb-0">est
+                                            2025</span>
                                     </div>
                                 </div>
-
-                                <!-- Right Side: Image -->
                                 <div
                                     class="col-span-5 relative h-full flex items-end justify-center md:justify-end z-10">
                                     <div
                                         class="relative w-full max-w-[160px] md:max-w-[340px] origin-bottom transition-transform duration-500">
                                         <img src="./profile.png" alt="Deepak S Portrait" fetchpriority="high"
-                                            class="w-full h-auto object-bottom object-contain grayscale transition-all duration-700 hover:grayscale-[20%] mix-blend-multiply opacity-90 hover:opacity-100 scale-125 md:scale-130 origin-bottom">
+                                            class="w-full h-auto object-bottom object-contain grayscale scale-125 md:scale-130 origin-bottom">
                                     </div>
                                 </div>
                             </section>
                         </div>
-                        <!-- Glare Overlay from React Bits (Z-index ensures it's on top of content) -->
-                        <div class="glare-overlay pointer-events-none"></div>
                     </div>
                 </div>
             </div>
         </div>
 
+        <!-- MOBILE HERO: Luxury Swiss Editorial (hidden md+) -->
+        <section id="mobile-hero" class="md:hidden w-full bg-[#F4EFE8] relative flex flex-col overflow-hidden">
+
+            <!-- Fixed Mobile Navbar -->
+            <nav
+                class="mh-nav md:hidden fixed top-0 left-0 right-0 z-[200] flex justify-between items-center px-6 py-4 bg-[#F4EFE8] border-b border-black/10">
+                <span class="font-display italic text-[13px] tracking-tight text-black font-bold">Deepak S</span>
+                <div class="flex items-center gap-5">
+                    <a href="#projects"
+                        class="text-[9px] font-bold tracking-[0.25em] uppercase text-black/50 hover:text-black transition-colors">Work</a>
+                    <a href="#about"
+                        class="text-[9px] font-bold tracking-[0.25em] uppercase text-black/50 hover:text-black transition-colors">About</a>
+                    <a href="#contact"
+                        class="text-[9px] font-bold tracking-[0.25em] uppercase text-white bg-black px-3 py-1.5">Hire
+                        ↗</a>
+                </div>
+            </nav>
+
+            <!-- Hero Body -->
+            <div class="flex-1 flex flex-col justify-between px-6 pt-[68px] pb-12" style="padding-top: 68px;">
+
+                <!-- Role tag -->
+                <div class="mh-top flex items-center gap-5 mb-14">
+                    <div class="h-px w-5 bg-black/30"></div>
+                    <span class="text-[9px] font-bold uppercase tracking-[0.4em] text-black/40">Full-Stack Developer /
+                        2026</span>
+                </div>
+
+                <!-- Hero Headline: One Line -->
+                <div class="mh-headline flex-1">
+                    <div class="overflow-hidden mb-0">
+                        <h1 class="mh-line1 font-display italic leading-[0.85] tracking-tighter text-black whitespace-nowrap"
+                            style="font-size: clamp(58px, 16vw, 96px);">Deepak S</h1>
+                    </div>
+                    <div class="overflow-hidden mb-10">
+                        <p class="mh-line2 font-display leading-[0.9] tracking-tighter whitespace-nowrap"
+                            style="font-size: clamp(30px, 9vw, 52px); -webkit-text-stroke: 1px black; color: transparent;">
+                            Web Developer.</p>
+                    </div>
+
+                    <!-- Self-drawing rule -->
+                    <div class="mh-rule mb-8">
+                        <div class="mh-rule-line h-px bg-black/30 w-full scale-x-0 origin-left"></div>
+                    </div>
+
+                    <!-- Description -->
+                    <p class="mh-desc text-[11.5px] leading-[1.85] text-black/50 max-w-[240px] tracking-wide">
+                        Engineering high-performance digital experiences — where systems architecture meets refined
+                        visual craft.
+                    </p>
+                </div>
+
+                <!-- Bottom: CTA + year -->
+                <div class="mh-bottom mt-10 flex items-center justify-between">
+                    <a href="#projects"
+                        class="mh-cta group inline-flex items-center gap-4 bg-black px-8 py-4 text-[10px] font-bold uppercase tracking-[0.25em]" style="color: #F4EFE8;">
+                        View Work
+                        <span class="group-hover:translate-x-1 transition-transform inline-block">→</span>
+                    </a>
+                    <span class="text-[8px] font-bold tracking-[0.35em] uppercase text-black/20">EST 2025</span>
+                </div>
+            </div>
+
+            <!-- Decorative corner accent -->
+            <div class="absolute bottom-0 right-0 w-20 h-20 border-t border-l border-black/10"></div>
+        </section>
+
 
 
         <!-- About Me Section -->
-        <section id="about" class="pt-0 pb-24 reveal-up">
-            <div class="grid grid-cols-1 md:grid-cols-12 gap-12" style="padding-top: 0px;">
+        <section id="about" class="py-24 reveal-up">
+            <div class="grid grid-cols-1 md:grid-cols-12 gap-12" style="padding-top: 100px;">
                 <!-- Column 1: Text (Span 4) -->
                 <div class="md:col-span-4 pr-8 reveal-up delay-100">
                     <span class="text-[10px] font-bold uppercase tracking-[0.2em] text-black mb-4 block">About</span>

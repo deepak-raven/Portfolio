@@ -93,8 +93,8 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // 5. Typewriter Effect
-    const tw = document.getElementById('typewriter');
-    if (tw) {
+    const typewriters = document.querySelectorAll('.typewriter-trigger');
+    typewriters.forEach(tw => {
         const sleep = ms => new Promise(res => setTimeout(res, ms));
         const type = async (text, speed, del = false) => {
             for (let i = del ? text.length : 0; del ? i >= 0 : i <= text.length; del ? i-- : i++) {
@@ -110,7 +110,7 @@ document.addEventListener('DOMContentLoaded', () => {
             await sleep(400);
             await type("I'm Deepak S", 100);
         })();
-    }
+    });
 
     // 6. Contact Form Animation
     const contactForm = document.getElementById('contact-form');
