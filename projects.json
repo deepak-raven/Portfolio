@@ -2,25 +2,31 @@
     {
         "title": "E-Commerce Demo Website",
         "category": "E-Commerce",
-        "image": "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
-        "link": "#"
+        "image": "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?ixlib=rb-1.2.1&auto=format&fit",
+        "link": "https://commercejs-demo.netlify.app/"
     },
     {
         "title": "Momo Shop Demo",
         "category": "Restaurant Website",
-        "image": "https://images.unsplash.com/photo-1543269664-56d93c1b41a6?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
-        "link": "#"
+        "image": "auto",
+        "link": "https://momo-demo-one.vercel.app/"
     },
     {
         "title": "Realestate Demo Website",
         "category": "Realestate",
-        "image": "https://images.unsplash.com/photo-1543269664-56d93c1b41a6?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
-        "link": "#"
+        "image": "auto",
+        "link": "https://realestateweb-demo.vercel.app/"
+    },
+    {
+        "title": "Colab-IDE",
+        "category": "Digital Product",
+        "image": "auto",
+        "link": "https://colab-ide-nine.vercel.app/"
     },
     {
         "title": "Gym Website",
         "category": "Fitness",
-        "image": "https://images.unsplash.com/photo-1550745165-9bc0b252726f?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
-        "link": "#"
+        "image": "auto",
+        "link": "https/gym-demo-jade.vercel.app/"
     }
 ]

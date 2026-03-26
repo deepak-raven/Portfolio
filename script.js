@@ -163,21 +163,27 @@ document.addEventListener('DOMContentLoaded', () => {
             const response = await fetch('projects.json');
             const projects = await response.json();
 
-            grid.innerHTML = projects.map((project, index) => `
-                <div class="reveal-up delay-${(index + 1) * 100} h-[400px]">
-                    <figure class="tilted-card-figure">
-                        <div class="tilted-card-mobile-alert">Check on desktop for effects.</div>
-                        <div class="tilted-card-inner">
-                            <img src="${project.image}" alt="${project.title}" class="tilted-card-img">
-                            <div class="tilted-card-overlay">
-                                <h3 class="text-xl font-serif italic mb-1">${project.title}</h3>
-                                <p class="text-[10px] uppercase tracking-widest opacity-80">${project.category}</p>
+            grid.innerHTML = projects.map((project, index) => {
+                const imageUrl = (project.image && project.image !== "auto") 
+                    ? project.image 
+                    : `https://s.wordpress.com/mshots/v1/${encodeURIComponent(project.link)}?w=800`;
+
+                return `
+                    <a href="${project.link}" target="_blank" rel="noopener noreferrer" class="reveal-up delay-${(index + 1) * 100} h-[400px] block">
+                        <figure class="tilted-card-figure">
+                            <div class="tilted-card-mobile-alert">Check on desktop for effects.</div>
+                            <div class="tilted-card-inner">
+                                <img src="${imageUrl}" alt="${project.title}" class="tilted-card-img">
+                                <div class="tilted-card-overlay">
+                                    <h3 class="text-xl font-serif italic mb-1">${project.title}</h3>
+                                    <p class="text-[10px] uppercase tracking-widest opacity-80">${project.category}</p>
+                                </div>
                             </div>
-                        </div>
-                        <figcaption class="tilted-card-caption">View Project</figcaption>
-                    </figure>
-                </div>
-            `).join('');
+                            <figcaption class="tilted-card-caption">View Project</figcaption>
+                        </figure>
+                    </a>
+                `;
+            }).join('');
 
             initTiltedCards();
             grid.querySelectorAll('.reveal-up').forEach(el => revealObserver.observe(el));
