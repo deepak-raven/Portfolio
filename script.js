@@ -1,12 +1,42 @@
 document.addEventListener('DOMContentLoaded', () => {
     // 1. Laptop Scroll Animation
-    const mockup = document.querySelector('.mockup');
-    if (mockup) {
+    const laptop = document.querySelector('.laptop');
+    const laptopBlock = document.querySelector('.laptop-block');
+    const laptopTop = document.querySelector('.laptop-top');
+    if (laptop && laptopBlock && laptopTop) {
+        let currentProgress = 0;
+        let targetProgress = 0;
+
+        // Easing function for buttery smooth updates
+        const updateAnimation = () => {
+            // Lerp linearly interpolates the current value to the target value 
+            currentProgress += (targetProgress - currentProgress) * 0.08;
+            
+            // Swing the screen block smoothly
+            laptopBlock.style.transform = `translate3d(0, 0, 0) rotateY(-${currentProgress * 90}deg)`;
+            
+            // Just make the lid appear ONLY when fully closed
+            if (currentProgress >= 0.99) {
+                laptopTop.style.opacity = 1;
+                laptopTop.style.transform = 'scale(1)';
+                laptopTop.style.top = '0px';
+                laptopTop.style.left = '20px';
+                laptopTop.style.zIndex = 0;
+            } else {
+                laptopTop.style.opacity = 0;
+                laptopTop.style.zIndex = -5;
+            }
+
+            requestAnimationFrame(updateAnimation);
+        };
+
         window.addEventListener('scroll', () => {
-            const isScrolled = window.scrollY > 50;
-            mockup.classList.toggle('closed', isScrolled);
-            mockup.classList.toggle('opened', !isScrolled);
+            // Fluid progress target from 0 (open) to 1 (closed) over 450px
+            targetProgress = Math.max(0, Math.min(1, window.scrollY / 450));
         });
+
+        // Kick off the loop
+        updateAnimation();
     }
 
     // 2. Intersection Observer for Scroll Animations

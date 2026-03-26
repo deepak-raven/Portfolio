@@ -80,13 +80,19 @@
         <!-- Laptop Frame -->
         <!-- Laptop Frame -->
         <div
-            class="laptop-container relative mx-auto mb-32 mt-12 perspective-[2000px] transform scale-100 md:scale-125 origin-top">
-            <!-- Added scale wrapper -->
-            <div class="mockup mockup-macbook loaded opened">
-                <div class="part top">
-                    <img src="https://d1xm195wioio0k.cloudfront.net/images/mockup/macbook-top.svg" alt="" class="top">
-                    <img src="https://d1xm195wioio0k.cloudfront.net/images/mockup/macbook-cover.svg" alt=""
-                        class="cover">
+            class="laptop-container flex justify-center items-center relative mx-auto mb-20 md:mb-32 mt-[-100px] md:mt-[-160px] perspective-[2000px] transform scale-100 md:scale-110 origin-center">
+            <!-- Fixed dimensions so rotation pivot is perfectly centered -->
+            <div
+                class="laptop relative w-[800px] h-[640px] scale-[0.6] md:scale-[1.15] origin-center rotate-[-90deg] translate(-50%, -50%)">
+                <div class="laptop-bottom"><img
+                        src="https://res.cloudinary.com/hanieldaniel/image/upload/v1553626587/codepen/base.png" alt="">
+                </div>
+                <div class="laptop-top"><img
+                        src="https://res.cloudinary.com/hanieldaniel/image/upload/v1553626587/codepen/lid.png" alt="">
+                </div>
+                <div class="laptop-block">
+                    <img src="https://res.cloudinary.com/hanieldaniel/image/upload/v1553626589/codepen/screen.png"
+                        alt="">
 
                     <!-- Screen Content Container -->
                     <div class="screen-content bg-white overflow-hidden">
@@ -209,20 +215,14 @@
                         </div>
                     </div>
                 </div>
-                <div class="part bottom">
-                    <img src="https://d1xm195wioio0k.cloudfront.net/images/mockup/macbook-cover.svg" alt=""
-                        class="cover">
-                    <img src="https://d1xm195wioio0k.cloudfront.net/images/mockup/macbook-bottom.svg" alt=""
-                        class="bottom">
-                </div>
             </div>
         </div>
 
 
 
         <!-- About Me Section -->
-        <section id="about" class="py-24 border-t border-gray-100 reveal-up">
-            <div class="grid grid-cols-1 md:grid-cols-12 gap-12">
+        <section id="about" class="py-24 reveal-up">
+            <div class="grid grid-cols-1 md:grid-cols-12 gap-12" style="padding-top: 100px;">
                 <!-- Column 1: Text (Span 4) -->
                 <div class="md:col-span-4 pr-8 reveal-up delay-100">
                     <span class="text-[10px] font-bold uppercase tracking-[0.2em] text-black mb-4 block">About</span>
