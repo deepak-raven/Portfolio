@@ -61,10 +61,13 @@ document.addEventListener('DOMContentLoaded', () => {
         const dot = createCursor('cursor-dot');
         const outline = createCursor('cursor-outline');
 
+        let cursorRaf;
         window.addEventListener('mousemove', e => {
-            dot.style.left = `${e.clientX}px`;
-            dot.style.top = `${e.clientY}px`;
-            outline.animate({ left: `${e.clientX}px`, top: `${e.clientY}px` }, { duration: 500, fill: "forwards" });
+            if (cursorRaf) cancelAnimationFrame(cursorRaf);
+            cursorRaf = requestAnimationFrame(() => {
+                dot.style.transform = `translate3d(${e.clientX}px, ${e.clientY}px, 0) translate(-50%, -50%)`;
+                outline.animate({ transform: `translate3d(${e.clientX}px, ${e.clientY}px, 0) translate(-50%, -50%)` }, { duration: 500, fill: "forwards" });
+            });
         });
 
         document.querySelectorAll('a, button, .cursor-pointer, .mockup, [role="button"]').forEach(el => {
@@ -202,29 +205,34 @@ document.addEventListener('DOMContentLoaded', () => {
             const scaleOnHover = 1.05;
             let lastY = 0;
             
+            let rafId;
             card.addEventListener('mousemove', (e) => {
-                const rect = card.getBoundingClientRect();
-                const offsetX = e.clientX - rect.left - rect.width / 2;
-                const offsetY = e.clientY - rect.top - rect.height / 2;
+                if (rafId) cancelAnimationFrame(rafId);
+                rafId = requestAnimationFrame(() => {
+                    const rect = card.getBoundingClientRect();
+                    const offsetX = e.clientX - rect.left - rect.width / 2;
+                    const offsetY = e.clientY - rect.top - rect.height / 2;
 
-                const rotationX = (offsetY / (rect.height / 2)) * -rotateAmplitude;
-                const rotationY = (offsetX / (rect.width / 2)) * rotateAmplitude;
+                    const rotationX = (offsetY / (rect.height / 2)) * -rotateAmplitude;
+                    const rotationY = (offsetX / (rect.width / 2)) * rotateAmplitude;
 
-                inner.style.transform = `rotateX(${rotationX}deg) rotateY(${rotationY}deg) scale(${scaleOnHover})`;
-                
-                if (caption) {
-                    const velocityY = offsetY - lastY;
-                    const rotateCap = -velocityY * 0.6;
-                    lastY = offsetY;
+                    inner.style.transform = `rotateX(${rotationX}deg) rotateY(${rotationY}deg) scale(${scaleOnHover})`;
+                    
+                    if (caption) {
+                        const velocityY = offsetY - lastY;
+                        const rotateCap = -velocityY * 0.6;
+                        lastY = offsetY;
 
-                    caption.style.left = `${e.clientX - rect.left}px`;
-                    caption.style.top = `${e.clientY - rect.top}px`;
-                    caption.style.transform = `translate(-50%, -120%) rotate(${rotateCap}deg)`;
-                    caption.style.opacity = '1';
-                }
+                        caption.style.left = `${e.clientX - rect.left}px`;
+                        caption.style.top = `${e.clientY - rect.top}px`;
+                        caption.style.transform = `translate(-50%, -120%) rotate(${rotateCap}deg)`;
+                        caption.style.opacity = '1';
+                    }
+                });
             });
 
             card.addEventListener('mouseleave', () => {
+                if (rafId) cancelAnimationFrame(rafId);
                 inner.style.transform = `rotateX(0deg) rotateY(0deg) scale(1)`;
                 if (caption) {
                     caption.style.opacity = '0';
