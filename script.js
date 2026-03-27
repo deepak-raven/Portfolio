@@ -50,6 +50,26 @@ document.addEventListener('DOMContentLoaded', () => {
     }, { threshold: 0.1 });
     document.querySelectorAll('.reveal-up').forEach(el => revealObserver.observe(el));
 
+    // 2b. Mobile Envelope Auto-Open on Scroll
+    // Only triggers on touch devices (phones/tablets) where hover doesn't work
+    if (window.matchMedia('(pointer: coarse)').matches) {
+        const envWrapper = document.getElementById('envelope-wrapper');
+        if (envWrapper) {
+            const envelopeObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        // Delay slightly so user sees the envelope first
+                        setTimeout(() => envWrapper.classList.add('is-open'), 300);
+                    } else {
+                        // Reset when scrolled away so it animates fresh on next view
+                        envWrapper.classList.remove('is-open');
+                    }
+                });
+            }, { threshold: 0.5 }); // 50% visible before trigger
+            envelopeObserver.observe(envWrapper);
+        }
+    }
+
     // 3. Custom Cursor
     if (window.matchMedia("(pointer: fine)").matches) {
         const createCursor = (cls) => {

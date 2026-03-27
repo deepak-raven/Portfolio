@@ -427,26 +427,31 @@ body.cursor-hover-dark .cursor-dot {
   background: radial-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.0), rgba(0, 0, 0, 0.0));
 }
 
-.envelope-wrapper:hover .animated-mail {
+.envelope-wrapper:hover .animated-mail,
+.envelope-wrapper.is-open .animated-mail {
   transform: translateY(-20px);
 }
 
-.envelope-wrapper:hover .animated-mail .top-fold {
+.envelope-wrapper:hover .animated-mail .top-fold,
+.envelope-wrapper.is-open .animated-mail .top-fold {
   transition: transform .4s, z-index .2s;
   transform: rotateX(180deg);
   z-index: 0;
 }
 
-.envelope-wrapper:hover .animated-mail .letter {
+.envelope-wrapper:hover .animated-mail .letter,
+.envelope-wrapper.is-open .animated-mail .letter {
   height: 140px;
 }
 
-.envelope-wrapper:hover .animated-mail .letter .letter-content {
+.envelope-wrapper:hover .animated-mail .letter .letter-content,
+.envelope-wrapper.is-open .animated-mail .letter .letter-content {
   opacity: 1;
   transition-delay: 0.4s;
 }
 
-.envelope-wrapper:hover .shadow {
+.envelope-wrapper:hover .shadow,
+.envelope-wrapper.is-open .shadow {
   width: 200px;
   background: radial-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.0), rgba(0, 0, 0, 0.0));
 }
