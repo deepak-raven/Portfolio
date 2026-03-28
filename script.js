@@ -291,13 +291,32 @@ document.addEventListener('DOMContentLoaded', () => {
             const rotateX = smoothedX * rotateAmplitude;
             const rotateY = smoothedY * -rotateAmplitude;
 
+            let closestCard = null;
+            let minDistance = Infinity;
+            const viewportCenter = window.innerHeight / 2;
+
             activeCards.forEach(card => {
                 const rect = card.getBoundingClientRect();
+                const cardCenter = rect.top + rect.height / 2;
+                const distance = Math.abs(cardCenter - viewportCenter);
+
+                // Only consider cards that are actually in the viewport
                 if (rect.top < window.innerHeight && rect.bottom > 0) {
-                    const inner = card.querySelector('.tilted-card-inner');
-                    if (inner) inner.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+                    if (distance < minDistance) {
+                        minDistance = distance;
+                        closestCard = card;
+                    }
                 }
+                
+                // Clear transform for all cards first (we'll re-apply to the closest one)
+                const inner = card.querySelector('.tilted-card-inner');
+                if (inner) inner.style.transform = `rotateX(0deg) rotateY(0deg)`;
             });
+
+            if (closestCard) {
+                const inner = closestCard.querySelector('.tilted-card-inner');
+                if (inner) inner.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+            }
         };
 
         if (window.DeviceOrientationEvent) {
