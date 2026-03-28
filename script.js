@@ -216,16 +216,29 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     // 8. Tilted Card Animation
+    let activeCards = [];
+    let isGyroInitialized = false;
+
     const initTiltedCards = () => {
         const cards = document.querySelectorAll('.tilted-card-figure');
-        cards.forEach(card => {
+        const rotateAmplitude = 12;
+        const scaleOnHover = 1.05;
+        activeCards = Array.from(cards);
+
+        // Hide mobile alerts if we're enabling gyro
+        document.querySelectorAll('.tilted-card-mobile-alert').forEach(el => el.style.display = 'none');
+
+        activeCards.forEach(card => {
+            // Avoid re-attaching listeners if already initialized
+            if (card.dataset.tiltedInit) return;
+            card.dataset.tiltedInit = "true";
+
             const inner = card.querySelector('.tilted-card-inner');
             const caption = card.querySelector('.tilted-card-caption');
-            const rotateAmplitude = 12;
-            const scaleOnHover = 1.05;
             let lastY = 0;
-            
             let rafId;
+
+            // Mouse handling (Desktop)
             card.addEventListener('mousemove', (e) => {
                 if (rafId) cancelAnimationFrame(rafId);
                 rafId = requestAnimationFrame(() => {
@@ -260,7 +273,55 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             });
         });
+
+        // Gyroscope Handling (Mobile) - Singleton Listener
+        if (isGyroInitialized) return;
+        
+        let smoothedX = 0;
+        let smoothedY = 0;
+        const smoothing = 0.1;
+
+        const handleOrientation = (e) => {
+            const targetX = Math.max(-1, Math.min(1, (e.beta - 45) / 30));
+            const targetY = Math.max(-1, Math.min(1, e.gamma / 30));
+
+            smoothedX += (targetX - smoothedX) * smoothing;
+            smoothedY += (targetY - smoothedY) * smoothing;
+
+            const rotateX = smoothedX * rotateAmplitude;
+            const rotateY = smoothedY * -rotateAmplitude;
+
+            activeCards.forEach(card => {
+                const rect = card.getBoundingClientRect();
+                if (rect.top < window.innerHeight && rect.bottom > 0) {
+                    const inner = card.querySelector('.tilted-card-inner');
+                    if (inner) inner.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+                }
+            });
+        };
+
+        if (window.DeviceOrientationEvent) {
+            isGyroInitialized = true;
+            if (typeof DeviceOrientationEvent.requestPermission === 'function') {
+                const triggerPermission = () => {
+                    DeviceOrientationEvent.requestPermission()
+                        .then(response => {
+                            if (response === 'granted') {
+                                window.addEventListener('deviceorientation', handleOrientation);
+                            }
+                        })
+                        .catch(console.error);
+                    window.removeEventListener('click', triggerPermission);
+                    window.removeEventListener('touchstart', triggerPermission);
+                };
+                window.addEventListener('click', triggerPermission, { once: true });
+                window.addEventListener('touchstart', triggerPermission, { once: true });
+            } else {
+                window.addEventListener('deviceorientation', handleOrientation);
+            }
+        }
     };
+
 
     // 9. Logo Loop Scroll Logic
     const initLogoLoop = () => {
@@ -271,31 +332,49 @@ document.addEventListener('DOMContentLoaded', () => {
 
         let seqWidth = 0;
         let isHovered = false;
-        let speed = 60; 
+        let speed = 60; // Base speed: pixels per second
         let offset = 0;
         let lastTimestamp = null;
         let currentVelocity = speed;
+        let isActive = false;
+        let retryCount = 0;
 
         const initializeTrack = () => {
-            seqWidth = seq.getBoundingClientRect().width;
-            if (seqWidth === 0) return;
+            // Get the actual width of the original sequence
+            seqWidth = seq.scrollWidth;
+            if (seqWidth <= 0) {
+                if (retryCount < 10) {
+                    retryCount++;
+                    setTimeout(initializeTrack, 200);
+                }
+                return;
+            }
 
-            const viewportWidth = loop.clientWidth;
+            const viewportWidth = loop.clientWidth || window.innerWidth;
+            // Ensure we have enough copies to cover twice the viewport plus overlap
             const copiesNeeded = Math.ceil(viewportWidth / seqWidth) + 2;
             
-            const originalSeq = seq.cloneNode(true);
-            track.innerHTML = '';
+            // Create the track content
+            const fragment = document.createDocumentFragment();
             for (let i = 0; i < copiesNeeded; i++) {
-                const clone = originalSeq.cloneNode(true);
+                const clone = seq.cloneNode(true);
                 clone.removeAttribute('id');
                 if (i > 0) clone.setAttribute('aria-hidden', 'true');
-                track.appendChild(clone);
+                fragment.appendChild(clone);
+            }
+            
+            track.innerHTML = '';
+            track.appendChild(fragment);
+            
+            if (!isActive) {
+                isActive = true;
+                requestAnimationFrame(animate);
             }
         };
 
         const animate = (timestamp) => {
             if (!lastTimestamp) lastTimestamp = timestamp;
-            const deltaTime = (timestamp - lastTimestamp) / 1000;
+            const deltaTime = Math.min((timestamp - lastTimestamp) / 1000, 0.1); // Cap delta to avoid jumps
             lastTimestamp = timestamp;
 
             const targetVelocity = isHovered ? 0 : speed;
@@ -310,27 +389,40 @@ document.addEventListener('DOMContentLoaded', () => {
             requestAnimationFrame(animate);
         };
 
+        // Hover events for pausing
         loop.addEventListener('mouseenter', () => isHovered = true);
         loop.addEventListener('mouseleave', () => isHovered = false);
-        window.addEventListener('resize', initializeTrack);
         
+        // Touch events for mobile
+        loop.addEventListener('touchstart', () => isHovered = true, { passive: true });
+        loop.addEventListener('touchend', () => isHovered = false, { passive: true });
+
+        // Resize handling
+        let resizeTimer;
+        window.addEventListener('resize', () => {
+            clearTimeout(resizeTimer);
+            resizeTimer = setTimeout(initializeTrack, 250);
+        });
+        
+        // Wait for images to load to get accurate dimensions
         const images = seq.querySelectorAll('img');
         let loadedCount = 0;
+        
         const checkAllLoaded = () => {
             loadedCount++;
             if (loadedCount >= images.length) {
-                initializeTrack();
-                requestAnimationFrame(animate);
+                // Short extra delay for layout settling
+                setTimeout(initializeTrack, 100);
             }
         };
 
         if (images.length === 0) {
             initializeTrack();
-            requestAnimationFrame(animate);
         } else {
             images.forEach(img => {
-                if (img.complete) checkAllLoaded();
-                else {
+                if (img.complete) {
+                    checkAllLoaded();
+                } else {
                     img.addEventListener('load', checkAllLoaded, { once: true });
                     img.addEventListener('error', checkAllLoaded, { once: true });
                 }
@@ -341,3 +433,4 @@ document.addEventListener('DOMContentLoaded', () => {
     loadProjects();
     initLogoLoop();
 });
+
