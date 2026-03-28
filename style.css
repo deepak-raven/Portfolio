@@ -82,11 +82,12 @@
 .laptop .screen-content {
   display: block;
   position: absolute;
-  width: 555px;
-  height: 360px;
-  top: 21%;
-  left: -21%;
-  border-radius: 12px;
+  width: 560px;
+  height: 364px;
+  top: 128px;
+  left: -87px;
+  border: 1px solid black;
+  border-radius: 10px;
   border-bottom-left-radius: 0px;
   border-bottom-right-radius: 0px;
   overflow: hidden;
@@ -1413,32 +1414,69 @@ html {
 
 /* Entrance keyframes */
 @keyframes mh-slide-up {
-  from { transform: translateY(110%); opacity: 0; }
-  to   { transform: translateY(0);    opacity: 1; }
+  from {
+    transform: translateY(110%);
+    opacity: 0;
+  }
+
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
 }
 
 @keyframes mh-fade-in {
-  from { opacity: 0; transform: translateY(10px); }
-  to   { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 @keyframes mh-draw-line {
-  from { transform: scaleX(0); }
-  to   { transform: scaleX(1); }
+  from {
+    transform: scaleX(0);
+  }
+
+  to {
+    transform: scaleX(1);
+  }
 }
 
 /* Staggered animations */
-.mh-nav   { animation: mh-fade-in 0.5s cubic-bezier(0.16,1,0.3,1) 0s    both; }
-.mh-top   { animation: mh-fade-in 0.6s cubic-bezier(0.16,1,0.3,1) 0.2s  both; }
-.mh-line1 { animation: mh-slide-up 0.9s cubic-bezier(0.16,1,0.3,1) 0.3s both; display: block; }
-.mh-line2 { animation: mh-slide-up 0.9s cubic-bezier(0.16,1,0.3,1) 0.45s both; display: block; }
-
-.mh-rule-line {
-  animation: mh-draw-line 1s cubic-bezier(0.16,1,0.3,1) 0.7s both;
+.mh-nav {
+  animation: mh-fade-in 0.5s cubic-bezier(0.16, 1, 0.3, 1) 0s both;
 }
 
-.mh-desc   { animation: mh-fade-in 0.8s cubic-bezier(0.16,1,0.3,1) 0.85s both; }
-.mh-bottom { animation: mh-fade-in 0.8s cubic-bezier(0.16,1,0.3,1) 1.0s  both; }
+.mh-top {
+  animation: mh-fade-in 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.2s both;
+}
+
+.mh-line1 {
+  animation: mh-slide-up 0.9s cubic-bezier(0.16, 1, 0.3, 1) 0.3s both;
+  display: block;
+}
+
+.mh-line2 {
+  animation: mh-slide-up 0.9s cubic-bezier(0.16, 1, 0.3, 1) 0.45s both;
+  display: block;
+}
+
+.mh-rule-line {
+  animation: mh-draw-line 1s cubic-bezier(0.16, 1, 0.3, 1) 0.7s both;
+}
+
+.mh-desc {
+  animation: mh-fade-in 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.85s both;
+}
+
+.mh-bottom {
+  animation: mh-fade-in 0.8s cubic-bezier(0.16, 1, 0.3, 1) 1.0s both;
+}
 
 /* CTA shimmer hover */
 .mh-cta {
@@ -1446,12 +1484,26 @@ html {
   overflow: hidden;
   transition: background 0.2s;
 }
+
 .mh-cta::after {
   content: '';
   position: absolute;
   inset: 0;
-  background: rgba(255,255,255,0.08);
+  background: rgba(255, 255, 255, 0.08);
   transform: translateX(-100%);
-  transition: transform 0.4s cubic-bezier(0.16,1,0.3,1);
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 }
-.mh-cta:hover::after { transform: translateX(0); }
+
+.mh-cta:hover::after {
+  transform: translateX(0);
+}
+
+/* Supplemental Profile Image Hover and Scale Utilities */
+.grayscale {
+  filter: grayscale(100%);
+  transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+
+.hover\:grayscale-0:hover {
+  filter: grayscale(0%) !important;
+}

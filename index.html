@@ -121,6 +121,7 @@
 
                     <!-- Screen Content Container -->
                     <div class="screen-content bg-white overflow-hidden">
+                        <div class="glare-overlay"></div>
                         <div class="h-full w-full relative overflow-y-auto no-scrollbar bg-[#f8f8f8]">
                             <!-- Subtle noise overlay for the laptop screen -->
                             <div class="absolute inset-0 opacity-[0.03] pointer-events-none z-0"
@@ -199,7 +200,7 @@
                                     <div
                                         class="relative w-full max-w-[160px] md:max-w-[340px] origin-bottom transition-transform duration-500">
                                         <img src="./images/profile.png" alt="Deepak S Portrait" fetchpriority="high"
-                                            class="w-full h-auto object-bottom object-contain grayscale scale-125 md:scale-130 origin-bottom">
+                                            class="w-full h-auto object-bottom object-contain grayscale scale-125 md:scale-130 origin-bottom hover:grayscale-0 transition-all duration-500 cursor-pointer hover:scale-135 z-10">
                                     </div>
                                 </div>
                             </section>
@@ -331,7 +332,7 @@
                     </div>
 
                     <!-- Portrait Image -->
-                    <div class="w-full max-w-[280px] aspect-[4/5] overflow-hidden border border-black/10">
+                    <div class="w-full max-w-[280px] aspect-[4/5] overflow-hidden border border-black/10 relative z-20">
                         <img src="./images/about.png" alt="Deepak S" loading="lazy"
                             class="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-500 cursor-pointer hover:scale-105">
                     </div>
