@@ -4,6 +4,8 @@
   "description": "",
   "main": "script.js",
   "scripts": {
+    "build:css": "npx tailwindcss -i tailwind-input.css -o tailwind-build.css",
+    "watch:css": "npx tailwindcss -i tailwind-input.css -o tailwind-build.css --watch",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
