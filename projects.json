@@ -2,8 +2,8 @@
     {
         "title": "E-Commerce Demo Website",
         "category": "E-Commerce",
-        "image": "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?ixlib=rb-1.2.1&auto=format&fit",
-        "link": "https://commercejs-demo.netlify.app/"
+        "image": "auto",
+        "link": "https://aetherstore-eosin.vercel.app/"
     },
     {
         "title": "Momo Shop Demo",
