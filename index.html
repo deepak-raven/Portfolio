@@ -45,7 +45,6 @@
       "url": "https://deepaksites-portfolio.vercel.app/",
       "image": "https://deepaksites-portfolio.vercel.app/images/profile.png",
       "jobTitle": "Full-Stack Web Developer",
-      "telephone": "+91 9342238936",
       "email": "deepak.me005@gmail.com",
       "sameAs": [
         "https://github.com/deepak-raven",
@@ -620,13 +619,13 @@
 
             <form class="paper-form" id="contact-form">
                 <div class="form-group">
-                    <input type="text" placeholder="Name" required>
+                    <input type="text" name="entry.1052874432" placeholder="Your Full Name" required>
                 </div>
                 <div class="form-group">
-                    <input type="email" placeholder="Email" required>
+                    <input type="email" name="entry.789511947" placeholder="Your Email Address" required>
                 </div>
                 <div class="form-group">
-                    <textarea placeholder="Message..." required></textarea>
+                    <textarea name="entry.1092473110" placeholder="Message / Project Details..." required></textarea>
                 </div>
                 <div class="mt-8">
                     <button type="submit"
@@ -644,30 +643,44 @@
 
     <footer class="bg-black text-white py-20 px-6 md:px-12 reveal-up">
         <div
-            class="flex flex-col md:flex-row justify-between items-start md:items-center gap-12 border-b border-gray-800 pb-12 mb-12">
+            class="flex flex-row flex-wrap justify-between items-start gap-y-12 gap-x-6 border-b border-gray-800 pb-12 mb-12">
             <!-- Logo area -->
-            <div class="flex flex-col gap-4">
+            <div class="flex flex-col gap-4 w-full md:w-auto mb-4 md:mb-0">
                 <div
                     class="w-10 h-10 bg-white text-black rounded-lg flex items-center justify-center font-bold text-xl">
                     DS</div>
                 <p class="text-gray-400 text-sm max-w-xs">Creating digital experiences that matter.</p>
             </div>
 
-            <!-- Links -->
-            <div class="flex gap-12 text-sm text-gray-400 font-medium">
-                <a href="https://github.com/deepak-raven" target="_blank" rel="noopener noreferrer"
-                    class="hover:text-white transition-colors">GitHub</a>
-                <a href="https://linkedin.com/in/contact-deepak-s" target="_blank" rel="noopener noreferrer"
-                    class="hover:text-white transition-colors">LinkedIn</a>
+            <!-- Utility Navigation -->
+            <div class="flex flex-col gap-4 flex-1 md:flex-none">
+                <span class="text-gray-500 text-xs uppercase tracking-wider">Explore</span>
+                <nav class="flex flex-col gap-2 text-sm text-gray-400 font-medium">
+                    <a href="#projects" class="hover:text-white transition-colors">Selected Work</a>
+                    <a href="#about" class="hover:text-white transition-colors">About Me</a>
+                    <a href="#experience" class="hover:text-white transition-colors">Experience</a>
+                    <a href="#contact" class="hover:text-white transition-colors">Contact</a>
+                </nav>
             </div>
 
-            <!-- Contact -->
-            <div class="text-right">
-                <span class="block text-gray-500 text-xs uppercase tracking-wider mb-1">Contact</span>
-                <a href="mailto:deepak.me005@gmail.com"
-                    class="text-lg font-medium hover:text-gray-300 transition-colors block">deepak.me005@gmail.com</a>
-                <a href="tel:9342238936"
-                    class="text-sm font-medium hover:text-gray-300 transition-colors block mt-1">+91 9342238936</a>
+            <!-- Connect -->
+            <div class="flex flex-col gap-4 flex-[1.5] md:flex-none text-right items-end">
+                <span class="text-gray-500 text-xs uppercase tracking-wider">Connect</span>
+                <nav class="flex flex-col gap-2 text-sm text-gray-400 font-medium items-end">
+                    <!-- Row 1: Socials -->
+                    <div class="flex flex-col gap-2 items-end">
+                        <a href="https://github.com/deepak-raven" target="_blank" rel="noopener noreferrer"
+                            class="hover:text-white transition-colors">GitHub</a>
+                        <a href="https://linkedin.com/in/contact-deepak-s" target="_blank" rel="noopener noreferrer"
+                            class="hover:text-white transition-colors">LinkedIn</a>
+                    </div>
+                    <!-- Row 2: Mail -->
+                    <div class="mt-4 flex flex-col items-end">
+                        <span class="block text-gray-500 text-xs uppercase tracking-wider mb-1">Email</span>
+                        <a href="mailto:deepak.me005@gmail.com"
+                            class="text-sm md:text-lg font-medium hover:text-gray-300 transition-colors block">deepak.me005@gmail.com</a>
+                    </div>
+                </nav>
             </div>
         </div>
 

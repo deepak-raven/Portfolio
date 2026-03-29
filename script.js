@@ -137,12 +137,31 @@ document.addEventListener('DOMContentLoaded', () => {
     const modal = document.getElementById('contact-modal');
     const env = document.getElementById('envelope-wrapper');
     if (contactForm && modal && env) {
-        contactForm.addEventListener('submit', e => {
+        contactForm.addEventListener('submit', async e => {
             e.preventDefault();
+            
+            // Capture the form data
+            const formData = new FormData(contactForm);
+            const formAction = 'https://docs.google.com/forms/d/e/1FAIpQLSfSsdYm5_KItn3h5frACQMMZZoexgzVAdpLXUrvXA8ehsiR1g/formResponse';
+            
+            // Trigger the UI animation immediately
             const paper = modal.querySelector('.paper-modal');
             paper.classList.add('folding');
             modal.classList.add('sending');
             env.classList.add('is-receiving');
+
+            // Send to Google Form in the background
+            try {
+                // Using 'no-cors' mode for Google Forms headless POST
+                await fetch(formAction, {
+                    method: 'POST',
+                    mode: 'no-cors',
+                    body: formData
+                });
+            } catch (error) {
+                console.warn('Form submission potential issue:', error);
+                // We continue with UI animation anyway as 'no-cors' often throws a false-negative
+            }
 
             setTimeout(() => {
                 Object.assign(modal.style, { visibility: 'hidden' });
