@@ -101,8 +101,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // 4. Magnetic Buttons
     document.querySelectorAll('.magnetic').forEach(el => {
+        let rect;
+        el.addEventListener('mouseenter', () => {
+            rect = el.getBoundingClientRect();
+        });
         el.addEventListener('mousemove', e => {
-            const { left, top, width, height } = el.getBoundingClientRect();
+            if (!rect) rect = el.getBoundingClientRect();
+            const { left, top, width, height } = rect;
             el.style.transform = `translate(${(e.clientX - left - width / 2) * 0.3}px, ${(e.clientY - top - height / 2) * 0.3}px)`;
             el.style.transition = 'transform 0.1s ease-out';
         });
@@ -258,10 +263,18 @@ document.addEventListener('DOMContentLoaded', () => {
             let rafId;
 
             // Mouse handling (Desktop)
+            let rect;
+            card.addEventListener('mouseenter', () => {
+                rect = card.getBoundingClientRect();
+            });
+            window.addEventListener('resize', () => {
+                rect = null; // Mark for re-cache
+            });
+
             card.addEventListener('mousemove', (e) => {
                 if (rafId) cancelAnimationFrame(rafId);
                 rafId = requestAnimationFrame(() => {
-                    const rect = card.getBoundingClientRect();
+                    if (!rect) rect = card.getBoundingClientRect();
                     const offsetX = e.clientX - rect.left - rect.width / 2;
                     const offsetY = e.clientY - rect.top - rect.height / 2;
 
