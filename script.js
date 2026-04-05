@@ -1,9 +1,11 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // 1. Laptop Scroll Animation
+    // 1. Laptop Scroll Animation (Only for Desktop)
     const laptop = document.querySelector('.laptop');
     const laptopBlock = document.querySelector('.laptop-block');
     const laptopTop = document.querySelector('.laptop-top');
-    if (laptop && laptopBlock && laptopTop) {
+    const isDesktop = window.matchMedia('(min-width: 768px)').matches;
+
+    if (isDesktop && laptop && laptopBlock && laptopTop) {
         let currentProgress = 1; // Start closed
         let targetProgress = Math.max(0, Math.min(1, window.scrollY / 450));
 
