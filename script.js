@@ -7,10 +7,19 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (isDesktop && laptop && laptopBlock && laptopTop) {
         let currentProgress = 1; // Start closed
-        let targetProgress = Math.max(0, Math.min(1, window.scrollY / 450));
+        let targetProgress = Math.max(0, Math.min(1, window.pageYOffset / 450));
+        let isLooping = false;
 
         const updateAnimation = () => {
-            currentProgress += (targetProgress - currentProgress) * 0.08;
+            const diff = targetProgress - currentProgress;
+            if (Math.abs(diff) < 0.001) {
+                currentProgress = targetProgress;
+                isLooping = false;
+            } else {
+                currentProgress += diff * 0.08;
+                isLooping = true;
+            }
+            
             laptopBlock.style.transform = `translate3d(0, 0, 0) rotateY(-${currentProgress * 90}deg)`;
             
             if (currentProgress >= 0.99) {
@@ -33,12 +42,21 @@ document.addEventListener('DOMContentLoaded', () => {
                     laptopBlock.classList.remove('glare-active');
                 }
             }
-            requestAnimationFrame(updateAnimation);
+
+            if (isLooping) {
+                requestAnimationFrame(updateAnimation);
+            }
         };
 
         window.addEventListener('scroll', () => {
-            targetProgress = Math.max(0, Math.min(1, window.scrollY / 450));
-        });
+            targetProgress = Math.max(0, Math.min(1, window.pageYOffset / 450));
+            if (!isLooping) {
+                isLooping = true;
+                requestAnimationFrame(updateAnimation);
+            }
+        }, { passive: true });
+        
+        // Initial run
         updateAnimation();
     }
 
