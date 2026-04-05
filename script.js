@@ -5,10 +5,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const laptopTop = document.querySelector('.laptop-top');
     if (laptop && laptopBlock && laptopTop) {
         let currentProgress = 1; // Start closed
-        let targetProgress = 0;
-        requestAnimationFrame(() => {
-            targetProgress = Math.max(0, Math.min(1, window.scrollY / 450));
-        });
+        let targetProgress = Math.max(0, Math.min(1, window.scrollY / 450));
 
         const updateAnimation = () => {
             currentProgress += (targetProgress - currentProgress) * 0.08;
@@ -309,23 +306,7 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         });
 
-        // Gyroscope Handling (Mobile) - Caching rects to avoid reflows
-        let cachedRects = new Map();
-        const updateCachedRects = () => {
-            activeCards.forEach(card => {
-                cachedRects.set(card, card.getBoundingClientRect());
-            });
-        };
-
-        // Update rects on initialization and after scrolling stops
-        updateCachedRects();
-        let scrollTimeout;
-        window.addEventListener('scroll', () => {
-            clearTimeout(scrollTimeout);
-            scrollTimeout = setTimeout(updateCachedRects, 150);
-        }, { passive: true });
-        window.addEventListener('resize', updateCachedRects, { passive: true });
-
+        // Gyroscope Handling (Mobile) - Singleton Listener
         if (isGyroInitialized) return;
         
         let smoothedX = 0;
@@ -342,24 +323,22 @@ document.addEventListener('DOMContentLoaded', () => {
             const rotateX = smoothedX * rotateAmplitude;
             const rotateY = smoothedY * -rotateAmplitude;
 
-            // Find the most visible/central card using cached rects
+            // Find the most visible/central card
             let mostCentralCard = null;
             let minDistance = Infinity;
             const viewportCenter = window.innerHeight / 2;
 
             activeCards.forEach(card => {
-                const rect = cachedRects.get(card);
-                if (!rect) return;
-
+                const rect = card.getBoundingClientRect();
                 const cardCenter = rect.top + rect.height / 2;
                 const distanceToCenter = Math.abs(cardCenter - viewportCenter);
 
-                // Check if card is at least partially visible using cached relative position
-                // (Note: since rects are cached, we need to adjust based on current scroll if we want absolute precision,
-                // but since we update on scroll end, it's a good tradeoff for performance)
-                if (distanceToCenter < minDistance) {
-                    minDistance = distanceToCenter;
-                    mostCentralCard = card;
+                // Check if card is at least partially visible
+                if (rect.top < window.innerHeight && rect.bottom > 0) {
+                    if (distanceToCenter < minDistance) {
+                        minDistance = distanceToCenter;
+                        mostCentralCard = card;
+                    }
                 }
             });
 
@@ -369,8 +348,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 if (card === mostCentralCard) {
                     inner.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
-                    inner.style.transition = 'none'; 
+                    inner.style.transition = 'none'; // Fast tracking for active card
                 } else {
+                    // Smoothly reset others
                     inner.style.transform = `rotateX(0deg) rotateY(0deg)`;
                     inner.style.transition = 'transform 0.6s cubic-bezier(0.2, 0.8, 0.2, 1)';
                 }
@@ -508,10 +488,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     };
 
-    // 10. Initialization in next frame to prevent forced reflows
-    requestAnimationFrame(() => {
-        loadProjects();
-        initLogoLoop();
-    });
+    loadProjects();
+    initLogoLoop();
 });
 
