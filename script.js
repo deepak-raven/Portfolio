@@ -8,20 +8,17 @@ document.addEventListener('DOMContentLoaded', () => {
     if (isDesktop && laptop && laptopBlock && laptopTop) {
         let currentProgress = 1; // Start closed
         let targetProgress = Math.max(0, Math.min(1, window.pageYOffset / 450));
-        let isLooping = false;
+        let rafId = null;
 
         const updateAnimation = () => {
             const diff = targetProgress - currentProgress;
-            if (Math.abs(diff) < 0.001) {
-                currentProgress = targetProgress;
-                isLooping = false;
-            } else {
-                currentProgress += diff * 0.08;
-                isLooping = true;
-            }
+            
+            // Easing: Slightly faster for responsiveness (0.12 instead of 0.08)
+            currentProgress += diff * 0.12; 
             
             laptopBlock.style.transform = `translate3d(0, 0, 0) rotateY(-${currentProgress * 90}deg)`;
             
+            // Update other properties based on currentProgress
             if (currentProgress >= 0.99) {
                 laptopTop.style.opacity = 1;
                 laptopTop.style.transform = 'scale(1)';
@@ -43,20 +40,23 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             }
 
-            if (isLooping) {
-                requestAnimationFrame(updateAnimation);
+            // Continue loop if not settled
+            if (Math.abs(targetProgress - currentProgress) > 0.0001) {
+                rafId = requestAnimationFrame(updateAnimation);
+            } else {
+                currentProgress = targetProgress;
+                rafId = null;
             }
         };
 
         window.addEventListener('scroll', () => {
             targetProgress = Math.max(0, Math.min(1, window.pageYOffset / 450));
-            if (!isLooping) {
-                isLooping = true;
-                requestAnimationFrame(updateAnimation);
+            if (!rafId) {
+                rafId = requestAnimationFrame(updateAnimation);
             }
         }, { passive: true });
         
-        // Initial run
+        // Initial run to set state
         updateAnimation();
     }
 
