@@ -9,16 +9,16 @@ document.addEventListener('DOMContentLoaded', () => {
         let currentProgress = 1; // Start closed
         let targetProgress = Math.max(0, Math.min(1, window.pageYOffset / 450));
         let rafId = null;
+        let isLaptopVisible = false;
 
         const updateAnimation = () => {
             const diff = targetProgress - currentProgress;
             
-            // Easing: Slightly faster for responsiveness (0.12 instead of 0.08)
-            currentProgress += diff * 0.12; 
+            // Easing: Increased to 0.15 for even snappier response
+            currentProgress += diff * 0.15; 
             
             laptopBlock.style.transform = `translate3d(0, 0, 0) rotateY(-${currentProgress * 90}deg)`;
             
-            // Update other properties based on currentProgress
             if (currentProgress >= 0.99) {
                 laptopTop.style.opacity = 1;
                 laptopTop.style.transform = 'scale(1)';
@@ -40,7 +40,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             }
 
-            // Continue loop if not settled
             if (Math.abs(targetProgress - currentProgress) > 0.0001) {
                 rafId = requestAnimationFrame(updateAnimation);
             } else {
@@ -49,14 +48,29 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         };
 
-        window.addEventListener('scroll', () => {
+        const handleScroll = () => {
+            if (!isLaptopVisible) return;
             targetProgress = Math.max(0, Math.min(1, window.pageYOffset / 450));
             if (!rafId) {
                 rafId = requestAnimationFrame(updateAnimation);
             }
-        }, { passive: true });
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                isLaptopVisible = entry.isIntersecting;
+                if (isLaptopVisible) {
+                    handleScroll();
+                    window.addEventListener('scroll', handleScroll, { passive: true });
+                } else {
+                    window.removeEventListener('scroll', handleScroll);
+                }
+            });
+        }, { threshold: 0 });
+
+        const container = document.querySelector('.laptop-container');
+        if (container) observer.observe(container);
         
-        // Initial run to set state
         updateAnimation();
     }
 
