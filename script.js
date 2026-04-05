@@ -5,7 +5,10 @@ document.addEventListener('DOMContentLoaded', () => {
     const laptopTop = document.querySelector('.laptop-top');
     if (laptop && laptopBlock && laptopTop) {
         let currentProgress = 1; // Start closed
-        let targetProgress = Math.max(0, Math.min(1, window.scrollY / 450));
+        let targetProgress = 0;
+        requestAnimationFrame(() => {
+            targetProgress = Math.max(0, Math.min(1, window.scrollY / 450));
+        });
 
         const updateAnimation = () => {
             currentProgress += (targetProgress - currentProgress) * 0.08;
@@ -505,7 +508,10 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     };
 
-    loadProjects();
-    initLogoLoop();
+    // 10. Initialization in next frame to prevent forced reflows
+    requestAnimationFrame(() => {
+        loadProjects();
+        initLogoLoop();
+    });
 });
 
