@@ -3,9 +3,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const laptop = document.querySelector('.laptop');
     const laptopBlock = document.querySelector('.laptop-block');
     const laptopTop = document.querySelector('.laptop-top');
-    
-    // Only run expensive laptop animations on desktop (width > 1024)
-    if (laptop && laptopBlock && laptopTop && window.innerWidth > 1024) {
+    if (laptop && laptopBlock && laptopTop) {
         let currentProgress = 1; // Start closed
         let targetProgress = Math.max(0, Math.min(1, window.scrollY / 450));
 
@@ -217,7 +215,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         <figure class="tilted-card-figure">
                             <div class="tilted-card-mobile-alert">Check on desktop for effects.</div>
                             <div class="tilted-card-inner">
-                                <img src="${imageUrl}" alt="${project.title} - Project by Deepak S (Deepaksites)" class="tilted-card-img" loading="lazy">
+                                <img src="${imageUrl}" alt="${project.title} - Project by Deepak S (Deepaksites)" class="tilted-card-img">
                                 <div class="tilted-card-overlay">
                                     <h3 class="text-xl font-serif italic mb-1">${project.title}</h3>
                                     <p class="text-[10px] uppercase tracking-widest opacity-80">${project.category}</p>
@@ -478,15 +476,6 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     loadProjects();
-    
-    // Defer non-critical animations to improve TBT
-    const logoObserver = new IntersectionObserver((entries) => {
-        if (entries[0].isIntersecting) {
-            initLogoLoop();
-            logoObserver.disconnect();
-        }
-    }, { rootMargin: '200px' });
-    const logoSection = document.getElementById('logo-loop');
-    if (logoSection) logoObserver.observe(logoSection);
+    initLogoLoop();
 });
 
