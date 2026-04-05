@@ -215,7 +215,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         <figure class="tilted-card-figure">
                             <div class="tilted-card-mobile-alert">Check on desktop for effects.</div>
                             <div class="tilted-card-inner">
-                                <img src="${imageUrl}" alt="${project.title}" class="tilted-card-img">
+                                <img src="${imageUrl}" alt="${project.title} - Project by Deepak S (Deepaksites)" class="tilted-card-img">
                                 <div class="tilted-card-overlay">
                                     <h3 class="text-xl font-serif italic mb-1">${project.title}</h3>
                                     <p class="text-[10px] uppercase tracking-widest opacity-80">${project.category}</p>
