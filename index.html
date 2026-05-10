@@ -37,8 +37,12 @@
       :root { --bg: #f7f7f5; --black: #1a1a1a; }
       body { background-color: var(--bg); color: var(--black); margin: 0; font-family: 'Inter', sans-serif; -webkit-font-smoothing: antialiased; }
       .reveal-up { opacity: 0; transform: translateY(30px); }
-      #mobile-hero { padding-top: 68px; display: flex; flex-direction: column; height: 100vh; overflow: hidden; }
-      .mh-nav { position: fixed; top: 0; width: 100%; border-bottom: 1px solid rgba(0,0,0,0.1); background: var(--bg); z-index: 200; }
+      
+      /* Only apply mobile hero layouts on small screens to prevent ID selector conflicts with md:hidden */
+      @media (max-width: 767px) {
+        #mobile-hero { padding-top: 68px; display: flex; flex-direction: column; height: 100vh; overflow: hidden; }
+        .mh-nav { position: fixed; top: 0; width: 100%; border-bottom: 1px solid rgba(0,0,0,0.1); background: var(--bg); z-index: 200; }
+      }
     </style>
 
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;1,400&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
