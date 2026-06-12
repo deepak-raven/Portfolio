@@ -1,3 +1,10 @@
+html,
+body {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
 img {
   -webkit-user-drag: none;
   -khtml-user-drag: none;
