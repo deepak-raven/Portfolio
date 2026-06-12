@@ -1558,3 +1558,11 @@ html {
   -ms-user-select: none !important;
   user-select: none !important;
 }
+
+#projects-grid *,
+#projects-grid *::selection,
+#projects-grid *::-moz-selection {
+  background: transparent !important;
+  color: inherit !important;
+  text-shadow: none !important;
+}
