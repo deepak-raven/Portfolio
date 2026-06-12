@@ -1244,6 +1244,17 @@ html {
   overflow: visible;
   background: transparent;
   /* Ensure no gray background here */
+  -webkit-user-select: none !important;
+  -moz-user-select: none !important;
+  -ms-user-select: none !important;
+  user-select: none !important;
+}
+
+.tilted-card-figure * {
+  -webkit-user-select: none !important;
+  -moz-user-select: none !important;
+  -ms-user-select: none !important;
+  user-select: none !important;
 }
 
 .tilted-card-mobile-alert {
