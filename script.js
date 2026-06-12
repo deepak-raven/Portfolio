@@ -1,4 +1,12 @@
 document.addEventListener('DOMContentLoaded', () => {
+    // Global non-draggable images utility
+    const makeImagesNonDraggable = () => {
+        document.querySelectorAll('img').forEach(img => {
+            img.setAttribute('draggable', 'false');
+        });
+    };
+    makeImagesNonDraggable();
+
     // 1. Laptop Scroll Animation (Only for Desktop)
     const laptop = document.querySelector('.laptop');
     const laptopBlock = document.querySelector('.laptop-block');
@@ -254,7 +262,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         <figure class="tilted-card-figure">
                             <div class="tilted-card-mobile-alert">Check on desktop for effects.</div>
                             <div class="tilted-card-inner">
-                                <img src="${imageUrl}" alt="${project.title} - Project by Deepak S (Deepaksites)" class="tilted-card-img">
+                                <img src="${imageUrl}" alt="${project.title} - Project by Deepak S (Deepaksites)" class="tilted-card-img" draggable="false">
                                 <div class="tilted-card-overlay">
                                     <h3 class="text-xl font-serif italic mb-1">${project.title}</h3>
                                     <p class="text-[10px] uppercase tracking-widest opacity-80">${project.category}</p>
@@ -266,6 +274,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 `;
             }).join('');
 
+            makeImagesNonDraggable();
             initTiltedCards();
             grid.querySelectorAll('.reveal-up').forEach(el => revealObserver.observe(el));
         } catch (error) {
