@@ -258,10 +258,10 @@ document.addEventListener('DOMContentLoaded', () => {
                     : `https://s.wordpress.com/mshots/v1/${encodeURIComponent(project.link)}?w=800`;
 
                 return `
-                    <a href="${project.link}" target="_blank" rel="noopener noreferrer" class="reveal-up delay-${(index + 1) * 100} h-[400px] block">
-                        <figure class="tilted-card-figure">
+                    <a href="${project.link}" target="_blank" rel="noopener noreferrer" class="reveal-up delay-${(index + 1) * 100} h-[400px] block select-none">
+                        <figure class="tilted-card-figure select-none">
                             <div class="tilted-card-mobile-alert">Check on desktop for effects.</div>
-                            <div class="tilted-card-inner">
+                            <div class="tilted-card-inner select-none">
                                 <img src="${imageUrl}" alt="${project.title} - Project by Deepak S (Deepaksites)" class="tilted-card-img" draggable="false">
                                 <div class="tilted-card-overlay">
                                     <h3 class="text-xl font-serif italic mb-1">${project.title}</h3>
