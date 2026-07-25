@@ -35,7 +35,8 @@
     
     <style>
       :root { --bg: #f7f7f5; --black: #1a1a1a; }
-      html, body { max-width: 100%; overflow-x: hidden; position: relative; }
+      html { overflow-x: hidden; }
+      html, body { max-width: 100%; position: relative; }
       body { background-color: var(--bg); color: var(--black); margin: 0; font-family: 'Inter', sans-serif; -webkit-font-smoothing: antialiased; }
       .reveal-up { opacity: 0; transform: translateY(30px); }
       
@@ -69,7 +70,7 @@
 </head>
 
 <body
-    class="bg-[#f7f7f5] text-brand-black font-sans antialiased selection:bg-black selection:text-white relative overflow-x-hidden">
+    class="bg-[#f7f7f5] text-brand-black font-sans antialiased selection:bg-black selection:text-white relative">
 
     <!-- Tactile Grain/Noise Overlay -->
     <div
