@@ -1,4 +1,22 @@
 document.addEventListener('DOMContentLoaded', () => {
+    // Initialize Lenis Smooth Scroll
+    const lenis = new Lenis({
+        duration: 1.2,
+        easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+        orientation: 'vertical',
+        gestureOrientation: 'vertical',
+        smoothWheel: true,
+        wheelMultiplier: 1,
+        touchMultiplier: 2,
+        infinite: false,
+    });
+
+    function raf(time) {
+        lenis.raf(time);
+        requestAnimationFrame(raf);
+    }
+    requestAnimationFrame(raf);
+
     // Global non-draggable images utility
     const makeImagesNonDraggable = () => {
         document.querySelectorAll('img').forEach(img => {
@@ -14,31 +32,48 @@ document.addEventListener('DOMContentLoaded', () => {
     const isDesktop = window.matchMedia('(min-width: 768px)').matches;
 
     if (isDesktop && laptop && laptopBlock && laptopTop) {
-        let currentProgress = 1; // Start closed
-        let targetProgress = Math.max(0, Math.min(1, window.pageYOffset / 450));
+        let currentProgress = 1; // Start fully closed
+        let targetProgress = 1;
         let rafId = null;
         let isLaptopVisible = false;
+        let introComplete = false; // Flag: has the open-on-load animation finished?
+
+        const screenContent = document.querySelector('.screen-content');
 
         const updateAnimation = () => {
             const diff = targetProgress - currentProgress;
-            
-            // Easing: Increased to 0.15 for even snappier response
-            currentProgress += diff * 0.15; 
-            
+            const ease = introComplete ? 0.15 : 0.04;
+            currentProgress += diff * ease;
+
             laptopBlock.style.transform = `translate3d(0, 0, 0) rotateY(-${currentProgress * 90}deg)`;
-            
+
             if (currentProgress >= 0.99) {
-                laptopTop.style.opacity = 1;
-                laptopTop.style.transform = 'scale(1)';
-                laptopTop.style.top = '0px';
-                laptopTop.style.left = '20px';
-                laptopTop.style.zIndex = 0;
+                // Last 5% of closing: hide the block so no pixel bleeds through the edge
+                laptopBlock.style.visibility = 'hidden';
+                laptopBlock.style.opacity = '0';
+                if (screenContent) screenContent.style.visibility = 'hidden';
+
+                if (currentProgress >= 0.99) {
+                    // Fully closed: show the lid
+                    laptopTop.style.opacity = 1;
+                    laptopTop.style.transform = 'scale(1)';
+                    laptopTop.style.top = '0px';
+                    laptopTop.style.left = '20px';
+                    laptopTop.style.zIndex = 0;
+                } else {
+                    laptopTop.style.opacity = 0;
+                    laptopTop.style.zIndex = -5;
+                }
                 laptopBlock.classList.remove('glare-active');
             } else {
+                // Opening — reveal everything
+                laptopBlock.style.visibility = 'visible';
+                laptopBlock.style.opacity = '1';
                 laptopTop.style.opacity = 0;
                 laptopTop.style.zIndex = -5;
-                
-                if (currentProgress > 0.01 && currentProgress < 0.99) {
+                if (screenContent) screenContent.style.visibility = 'visible';
+
+                if (currentProgress > 0.01) {
                     laptopBlock.classList.add('glare-active');
                     const glareX = -150 + (currentProgress * 300);
                     const glareY = -150 + (currentProgress * 300);
@@ -53,12 +88,17 @@ document.addEventListener('DOMContentLoaded', () => {
             } else {
                 currentProgress = targetProgress;
                 rafId = null;
+                // Once the intro open animation reaches 0, mark it done & enable scroll
+                if (!introComplete && targetProgress === 0) {
+                    introComplete = true;
+                }
             }
         };
 
         const handleScroll = () => {
-            if (!isLaptopVisible) return;
-            targetProgress = Math.max(0, Math.min(1, window.pageYOffset / 450));
+            if (!isLaptopVisible || !introComplete) return;
+            // Use lenis.scroll for precise smooth scroll position tracking
+            targetProgress = Math.max(0, Math.min(1, lenis.scroll / 450));
             if (!rafId) {
                 rafId = requestAnimationFrame(updateAnimation);
             }
@@ -68,18 +108,25 @@ document.addEventListener('DOMContentLoaded', () => {
             entries.forEach(entry => {
                 isLaptopVisible = entry.isIntersecting;
                 if (isLaptopVisible) {
-                    handleScroll();
-                    window.addEventListener('scroll', handleScroll, { passive: true });
+                    if (introComplete) handleScroll();
+                    lenis.on('scroll', handleScroll);
                 } else {
-                    window.removeEventListener('scroll', handleScroll);
+                    lenis.off('scroll', handleScroll);
                 }
             });
         }, { threshold: 0 });
 
         const container = document.querySelector('.laptop-container');
         if (container) observer.observe(container);
-        
+
+        // Paint the closed state immediately so the lid is visible
         updateAnimation();
+
+        // Stay closed for 1 second, then smoothly open
+        setTimeout(() => {
+            targetProgress = 0; // Animate to fully open
+            if (!rafId) rafId = requestAnimationFrame(updateAnimation);
+        }, 1400);
     }
 
     // 2. Reveal Up Observer
@@ -186,11 +233,11 @@ document.addEventListener('DOMContentLoaded', () => {
     if (contactForm && modal && env) {
         contactForm.addEventListener('submit', async e => {
             e.preventDefault();
-            
+
             // Capture the form data
             const formData = new FormData(contactForm);
             const formAction = 'https://docs.google.com/forms/d/e/1FAIpQLSfSsdYm5_KItn3h5frACQMMZZoexgzVAdpLXUrvXA8ehsiR1g/formResponse';
-            
+
             // Trigger the UI animation immediately
             const paper = modal.querySelector('.paper-modal');
             paper.classList.add('folding');
@@ -253,8 +300,8 @@ document.addEventListener('DOMContentLoaded', () => {
             const projects = await response.json();
 
             grid.innerHTML = projects.map((project, index) => {
-                const imageUrl = (project.image && project.image !== "auto") 
-                    ? project.image 
+                const imageUrl = (project.image && project.image !== "auto")
+                    ? project.image
                     : `https://s.wordpress.com/mshots/v1/${encodeURIComponent(project.link)}?w=800`;
 
                 return `
@@ -325,7 +372,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     const rotationY = (offsetX / (rect.width / 2)) * rotateAmplitude;
 
                     inner.style.transform = `rotateX(${rotationX}deg) rotateY(${rotationY}deg) scale(${scaleOnHover})`;
-                    
+
                     if (caption) {
                         const velocityY = offsetY - lastY;
                         const rotateCap = -velocityY * 0.6;
@@ -351,7 +398,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Gyroscope Handling (Mobile) - Singleton Listener
         if (isGyroInitialized) return;
-        
+
         let smoothedX = 0;
         let smoothedY = 0;
         const smoothing = 0.1;
@@ -454,7 +501,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const viewportWidth = loop.clientWidth || window.innerWidth;
             // Ensure we have enough copies to cover twice the viewport plus overlap
             const copiesNeeded = Math.ceil(viewportWidth / seqWidth) + 2;
-            
+
             // Create the track content
             const fragment = document.createDocumentFragment();
             for (let i = 0; i < copiesNeeded; i++) {
@@ -463,10 +510,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (i > 0) clone.setAttribute('aria-hidden', 'true');
                 fragment.appendChild(clone);
             }
-            
+
             track.innerHTML = '';
             track.appendChild(fragment);
-            
+
             if (!isActive) {
                 isActive = true;
                 requestAnimationFrame(animate);
@@ -493,7 +540,7 @@ document.addEventListener('DOMContentLoaded', () => {
         // Hover events for pausing
         loop.addEventListener('mouseenter', () => isHovered = true);
         loop.addEventListener('mouseleave', () => isHovered = false);
-        
+
         // Touch events for mobile
         loop.addEventListener('touchstart', () => isHovered = true, { passive: true });
         loop.addEventListener('touchend', () => isHovered = false, { passive: true });
@@ -504,11 +551,11 @@ document.addEventListener('DOMContentLoaded', () => {
             clearTimeout(resizeTimer);
             resizeTimer = setTimeout(initializeTrack, 250);
         });
-        
+
         // Wait for images to load to get accurate dimensions
         const images = seq.querySelectorAll('img');
         let loadedCount = 0;
-        
+
         const checkAllLoaded = () => {
             loadedCount++;
             if (loadedCount >= images.length) {

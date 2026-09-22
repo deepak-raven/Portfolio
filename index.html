@@ -10,6 +10,7 @@
     <meta name="keywords"
         content="Deepak S, Deepak Sites, Deepak Dev, Deepak developer, Deepak Web Developer, Deepsites, deepaksites, Web Developer">
     <link rel="canonical" href="https://deepaksites-portfolio.vercel.app/">
+    <link rel="alternate" type="text/plain" href="/llms.txt" title="LLMs.txt">
 
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website">
@@ -27,27 +28,91 @@
         content="Deepak Sites (Deepaksites) — official portfolio of Deepak S. Showcasing innovative web applications.">
     <meta property="twitter:image" content="https://deepaksites-portfolio.vercel.app/images/profile.webp">
 
-    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;1,400&family=DM+Serif+Display:ital@0;1&display=swap" as="style">
+    <link rel="preload"
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;1,400&family=DM+Serif+Display:ital@0;1&display=swap"
+        as="style">
     <link rel="preload" href="combined.css?v=2" as="style">
-    
+
     <link rel="preload" as="image" href="./images/profile.webp" fetchpriority="high" media="(min-width: 768px)">
     <link rel="preload" as="image" href="./images/screen.webp" fetchpriority="high" media="(min-width: 768px)">
-    
+
     <style>
-      :root { --bg: #f7f7f5; --black: #1a1a1a; }
-      html { overflow-x: hidden; }
-      html, body { max-width: 100%; position: relative; }
-      body { background-color: var(--bg); color: var(--black); margin: 0; font-family: 'Inter', sans-serif; -webkit-font-smoothing: antialiased; }
-      .reveal-up { opacity: 0; transform: translateY(30px); }
-      
-      /* Only apply mobile hero layouts on small screens to prevent ID selector conflicts with md:hidden */
-      @media (max-width: 767px) {
-        #mobile-hero { padding-top: 68px; display: flex; flex-direction: column; height: 100vh; overflow: hidden; }
-        .mh-nav { position: fixed; top: 0; width: 100%; border-bottom: 1px solid rgba(0,0,0,0.1); background: var(--bg); z-index: 200; }
-      }
+        :root {
+            --bg: #f7f7f5;
+            --black: #1a1a1a;
+        }
+
+        html {
+            overflow-x: hidden;
+        }
+
+        /* Lenis smooth scroll adjustments */
+        html.lenis, html.lenis body {
+            height: auto;
+        }
+        .lenis.lenis-smooth {
+            scroll-behavior: auto !important;
+        }
+        .lenis.lenis-smooth [data-lenis-prevent] {
+            overscroll-behavior: contain;
+        }
+        .lenis.lenis-stopped {
+            overflow: hidden;
+        }
+        .lenis.lenis-scrolling iframe {
+            pointer-events: none;
+        }
+
+        html,
+        body {
+            max-width: 100%;
+            position: relative;
+        }
+
+        body {
+            background-color: var(--bg);
+            color: var(--black);
+            margin: 0;
+            font-family: 'Inter', sans-serif;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .reveal-up {
+            opacity: 0;
+            transform: translateY(30px);
+        }
+
+        [data-aifx-wm] {
+            display: none !important;
+            visibility: hidden !important;
+            opacity: 0 !important;
+            pointer-events: none !important;
+        }
+
+        /* Only apply mobile hero layouts on small screens to prevent ID selector conflicts with md:hidden */
+        @media (max-width: 767px) {
+            #mobile-hero {
+                padding-top: 68px;
+                display: flex;
+                flex-direction: column;
+                height: 100vh;
+                overflow: hidden;
+            }
+
+            .mh-nav {
+                position: fixed;
+                top: 0;
+                width: 100%;
+                border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+                background: var(--bg);
+                z-index: 200;
+            }
+        }
     </style>
 
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;1,400&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;1,400&family=DM+Serif+Display:ital@0;1&display=swap"
+        rel="stylesheet" media="print" onload="this.media='all'">
     <link rel="stylesheet" href="combined.css?v=2">
 
     <script type="application/ld+json">
@@ -70,7 +135,14 @@
 </head>
 
 <body
-    class="bg-[#f7f7f5] text-brand-black font-sans antialiased selection:bg-black selection:text-white relative">
+    class="bg-[#f7f7f5] text-brand-black font-sans antialiased selection:bg-black selection:text-white relative isolate">
+
+    <!-- Topo Lines Background Effect -->
+    <div data-aifx="topo-lines" data-aifx-colors="#f7f7f5,#f7f7f5,#f7f7f5,#f7f7f5" data-aifx-bg="#f7f7f5"
+        data-aifx-speed="0.66" data-aifx-density="11" data-aifx-index-every="0" data-aifx-index-weight="1.35"
+        data-aifx-line-weight="0.4" data-aifx-tint="0" data-aifx-relief="0" data-aifx-scale="1.02" data-aifx-warp="0"
+        data-aifx-paper="0.28" data-aifx-mouse="0.34" class="fixed inset-0 -z-10 pointer-events-none"
+        aria-hidden="true"></div>
 
     <!-- Tactile Grain/Noise Overlay -->
     <div
@@ -80,11 +152,6 @@
     <!-- Editorial Ambient Background behind Hero -->
     <div
         class="absolute top-0 left-0 w-full h-[120vh] -z-10 overflow-hidden pointer-events-none flex items-center justify-center">
-        <!-- Asymmetrical Hairline Grid -->
-        <div class="absolute top-0 left-[8%] md:left-[15%] w-[1px] h-full bg-black/10"></div>
-        <div class="absolute top-0 right-[8%] md:right-[20%] w-[1px] h-full bg-black/10"></div>
-        <div class="absolute top-[20%] md:top-[30%] left-0 w-full h-[1px] bg-black/10"></div>
-
         <!-- Large Abstract Typography Watermarks -->
         <div class="absolute top-[20%] -left-[10%] text-[24vw] font-serif italic text-black/[0.03] leading-none whitespace-nowrap select-none transform -rotate-90 origin-left image-float"
             style="animation-duration: 20s;">
@@ -94,352 +161,351 @@
             style="animation-duration: 25s; animation-delay: -5s;">
             2026
         </div>
-
-        <!-- Distinctive Geometric Accents -->
-        <div class="absolute top-[10%] right-[10%] w-[20vw] max-w-[300px] aspect-square border border-black/10 rounded-full image-float"
-            style="animation-duration: 12s;"></div>
-        <div class="absolute bottom-[20%] left-[5%] w-[15vw] max-w-[200px] aspect-square border border-black/10 flex items-center justify-center image-float"
-            style="animation-duration: 18s; animation-delay: -3s; transform: rotate(15deg);">
-            <div class="w-1.5 h-1.5 bg-black/20 rounded-full"></div>
-        </div>
-
-        <!-- Subtle Gradient Backdrop -->
-        <div
-            class="absolute inset-0 bg-[radial-gradient(circle_at_20%_20%,_rgba(0,0,0,0.02)_0%,_transparent_40%),radial-gradient(circle_at_80%_80%,_rgba(0,0,0,0.02)_0%,_transparent_40%)] mix-blend-darken">
-        </div>
     </div>
 
     <div
-        class="max-w-[1440px] mx-auto px-6 md:px-12 pt-8 selection:bg-neutral-800 selection:text-white pb-20 relative z-10 overflow-x-hidden">
+        class="max-w-[1440px] mx-auto px-6 md:px-12 selection:bg-neutral-800 selection:text-white pb-20 relative z-10 overflow-x-hidden">
 
         <!-- Main Content Landmark -->
         <main id="main-content">
             <!-- Visually Hidden H1 for SEO -->
             <h1 class="sr-only">Deepak S | Web Developer Portfolio</h1>
-            <!-- Top spacing pushed down to compensate for missing heading -->
-            <div class="pt-8"></div>
 
-        <!-- Desktop Hero (Laptop Frame - Hidden on Mobile) -->
-        <div
-            class="hidden md:flex laptop-container select-none justify-center items-center relative mx-auto mb-20 md:mb-32 mt-[-50px] md:mt-[-160px] perspective-[2000px] transform scale-100 md:scale-110 origin-center">
-            <!-- Fixed dimensions so rotation pivot is perfectly centered -->
-            <div
-                class="laptop relative w-[800px] h-[640px] scale-[0.6] md:scale-[1.15] origin-center rotate-[-90deg] translate(-50%, -50%) select-none">
-                <div class="laptop-bottom"><img src="./images/base.png" alt="Laptop Base Illustration"
-                        width="20" height="650" fetchpriority="high" decoding="async" draggable="false">
-                </div>
-                <div class="laptop-top"><img src="./images/lid.png" alt="Laptop Lid Illustration" width="8" height="650" fetchpriority="high" decoding="async" draggable="false">
-                </div>
-                <div class="laptop-block">
-                    <img src="./images/screen.webp" alt="Laptop Screen Illustration" width="398" height="620" fetchpriority="high" decoding="async" draggable="false">
+            <!-- Desktop Hero (Laptop Frame - Hidden on Mobile) -->
+            <div class="hidden md:block w-full" style="height: 100vh; position: relative;">
+                <div class="laptop-container select-none"
+                    style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -100%) scale(1.75); transform-origin: center center;">
+                    <!-- Fixed dimensions so rotation pivot is perfectly centered -->
+                    <div class="laptop relative w-[800px] h-[640px] select-none">
+                        <div class="laptop-bottom"><img src="./images/base.png" alt="Laptop Base Illustration"
+                                width="20" height="650" fetchpriority="high" decoding="async" draggable="false">
+                        </div>
+                        <div class="laptop-top"><img src="./images/lid.png" alt="Laptop Lid Illustration" width="8"
+                                height="650" fetchpriority="high" decoding="async" draggable="false">
+                        </div>
+                        <div class="laptop-block">
+                            <img src="./images/screen.webp" alt="Laptop Screen Illustration" width="398" height="620"
+                                fetchpriority="high" decoding="async" draggable="false">
 
-                    <!-- Screen Content Container -->
-                    <div class="screen-content bg-white overflow-hidden">
-                        <div class="glare-overlay"></div>
-                        <div class="h-full w-full relative overflow-y-auto no-scrollbar bg-[#f8f8f8]">
-                            <!-- Subtle noise overlay for the laptop screen -->
-                            <div class="absolute inset-0 opacity-[0.03] pointer-events-none z-0"
-                                style="background-image: url('data:image/svg+xml,%3Csvg viewBox=%220 0 200 200%22 xmlns=%22http://www.w3.org/2000/svg%22%3E%3Cfilter id=%22noiseFilter%22%3E%3CfeTurbulence type=%22fractalNoise%22 baseFrequency=%220.65%22 numOctaves=%223%22 stitchTiles=%22stitch%22/%3E%3C/filter%3E%3Crect width=%22100%25%22 height=%22100%25%22 filter=%22url(%23noiseFilter)%22/%3E%3C/svg%3E');">
+                            <!-- Screen Content Container -->
+                            <div class="screen-content bg-white overflow-hidden">
+                                <div class="glare-overlay"></div>
+                                <div class="h-full w-full relative overflow-y-auto no-scrollbar bg-[#f8f8f8]">
+                                    <!-- Subtle noise overlay for the laptop screen -->
+                                    <div class="absolute inset-0 opacity-[0.03] pointer-events-none z-0"
+                                        style="background-image: url('data:image/svg+xml,%3Csvg viewBox=%220 0 200 200%22 xmlns=%22http://www.w3.org/2000/svg%22%3E%3Cfilter id=%22noiseFilter%22%3E%3CfeTurbulence type=%22fractalNoise%22 baseFrequency=%220.65%22 numOctaves=%223%22 stitchTiles=%22stitch%22/%3E%3C/filter%3E%3Crect width=%22100%25%22 height=%22100%25%22 filter=%22url(%23noiseFilter)%22/%3E%3C/svg%3E');">
+                                    </div>
+
+                                    <!-- Inner Header -->
+                                    <header
+                                        class="flex justify-between items-center py-2 px-4 md:py-3 md:px-4 absolute top-0 left-0 right-0 z-30 pointer-events-none w-full border-b border-black/10">
+                                        <div class="flex items-center gap-2 pointer-events-auto">
+                                            <div
+                                                class="w-4 h-4 md:w-6 md:h-6 bg-black text-white rounded-none flex items-center justify-center font-bold text-[8px] md:text-xs">
+                                                DS</div>
+                                        </div>
+                                        <nav
+                                            class="hidden md:flex items-center gap-4 text-[7px] md:text-[9px] font-bold uppercase tracking-widest text-black/60 pointer-events-auto">
+                                            <a href="#projects" class="hover:text-black transition-colors">Projects</a>
+                                            <a href="#about" class="hover:text-black transition-colors">About</a>
+                                        </nav>
+                                        <a href="#contact"
+                                            class="hidden md:inline-flex items-center justify-center px-3 py-1 border border-black text-[7px] md:text-[9px] font-bold uppercase tracking-widest hover:bg-black hover:text-white transition-all pointer-events-auto rounded-none">
+                                            Get in touch
+                                        </a>
+                                    </header>
+
+                                    <!-- Hero Section placed inside Laptop -->
+                                    <section
+                                        class="relative pt-8 md:pt-12 h-full grid grid-cols-12 gap-2 md:gap-4 items-end overflow-hidden">
+                                        <div
+                                            class="absolute left-0 top-0 w-full h-full pointer-events-none grid grid-cols-12 gap-2 md:gap-4 px-4 md:px-12 z-0 opacity-10">
+                                            <div class="border-l border-black h-full col-span-1"></div>
+                                            <div class="border-l border-r border-black h-full col-span-10"></div>
+                                            <div class="border-r border-black h-full col-span-1"></div>
+                                        </div>
+                                        <div
+                                            class="col-span-7 z-10 flex flex-col justify-center h-full relative pl-4 md:pl-12 pb-4 md:pb-8">
+                                            <div
+                                                class="absolute top-2 md:top-4 left-4 md:left-12 flex gap-4 md:gap-6 origin-top-left scale-[0.5] md:scale-90 opacity-90 border-b border-black/20 pb-2">
+                                                <div>
+                                                    <span
+                                                        class="block text-xs md:text-sm font-serif italic font-bold">+200</span>
+                                                    <span
+                                                        class="text-[5px] md:text-[6px] text-gray-400 uppercase tracking-widest mt-0.5 block">Happy
+                                                        Clients</span>
+                                                </div>
+                                                <div>
+                                                    <span
+                                                        class="block text-xs md:text-sm font-serif italic font-bold">+50</span>
+                                                    <span
+                                                        class="text-[5px] md:text-[6px] text-gray-400 uppercase tracking-widest mt-0.5 block">Projects
+                                                        Done</span>
+                                                </div>
+                                            </div>
+                                            <div class="mt-4 md:mt-12">
+                                                <h2
+                                                    class="text-[24px] sm:text-[40px] md:text-[60px] lg:text-[70px] leading-[0.85] font-serif italic tracking-tighter text-black w-max pb-2 flex items-center min-h-[40px]">
+                                                    <span class="typewriter-trigger"></span><span
+                                                        class="inline-block w-[2px] md:w-[4px] h-[20px] sm:h-[35px] md:h-[50px] lg:h-[60px] bg-black ml-1 md:ml-3 animate-[pulse_1s_ease-in-out_infinite]"></span>
+                                                </h2>
+                                                <p
+                                                    class="mt-2 md:mt-6 ml-0.5 text-black border-l-2 border-black pl-3 max-w-[150px] md:max-w-[260px] text-[7px] md:text-[10px] leading-relaxed">
+                                                    I'm a <span
+                                                        class="bg-black text-white px-1 py-0.5 font-bold uppercase tracking-widest text-[5px] md:text-[7px] mx-1">Web
+                                                        Developer</span> creating innovative web applications.
+                                                </p>
+                                            </div>
+                                            <div class="mt-6 md:mt-10 flex items-center gap-2">
+                                                <span class="w-4 md:w-8 h-[1px] bg-black"></span>
+                                                <span
+                                                    class="text-[6px] md:text-[8px] font-bold uppercase tracking-[0.2em] text-black pb-2 md:pb-0">est
+                                                    2025</span>
+                                            </div>
+                                        </div>
+                                        <div
+                                            class="col-span-5 relative h-full flex items-end justify-center md:justify-end z-10">
+                                            <div
+                                                class="relative w-full max-w-[160px] md:max-w-[340px] origin-bottom transition-transform duration-500 select-none">
+                                                <img src="./images/profile.webp" alt="Deepak S Portrait" width="640"
+                                                    height="640" fetchpriority="high" decoding="async"
+                                                    class="w-full h-auto object-bottom object-contain grayscale scale-125 md:scale-130 origin-bottom hover:grayscale-0 transition-all duration-500 cursor-pointer hover:scale-135 z-10"
+                                                    draggable="false">
+                                            </div>
+                                        </div>
+                                    </section>
+                                </div>
                             </div>
-
-                            <!-- Inner Header -->
-                            <header
-                                class="flex justify-between items-center py-2 px-4 md:py-3 md:px-4 absolute top-0 left-0 right-0 z-30 pointer-events-none w-full border-b border-black/10">
-                                <div class="flex items-center gap-2 pointer-events-auto">
-                                    <div
-                                        class="w-4 h-4 md:w-6 md:h-6 bg-black text-white rounded-none flex items-center justify-center font-bold text-[8px] md:text-xs">
-                                        DS</div>
-                                </div>
-                                <nav
-                                    class="hidden md:flex items-center gap-4 text-[7px] md:text-[9px] font-bold uppercase tracking-widest text-black/60 pointer-events-auto">
-                                    <a href="#projects" class="hover:text-black transition-colors">Projects</a>
-                                    <a href="#about" class="hover:text-black transition-colors">About</a>
-                                </nav>
-                                <a href="#contact"
-                                    class="hidden md:inline-flex items-center justify-center px-3 py-1 border border-black text-[7px] md:text-[9px] font-bold uppercase tracking-widest hover:bg-black hover:text-white transition-all pointer-events-auto rounded-none">
-                                    Get in touch
-                                </a>
-                            </header>
-
-                            <!-- Hero Section placed inside Laptop -->
-                            <section
-                                class="relative pt-8 md:pt-12 h-full grid grid-cols-12 gap-2 md:gap-4 items-end overflow-hidden">
-                                <div
-                                    class="absolute left-0 top-0 w-full h-full pointer-events-none grid grid-cols-12 gap-2 md:gap-4 px-4 md:px-12 z-0 opacity-10">
-                                    <div class="border-l border-black h-full col-span-1"></div>
-                                    <div class="border-l border-r border-black h-full col-span-10"></div>
-                                    <div class="border-r border-black h-full col-span-1"></div>
-                                </div>
-                                <div
-                                    class="col-span-7 z-10 flex flex-col justify-center h-full relative pl-4 md:pl-12 pb-4 md:pb-8">
-                                    <div
-                                        class="absolute top-2 md:top-4 left-4 md:left-12 flex gap-4 md:gap-6 origin-top-left scale-[0.5] md:scale-90 opacity-90 border-b border-black/20 pb-2">
-                                        <div>
-                                            <span
-                                                class="block text-xs md:text-sm font-serif italic font-bold">+200</span>
-                                            <span
-                                                class="text-[5px] md:text-[6px] text-gray-400 uppercase tracking-widest mt-0.5 block">Happy
-                                                Clients</span>
-                                        </div>
-                                        <div>
-                                            <span
-                                                class="block text-xs md:text-sm font-serif italic font-bold">+50</span>
-                                            <span
-                                                class="text-[5px] md:text-[6px] text-gray-400 uppercase tracking-widest mt-0.5 block">Projects
-                                                Done</span>
-                                        </div>
-                                    </div>
-                                    <div class="mt-4 md:mt-12">
-                                        <h2
-                                            class="text-[24px] sm:text-[40px] md:text-[60px] lg:text-[70px] leading-[0.85] font-serif italic tracking-tighter text-black w-max pb-2 flex items-center min-h-[40px]">
-                                            <span class="typewriter-trigger"></span><span
-                                                class="inline-block w-[2px] md:w-[4px] h-[20px] sm:h-[35px] md:h-[50px] lg:h-[60px] bg-black ml-1 md:ml-3 animate-[pulse_1s_ease-in-out_infinite]"></span>
-                                        </h2>
-                                        <p
-                                            class="mt-2 md:mt-6 ml-0.5 text-black border-l-2 border-black pl-3 max-w-[150px] md:max-w-[260px] text-[7px] md:text-[10px] leading-relaxed">
-                                            I'm a <span
-                                                class="bg-black text-white px-1 py-0.5 font-bold uppercase tracking-widest text-[5px] md:text-[7px] mx-1">Web
-                                                Developer</span> creating innovative web applications.
-                                        </p>
-                                    </div>
-                                    <div class="mt-6 md:mt-10 flex items-center gap-2">
-                                        <span class="w-4 md:w-8 h-[1px] bg-black"></span>
-                                        <span
-                                            class="text-[6px] md:text-[8px] font-bold uppercase tracking-[0.2em] text-black pb-2 md:pb-0">est
-                                            2025</span>
-                                    </div>
-                                </div>
-                                <div
-                                    class="col-span-5 relative h-full flex items-end justify-center md:justify-end z-10">
-                                    <div
-                                        class="relative w-full max-w-[160px] md:max-w-[340px] origin-bottom transition-transform duration-500 select-none">
-                                        <img src="./images/profile.webp" alt="Deepak S Portrait" width="640" height="640" fetchpriority="high" decoding="async"
-                                            class="w-full h-auto object-bottom object-contain grayscale scale-125 md:scale-130 origin-bottom hover:grayscale-0 transition-all duration-500 cursor-pointer hover:scale-135 z-10" draggable="false">
-                                    </div>
-                                </div>
-                            </section>
                         </div>
                     </div>
                 </div>
-            </div>
-        </div>
+            </div><!-- end hero flex wrapper -->
 
-        <!-- MOBILE HERO: Luxury Swiss Editorial (hidden md+) -->
-        <section id="mobile-hero" class="md:hidden w-full relative flex flex-col overflow-hidden">
+            <!-- MOBILE HERO: Luxury Swiss Editorial (hidden md+) -->
+            <section id="mobile-hero" class="md:hidden w-full relative flex flex-col overflow-hidden">
 
-            <!-- Fixed Mobile Navbar -->
-            <nav
-                class="mh-nav md:hidden fixed top-0 left-0 right-0 z-[200] flex justify-between items-center px-6 py-4 border-b border-black/10">
-                <span class="font-display italic text-[13px] tracking-tight text-black font-bold">Deepak S</span>
-                <div class="flex items-center gap-5">
-                    <a href="#projects"
-                        class="text-[9px] font-bold tracking-[0.25em] uppercase text-black/50 hover:text-black transition-colors">Work</a>
-                    <a href="#about"
-                        class="text-[9px] font-bold tracking-[0.25em] uppercase text-black/50 hover:text-black transition-colors">About</a>
-                    <a href="#contact"
-                        class="text-[9px] font-bold tracking-[0.25em] uppercase text-white bg-black px-3 py-1.5">Hire
-                        ↗</a>
-                </div>
-            </nav>
-
-            <!-- Hero Body -->
-            <div class="flex-1 flex flex-col justify-between px-6 pt-[68px] pb-12" style="padding-top: 68px;">
-
-                <!-- Role tag -->
-                <div class="mh-top flex items-center gap-5 mb-14">
-                    <div class="h-px w-5 bg-black/30"></div>
-                    <span class="text-[9px] font-bold uppercase tracking-[0.4em] text-black/40">Web Developer /
-                        2026</span>
-                </div>
-
-                <!-- Hero Headline: One Line -->
-                <div class="mh-headline flex-1">
-                    <div class="overflow-hidden mb-0">
-                        <h2 class="mh-line1 font-display italic leading-[0.85] tracking-tighter text-black whitespace-nowrap"
-                            style="font-size: clamp(58px, 16vw, 96px);">Deepak S</h2>
+                <!-- Fixed Mobile Navbar -->
+                <nav
+                    class="mh-nav md:hidden fixed top-0 left-0 right-0 z-[200] flex justify-between items-center px-6 py-4 border-b border-black/10">
+                    <span class="font-display italic text-[13px] tracking-tight text-black font-bold">Deepak S</span>
+                    <div class="flex items-center gap-5">
+                        <a href="#projects"
+                            class="text-[9px] font-bold tracking-[0.25em] uppercase text-black/50 hover:text-black transition-colors">Work</a>
+                        <a href="#about"
+                            class="text-[9px] font-bold tracking-[0.25em] uppercase text-black/50 hover:text-black transition-colors">About</a>
+                        <a href="#contact"
+                            class="text-[9px] font-bold tracking-[0.25em] uppercase text-white bg-black px-3 py-1.5">Hire
+                            ↗</a>
                     </div>
-                    <div class="overflow-hidden mb-10">
-                        <p class="mh-line2 font-display leading-[0.9] tracking-tighter whitespace-nowrap"
-                            style="font-size: clamp(30px, 9vw, 52px); -webkit-text-stroke: 1px black; color: transparent;">
-                            Web Developer.</p>
+                </nav>
+
+                <!-- Hero Body -->
+                <div class="flex-1 flex flex-col justify-between px-6 pt-[68px] pb-12" style="padding-top: 68px;">
+
+                    <!-- Role tag -->
+                    <div class="mh-top flex items-center gap-5 mb-14">
+                        <div class="h-px w-5 bg-black/30"></div>
+                        <span class="text-[9px] font-bold uppercase tracking-[0.4em] text-black/40">Web Developer /
+                            2026</span>
                     </div>
 
-                    <!-- Self-drawing rule -->
-                    <div class="mh-rule mb-8">
-                        <div class="mh-rule-line h-px bg-black/30 w-full scale-x-0 origin-left"></div>
-                    </div>
-
-                    <!-- Description -->
-                    <p class="mh-desc text-[11.5px] leading-[1.85] text-black/50 max-w-[240px] tracking-wide">
-                        Deepak S (Deepak Dev) — Engineering high-performance web experiences where architecture meets craft.
-                    </p>
-                </div>
-
-                <!-- Bottom: CTA + year -->
-                <div class="mh-bottom mt-10 flex items-center justify-between">
-                    <a href="#projects"
-                        class="mh-cta group inline-flex items-center gap-4 bg-black px-8 py-4 text-[10px] font-bold uppercase tracking-[0.25em]"
-                        style="color: #F4EFE8;">
-                        View Work
-                        <span class="group-hover:translate-x-1 transition-transform inline-block">→</span>
-                    </a>
-                    <span class="text-[8px] font-bold tracking-[0.35em] uppercase text-black/20">EST 2025</span>
-                </div>
-            </div>
-
-            <!-- Decorative corner accent -->
-            <div class="absolute bottom-0 right-0 w-20 h-20 border-t border-l border-black/10"></div>
-        </section>
-
-
-
-        <!-- About Me Section -->
-        <section id="about" class="py-24 reveal-up">
-            <div class="grid grid-cols-1 md:grid-cols-12 gap-12" style="padding-top: 100px;">
-                <!-- Column 1: Text (Span 4) -->
-                <div class="md:col-span-4 pr-8 reveal-up delay-100">
-                    <span class="text-[10px] font-bold uppercase tracking-[0.2em] text-black mb-4 block">About</span>
-                    <h2 class="text-3xl font-serif italic mb-6">Who I am</h2>
-                    <p class="text-black/60 text-sm leading-7 mb-12 max-w-[280px]">
-                        Deepak S is a Computer Science Engineering student and Web Developer passionate about innovative web applications and high-performance engineering.
-                    </p>
-                    <div class="hidden md:block mt-8">
-                        <!-- Decorative Curved Arrow -->
-                        <svg class="text-[#bfbfbf]" xmlns="http://www.w3.org/2000/svg" version="1.1"
-                            xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:svgjs="http://svgjs.dev/svgjs"
-                            viewBox="0 0 800 800">
-                            <g stroke-width="10" stroke="currentColor" fill="none" stroke-linecap="round"
-                                stroke-linejoin="round"
-                                transform="matrix(-0.529919264233205,-0.848048096156426,0.848048096156426,-0.529919264233205,292.74846723071164,941.1869441558524)">
-                                <!-- Drawn Line (No Marker) -->
-                                <path class="arrow-draw" pathLength="100"
-                                    d="M158.70144653320312 248.5Q935.7014465332031 268.5 461.7014465332031 551.5 ">
-                                </path>
-                                <!-- Arrow Marker Wrapper (No Stroke, Just Head) -->
-                                <path class="arrow-head-path" stroke="rgba(0,0,0,0)"
-                                    d="M158.70144653320312 248.5Q935.7014465332031 268.5 461.7014465332031 551.5 "
-                                    marker-end="url(#SvgjsMarker3652)"></path>
-                            </g>
-                            <defs>
-                                <marker markerWidth="7.5" markerHeight="7.5" refX="3.75" refY="3.75"
-                                    viewBox="0 0 7.5 7.5" orient="auto" id="SvgjsMarker3652">
-                                    <polygon points="0,7.5 3.75,3.75 0,0 7.5,3.75" fill="currentColor"></polygon>
-                                </marker>
-                            </defs>
-                        </svg>
-                    </div>
-                </div>
-
-                <!-- Column 2: Stats Card & Portrait (Span 4) - Centered visual -->
-                <div class="md:col-span-4 relative flex flex-col items-center reveal-up delay-200">
-                    <!-- 3+ Card - Brutalist effect -->
-                    <div class="bg-[#f7f7f5] p-6 w-full max-w-[200px] text-center z-10 -mb-12">
-                        <div class="flex justify-center mb-4 text-black">
-                            <span class="text-xl">✦</span>
+                    <!-- Hero Headline: One Line -->
+                    <div class="mh-headline flex-1">
+                        <div class="overflow-hidden mb-0">
+                            <h2 class="mh-line1 font-display italic leading-[0.85] tracking-tighter text-black whitespace-nowrap"
+                                style="font-size: clamp(58px, 16vw, 96px);">Deepak S</h2>
                         </div>
-                        <span class="block text-6xl font-serif italic mb-2 tracking-tighter">3<span
-                                class="text-3xl font-sans">+</span></span>
-                        <p class="text-[9px] text-black/60 uppercase tracking-widest leading-relaxed font-bold">Years of
-                            Coding<br> Experience.</p>
+                        <div class="overflow-hidden mb-10">
+                            <p class="mh-line2 font-display leading-[0.9] tracking-tighter whitespace-nowrap"
+                                style="font-size: clamp(30px, 9vw, 52px); -webkit-text-stroke: 1px black; color: transparent;">
+                                Web Developer.</p>
+                        </div>
+
+                        <!-- Self-drawing rule -->
+                        <div class="mh-rule mb-8">
+                            <div class="mh-rule-line h-px bg-black/30 w-full scale-x-0 origin-left"></div>
+                        </div>
+
+                        <!-- Description -->
+                        <p class="mh-desc text-[11.5px] leading-[1.85] text-black/50 max-w-[240px] tracking-wide">
+                            Deepak S (Deepak Dev) — Engineering high-performance web experiences where architecture
+                            meets craft.
+                        </p>
                     </div>
 
-                    <!-- Portrait Image -->
-                    <div class="w-full max-w-[280px] aspect-[4/5] overflow-hidden border border-black/10 relative z-0 select-none">
-                        <img src="./images/about.webp" alt="Deepak S" width="864" height="1184" loading="lazy" decoding="async"
-                            class="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-500 cursor-pointer hover:scale-105" draggable="false">
+                    <!-- Bottom: CTA + year -->
+                    <div class="mh-bottom mt-10 flex items-center justify-between">
+                        <a href="#projects"
+                            class="mh-cta group inline-flex items-center gap-4 bg-black px-8 py-4 text-[10px] font-bold uppercase tracking-[0.25em]"
+                            style="color: #F4EFE8;">
+                            View Work
+                            <span class="group-hover:translate-x-1 transition-transform inline-block">→</span>
+                        </a>
+                        <span class="text-[8px] font-bold tracking-[0.35em] uppercase text-black/20">EST 2025</span>
                     </div>
                 </div>
 
-                <!-- Column 3: Checklist (Span 4) -->
-                <div class="md:col-span-4 flex flex-col justify-center pl-4 reveal-up delay-300">
-                    <!-- Small decorative image top right -->
-                    <div
-                        class="w-20 h-20 bg-gray-200 overflow-hidden mb-12 self-end hidden md:block border border-black/10 select-none">
-                        <img src="https://images.unsplash.com/photo-1534308143481-c55f00be8bd7?ixlib=rb-1.2.1&auto=format&fit=crop&w=200&q=60&fm=webp"
-                            alt="Abstract" width="200" height="200" loading="lazy"
-                            class="w-full h-full object-cover grayscale opacity-50 hover:grayscale-0 hover:opacity-100 transition-all duration-500 cursor-pointer" draggable="false">
+                <!-- Decorative corner accent -->
+                <div class="absolute bottom-0 right-0 w-20 h-20 border-t border-l border-black/10"></div>
+            </section>
+
+
+
+            <!-- About Me Section -->
+            <section id="about" class="py-24 reveal-up">
+                <div class="grid grid-cols-1 md:grid-cols-12 gap-12" style="padding-top: 100px;">
+                    <!-- Column 1: Text (Span 4) -->
+                    <div class="md:col-span-4 pr-8 reveal-up delay-100">
+                        <span
+                            class="text-[10px] font-bold uppercase tracking-[0.2em] text-black mb-4 block">About</span>
+                        <h2 class="text-3xl font-serif italic mb-6">Who I am</h2>
+                        <p class="text-black/60 text-sm leading-7 mb-12 max-w-[280px]">
+                            Deepak S is a Computer Science Engineering student and Web Developer passionate about
+                            innovative web applications and high-performance engineering.
+                        </p>
+                        <div class="hidden md:block mt-8">
+                            <!-- Decorative Curved Arrow -->
+                            <svg class="text-[#bfbfbf]" xmlns="http://www.w3.org/2000/svg" version="1.1"
+                                xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:svgjs="http://svgjs.dev/svgjs"
+                                viewBox="0 0 800 800">
+                                <g stroke-width="10" stroke="currentColor" fill="none" stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    transform="matrix(-0.529919264233205,-0.848048096156426,0.848048096156426,-0.529919264233205,292.74846723071164,941.1869441558524)">
+                                    <!-- Drawn Line (No Marker) -->
+                                    <path class="arrow-draw" pathLength="100"
+                                        d="M158.70144653320312 248.5Q935.7014465332031 268.5 461.7014465332031 551.5 ">
+                                    </path>
+                                    <!-- Arrow Marker Wrapper (No Stroke, Just Head) -->
+                                    <path class="arrow-head-path" stroke="rgba(0,0,0,0)"
+                                        d="M158.70144653320312 248.5Q935.7014465332031 268.5 461.7014465332031 551.5 "
+                                        marker-end="url(#SvgjsMarker3652)"></path>
+                                </g>
+                                <defs>
+                                    <marker markerWidth="7.5" markerHeight="7.5" refX="3.75" refY="3.75"
+                                        viewBox="0 0 7.5 7.5" orient="auto" id="SvgjsMarker3652">
+                                        <polygon points="0,7.5 3.75,3.75 0,0 7.5,3.75" fill="currentColor"></polygon>
+                                    </marker>
+                                </defs>
+                            </svg>
+                        </div>
                     </div>
 
-                    <ul class="space-y-8 mt-4">
-                        <li class="flex gap-4 items-start border-b border-black/10 pb-6">
-                            <span class="flex-shrink-0 text-lg mt-1 font-serif italic">01</span>
-                            <div>
-                                <h3 class="font-bold text-sm mb-1 uppercase tracking-wider">Web Development</h3>
-                                <p class="text-xs text-black/60 leading-relaxed font-medium">Front-end development with
-                                    HTML, CSS, JavaScript, and Tailwind.</p>
+                    <!-- Column 2: Stats Card & Portrait (Span 4) - Centered visual -->
+                    <div class="md:col-span-4 relative flex flex-col items-center reveal-up delay-200">
+                        <!-- 3+ Card - Brutalist effect -->
+                        <div class="bg-[#f7f7f5] p-6 w-full max-w-[200px] text-center z-10 -mb-12">
+                            <div class="flex justify-center mb-4 text-black">
+                                <span class="text-xl">✦</span>
                             </div>
-                        </li>
-                        <li class="flex gap-4 items-start border-b border-black/10 pb-6">
-                            <span class="flex-shrink-0 text-lg mt-1 font-serif italic">02</span>
-                            <div>
-                                <h3 class="font-bold text-sm mb-1 uppercase tracking-wider">Core Programming</h3>
-                                <p class="text-xs text-black/60 leading-relaxed font-medium">Strong foundation in
-                                    Python, C, and Java.</p>
-                            </div>
-                        </li>
-                        <li class="flex gap-4 items-start border-b border-black/10 pb-6">
-                            <span class="flex-shrink-0 text-lg mt-1 font-serif italic">03</span>
-                            <div>
-                                <h3 class="font-bold text-sm mb-1 uppercase tracking-wider">Specialized Skills</h3>
-                                <p class="text-xs text-black/60 leading-relaxed font-medium">API Integration,
-                                    Git/GitHub, Prompt Engineering.</p>
-                            </div>
-                        </li>
-                    </ul>
-                </div>
-            </div>
+                            <span class="block text-6xl font-serif italic mb-2 tracking-tighter">3<span
+                                    class="text-3xl font-sans">+</span></span>
+                            <p class="text-[9px] text-black/60 uppercase tracking-widest leading-relaxed font-bold">
+                                Years of
+                                Coding<br> Experience.</p>
+                        </div>
 
-            <!-- Logo Loop Animation -->
-            <div class="logo-loop mt-12 mb-0 select-none" id="logo-loop">
-                <div class="logo-loop-fade-left"></div>
-                <div class="logo-loop-fade-right"></div>
-                <div class="logo-loop-track" id="logo-loop-track">
-                    <ul class="logo-loop-list" id="logo-loop-seq">
-                        <li class="logo-loop-item"><img
-                                src="https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/python.svg" alt="Python"
-                                loading="lazy" width="24" height="24"></li>
-                        <li class="logo-loop-item"><img
-                                src="https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/javascript.svg"
-                                alt="JavaScript" loading="lazy" width="24" height="24"></li>
-                        <li class="logo-loop-item"><img
-                                src="https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/react.svg" alt="React"
-                                loading="lazy" width="24" height="24"></li>
-                        <li class="logo-loop-item"><img
-                                src="https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/tailwindcss.svg"
-                                alt="Tailwind CSS" loading="lazy" width="24" height="24"></li>
-                        <li class="logo-loop-item"><img
-                                src="https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/nodedotjs.svg" alt="Node.js"
-                                loading="lazy" width="24" height="24"></li>
-                        <li class="logo-loop-item"><img
-                                src="https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/vercel.svg" alt="Vercel"
-                                loading="lazy" width="24" height="24"></li>
-                        <li class="logo-loop-item"><img
-                                src="https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/git.svg" alt="Git"
-                                loading="lazy" width="24" height="24"></li>
-                        <li class="logo-loop-item"><img
-                                src="https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/figma.svg" alt="Figma"
-                                loading="lazy" width="24" height="24"></li>
-                    </ul>
-                </div>
-            </div>
-        </section>
+                        <!-- Portrait Image -->
+                        <div
+                            class="w-full max-w-[280px] aspect-[4/5] overflow-hidden border border-black/10 relative z-0 select-none">
+                            <img src="./images/about.webp" alt="Deepak S" width="864" height="1184" loading="lazy"
+                                decoding="async"
+                                class="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-500 cursor-pointer hover:scale-105"
+                                draggable="false">
+                        </div>
+                    </div>
 
-        <!-- Projects Section -->
-        <section id="projects" class="reveal-up">
-            <div class="flex flex-col md:flex-row justify-between items-start md:items-end mb-16 gap-8 text-left">
-                <div class="max-w-xl">
-                    <span class="text-[10px] font-bold uppercase tracking-[0.2em] text-black mb-4 block">Work</span>
-                    <h2 class="text-6xl font-serif italic tracking-tighter leading-[0.9]">Selected<br>Projects</h2>
-                </div>
-                <p class="text-black/60 text-sm max-w-[300px] leading-relaxed">
-                    A collection of digital experiences where logic meets aesthetics, and performance meets purpose.
-                </p>
-            </div>
+                    <!-- Column 3: Checklist (Span 4) -->
+                    <div class="md:col-span-4 flex flex-col justify-center pl-4 reveal-up delay-300">
+                        <!-- Small decorative image top right -->
+                        <div
+                            class="w-20 h-20 bg-gray-200 overflow-hidden mb-12 self-end hidden md:block border border-black/10 select-none">
+                            <img src="https://images.unsplash.com/photo-1534308143481-c55f00be8bd7?ixlib=rb-1.2.1&auto=format&fit=crop&w=200&q=60&fm=webp"
+                                alt="Abstract" width="200" height="200" loading="lazy"
+                                class="w-full h-full object-cover grayscale opacity-50 hover:grayscale-0 hover:opacity-100 transition-all duration-500 cursor-pointer"
+                                draggable="false">
+                        </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-12" id="projects-grid">
-                <!-- Data will be loaded from projects.json -->
-            </div>
-        </section>
+                        <ul class="space-y-8 mt-4">
+                            <li class="flex gap-4 items-start border-b border-black/10 pb-6">
+                                <span class="flex-shrink-0 text-lg mt-1 font-serif italic">01</span>
+                                <div>
+                                    <h3 class="font-bold text-sm mb-1 uppercase tracking-wider">Web Development</h3>
+                                    <p class="text-xs text-black/60 leading-relaxed font-medium">Front-end development
+                                        with
+                                        HTML, CSS, JavaScript, and Tailwind.</p>
+                                </div>
+                            </li>
+                            <li class="flex gap-4 items-start border-b border-black/10 pb-6">
+                                <span class="flex-shrink-0 text-lg mt-1 font-serif italic">02</span>
+                                <div>
+                                    <h3 class="font-bold text-sm mb-1 uppercase tracking-wider">Core Programming</h3>
+                                    <p class="text-xs text-black/60 leading-relaxed font-medium">Strong foundation in
+                                        Python, C, and Java.</p>
+                                </div>
+                            </li>
+                            <li class="flex gap-4 items-start border-b border-black/10 pb-6">
+                                <span class="flex-shrink-0 text-lg mt-1 font-serif italic">03</span>
+                                <div>
+                                    <h3 class="font-bold text-sm mb-1 uppercase tracking-wider">Specialized Skills</h3>
+                                    <p class="text-xs text-black/60 leading-relaxed font-medium">API Integration,
+                                        Git/GitHub, Prompt Engineering.</p>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Logo Loop Animation -->
+                <div class="logo-loop mt-12 mb-0 select-none" id="logo-loop">
+                    <div class="logo-loop-fade-left"></div>
+                    <div class="logo-loop-fade-right"></div>
+                    <div class="logo-loop-track" id="logo-loop-track">
+                        <ul class="logo-loop-list" id="logo-loop-seq">
+                            <li class="logo-loop-item"><img
+                                    src="https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/python.svg" alt="Python"
+                                    loading="lazy" width="24" height="24"></li>
+                            <li class="logo-loop-item"><img
+                                    src="https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/javascript.svg"
+                                    alt="JavaScript" loading="lazy" width="24" height="24"></li>
+                            <li class="logo-loop-item"><img
+                                    src="https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/react.svg" alt="React"
+                                    loading="lazy" width="24" height="24"></li>
+                            <li class="logo-loop-item"><img
+                                    src="https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/tailwindcss.svg"
+                                    alt="Tailwind CSS" loading="lazy" width="24" height="24"></li>
+                            <li class="logo-loop-item"><img
+                                    src="https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/nodedotjs.svg"
+                                    alt="Node.js" loading="lazy" width="24" height="24"></li>
+                            <li class="logo-loop-item"><img
+                                    src="https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/vercel.svg" alt="Vercel"
+                                    loading="lazy" width="24" height="24"></li>
+                            <li class="logo-loop-item"><img
+                                    src="https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/git.svg" alt="Git"
+                                    loading="lazy" width="24" height="24"></li>
+                            <li class="logo-loop-item"><img
+                                    src="https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/figma.svg" alt="Figma"
+                                    loading="lazy" width="24" height="24"></li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Projects Section -->
+            <section id="projects" class="reveal-up">
+                <div class="flex flex-col md:flex-row justify-between items-start md:items-end mb-16 gap-8 text-left">
+                    <div class="max-w-xl">
+                        <span class="text-[10px] font-bold uppercase tracking-[0.2em] text-black mb-4 block">Work</span>
+                        <h2 class="text-6xl font-serif italic tracking-tighter leading-[0.9]">Selected<br>Projects</h2>
+                    </div>
+                    <p class="text-black/60 text-sm max-w-[300px] leading-relaxed">
+                        A collection of digital experiences where logic meets aesthetics, and performance meets purpose.
+                    </p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-12" id="projects-grid">
+                    <!-- Data will be loaded from projects.json -->
+                </div>
+            </section>
 
     </div>
 
@@ -532,6 +598,35 @@
                         <span class="text-xs font-serif italic text-black/40 mt-2">02</span>
                         <div>
                             <h3 class="text-3xl font-serif italic mb-2 group-hover:pl-4 transition-all duration-300">
+                                Full-Stack Development Intern</h3>
+                            <p
+                                class="text-black/60 text-xs font-bold uppercase tracking-widest mt-2 max-w-sm leading-relaxed">
+                                Kotlerx Technologies Pvt. Ltd. • July 2026 - Present <br>
+                                <span class="font-medium text-black/40 normal-case tracking-normal block mt-2">Developing
+                                    scalable full-stack web applications, integrating APIs, and building responsive,
+                                    high-performance digital solutions.</span>
+                            </p>
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-8 mt-6 md:mt-0 w-full md:w-auto justify-between md:justify-end">
+                        <span class="text-[10px] font-bold uppercase tracking-[0.2em] text-black">Internship</span>
+                        <div
+                            class="w-12 h-12 border border-black/20 flex items-center justify-center group-hover:bg-black group-hover:text-white transition-all transform group-hover:scale-110">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="1.5">
+                                <path d="M7 17L17 7M17 7H7M17 7V17" />
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Item 3 -->
+                <div
+                    class="group flex flex-col md:flex-row justify-between items-center py-10 border-b border-black/20 hover:border-black transition-colors cursor-pointer reveal-up delay-300">
+                    <div class="flex items-start gap-8 w-full md:w-auto">
+                        <span class="text-xs font-serif italic text-black/40 mt-2">03</span>
+                        <div>
+                            <h3 class="text-3xl font-serif italic mb-2 group-hover:pl-4 transition-all duration-300">
                                 Web Development Intern</h3>
                             <p
                                 class="text-black/60 text-xs font-bold uppercase tracking-widest mt-2 max-w-sm leading-relaxed">
@@ -563,7 +658,8 @@
         <div class="relative bg-black overflow-hidden min-h-[400px] flex items-center">
             <div class="absolute inset-0 select-none pointer-events-none">
                 <img src="https://images.unsplash.com/photo-1550745165-9bc0b252726f?ixlib=rb-1.2.1&auto=format&fit=crop&w=1200&q=60&fm=webp"
-                    alt="Background" width="1200" height="675" class="w-full h-full object-cover opacity-50" loading="lazy" draggable="false">
+                    alt="Background" width="1200" height="675" class="w-full h-full object-cover opacity-50"
+                    loading="lazy" draggable="false">
             </div>
 
             <div
@@ -655,7 +751,7 @@
             </form>
         </div>
     </div>
-        </main>
+    </main>
 
     <footer class="bg-black text-white py-20 px-6 md:px-12 reveal-up">
         <div
@@ -665,7 +761,8 @@
                 <div
                     class="w-10 h-10 bg-white text-black rounded-lg flex items-center justify-center font-bold text-xl">
                     DS</div>
-                <p class="text-gray-400 text-sm max-w-xs">Deepak Sites (Deepaksites) — Creating digital experiences that matter.</p>
+                <p class="text-gray-400 text-sm max-w-xs">Deepak Sites (Deepaksites) — Creating digital experiences that
+                    matter.</p>
             </div>
 
             <!-- Utility Navigation -->
@@ -709,7 +806,10 @@
         </div>
     </footer>
 
+    <script src="https://unpkg.com/lenis@1.1.18/dist/lenis.min.js"></script>
     <script src="script.js?v=2" defer></script>
+    <!-- Effect runtime -->
+    <script src="https://cdn.aidesigner.ai/effects/runtime/v1.js" defer></script>
 </body>
 
 </html>

@@ -1,0 +1,33 @@
+# Deepak S | Deepak Sites — Web Developer Portfolio
+
+> Official llms.txt for Deepak S (Deepak Sites / deepaksites), a Computer Science Engineer and Web Developer specializing in high-performance frontend architecture, responsive web applications, and modern digital craft.
+
+Deepak S is a web developer and computer science student with 3+ years of programming experience, building fast, modern, and aesthetically crafted web applications. He provides freelance web development services and works across JavaScript, React, and Python ecosystems.
+
+## Portfolio & Profiles
+
+- [Portfolio Website](https://deepaksites-portfolio.vercel.app/): Official portfolio showcasing selected projects, interactive UI work, and design engineering.
+- [GitHub Profile](https://github.com/deepak-raven): Open-source repositories, experiments, and source code.
+- [LinkedIn Profile](https://linkedin.com/in/contact-deepak-s): Professional background, networking, and career timeline.
+- [Contact Email](mailto:deepak.me005@gmail.com): Direct inquiry email for freelance inquiries, contract roles, and collaboration.
+
+## Featured Projects
+
+- [Colab-IDE](https://colab-ide-nine.vercel.app/): Interactive digital product and cloud IDE environment demo featuring browser-based editing and developer tools.
+- [AetherStore](https://aetherstore-eosin.vercel.app/): High-performance e-commerce demo application with seamless product catalog and cart experience.
+- [Realestate Demo](https://realestateweb-demo.vercel.app/): Modern real estate platform demo for property browsing, listings, and responsive filtering.
+- [Momo Shop Demo](https://momo-demo-one.vercel.app/): Food and restaurant web experience featuring interactive menu displays and culinary branding.
+- [Gym Website](https://gym-demo-jade.vercel.app/): Fitness and gym club web platform showcasing classes, trainer profiles, and membership tiers.
+
+## Technical Skills
+
+- **Languages**: JavaScript (ES6+), Python, C, Java, HTML5, CSS3
+- **Frameworks & Libraries**: React, Node.js, Tailwind CSS, Lenis (Smooth Scroll)
+- **Developer Tools & Platforms**: Git, GitHub, Vercel, Figma, PostCSS
+- **Specializations**: Responsive UI Engineering, Performance Optimization, Semantic SEO, API Integration, Interactive Web Animations
+
+## Professional Experience
+
+- [Freelance Web Developer](https://deepaksites-portfolio.vercel.app/#experience): Independent (Present) — Engineering bespoke, high-converting websites and digital interfaces for international clients.
+- [Full-Stack Development Intern](https://deepaksites-portfolio.vercel.app/#experience): Kotlerx Technologies Pvt Ltd (July 2026 – Present) — Developing scalable full-stack web applications, integrating APIs, and building responsive digital solutions.
+- [Web Development Intern](https://deepaksites-portfolio.vercel.app/#experience): Slytherin Private Solution Limited (Aug 2025 – Present) — Developing interactive web apps, creating reusable codebases, and performance tuning.
