@@ -22,7 +22,7 @@ Deepak S is a web developer and computer science student with 3+ years of progra
 ## Technical Skills
 
 - **Languages**: JavaScript (ES6+), Python, C, Java, HTML5, CSS3
-- **Frameworks & Libraries**: React, Node.js, Tailwind CSS
+- **Frameworks & Libraries**: React, Node.js, Tailwind CSS, Lenis (Smooth Scroll)
 - **Developer Tools & Platforms**: Git, GitHub, Vercel, Figma, PostCSS
 - **Specializations**: Responsive UI Engineering, Performance Optimization, Semantic SEO, API Integration, Interactive Web Animations
 
