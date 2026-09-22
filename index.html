@@ -85,13 +85,6 @@
             transform: translateY(30px);
         }
 
-        [data-aifx-wm] {
-            display: none !important;
-            visibility: hidden !important;
-            opacity: 0 !important;
-            pointer-events: none !important;
-        }
-
         /* Only apply mobile hero layouts on small screens to prevent ID selector conflicts with md:hidden */
         @media (max-width: 767px) {
             #mobile-hero {
@@ -140,12 +133,9 @@
 <body
     class="bg-[#f7f7f5] text-brand-black font-sans antialiased selection:bg-black selection:text-white relative isolate">
 
-    <!-- Topo Lines Background Effect -->
-    <div data-aifx="topo-lines" data-aifx-colors="#f7f7f5,#f7f7f5,#f7f7f5,#f7f7f5" data-aifx-bg="#f7f7f5"
-        data-aifx-speed="0.66" data-aifx-density="11" data-aifx-index-every="0" data-aifx-index-weight="1.35"
-        data-aifx-line-weight="0.4" data-aifx-tint="0" data-aifx-relief="0" data-aifx-scale="1.02" data-aifx-warp="0"
-        data-aifx-paper="0.28" data-aifx-mouse="0.34" class="fixed inset-0 -z-10 pointer-events-none"
-        aria-hidden="true"></div>
+    <!-- Topographic Contour Lines Background (Native Canvas) -->
+    <canvas id="topo-canvas" class="fixed inset-0 -z-10 pointer-events-none w-full h-full" aria-hidden="true"></canvas>
+
 
     <!-- Tactile Grain/Noise Overlay -->
     <div
@@ -811,8 +801,6 @@
 
     <script src="https://unpkg.com/lenis@1.1.18/dist/lenis.min.js"></script>
     <script src="script.js?v=2" defer></script>
-    <!-- Effect runtime -->
-    <script src="https://cdn.aidesigner.ai/effects/runtime/v1.js" defer></script>
 </body>
 
 </html>

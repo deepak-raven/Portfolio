@@ -27,6 +27,334 @@ document.addEventListener('DOMContentLoaded', () => {
     };
     makeImagesNonDraggable();
 
+    // Topographic Lines Background Effect (Exact WebGL implementation, self-hosted & zero dependencies)
+    const initTopoLines = () => {
+        const canvas = document.getElementById('topo-canvas');
+        if (!canvas) return;
+
+        const gl = canvas.getContext('webgl', { alpha: true, antialias: false, premultipliedAlpha: false }) ||
+                   canvas.getContext('experimental-webgl');
+        if (!gl) return;
+
+        const vsSource = `
+            attribute vec2 a_pos;
+            varying vec2 v_uv;
+            void main(){
+                v_uv = a_pos * 0.5 + 0.5;
+                gl_Position = vec4(a_pos, 0.0, 1.0);
+            }
+        `;
+
+        const fsSource = `
+            precision highp float;
+            varying vec2 v_uv;
+            uniform vec2 u_res;
+            uniform float u_time, u_speed, u_density, u_scale, u_warp, u_lineW, u_idxEvery, u_idxWeight, u_tint, u_relief, u_paper, u_bgalpha, u_colorCount;
+            uniform vec2 u_mouse;
+            uniform float u_mouseAct, u_mouseStr;
+            uniform vec3 u_bg, u_ink0, u_ink1, u_c0, u_c1, u_c2, u_c3, u_c4;
+
+            float hash(vec2 p){ return fract(sin(dot(p, vec2(127.1, 311.7))) * 43758.5453123); }
+            float noise(vec2 p){
+                vec2 i = floor(p), f = fract(p);
+                f = f * f * (3.0 - 2.0 * f);
+                return mix(mix(hash(i), hash(i + vec2(1.0, 0.0)), f.x), mix(hash(i + vec2(0.0, 1.0)), hash(i + vec2(1.0, 1.0)), f.x), f.y);
+            }
+
+            float fbm2(vec2 p, float t){
+                float v = 0.0, a = 0.56;
+                mat2 m = mat2(0.80, 0.60, -0.60, 0.80);
+                vec2 sh = vec2(t * 0.11, t * 0.07);
+                for(int i = 0; i < 2; i++){
+                    v += a * noise(p + sh);
+                    p = m * p * 2.02 + vec2(7.3, 3.1);
+                    sh = m * sh * 1.35;
+                    a *= 0.52;
+                }
+                return v * 1.18;
+            }
+
+            float fbm3(vec2 p, float t){
+                float v = 0.0, a = 0.54;
+                mat2 m = mat2(0.80, 0.60, -0.60, 0.80);
+                vec2 sh = vec2(t * 0.10, t * 0.06);
+                for(int i = 0; i < 3; i++){
+                    v += a * noise(p + sh);
+                    p = m * p * 2.02 + vec2(7.3, 3.1);
+                    sh = m * sh * 1.35;
+                    a *= 0.52;
+                }
+                return v * 1.04;
+            }
+
+            float fbm4(vec2 p, float t){
+                float v = 0.0, a = 0.52;
+                mat2 m = mat2(0.80, 0.60, -0.60, 0.80);
+                vec2 sh = vec2(t * 0.085, t * 0.055);
+                for(int i = 0; i < 4; i++){
+                    v += a * noise(p + sh);
+                    p = m * p * 2.03 + vec2(7.3, 3.1);
+                    sh = m * sh * 1.35;
+                    a *= 0.52;
+                }
+                return v * 1.02;
+            }
+
+            float terrain(vec2 p, float t){
+                p = mat2(1.02, 0.20, -0.14, 0.92) * p;
+                float base = fbm3(p * 0.5, t * 0.7);
+                base = (base - 0.5) * 1.7 + 0.5;
+                float hi = smoothstep(0.35, 0.85, base);
+                float d = fbm4(p * 1.75 + vec2(13.7, 5.2), t);
+                return base + (d - 0.50) * (0.30 + 0.50 * hi);
+            }
+
+            float height(vec2 uv, vec2 wOff, float t, float mAmp, float mR2){
+                float h = terrain(uv * u_scale + wOff, t);
+                vec2 mr = uv - u_mouse;
+                h += mAmp * exp(-dot(mr, mr) / mR2);
+                return h;
+            }
+
+            vec3 pick(float k){
+                if(k < 0.5) return u_c0;
+                if(k < 1.5) return u_c1;
+                if(k < 2.5) return u_c2;
+                if(k < 3.5) return u_c3;
+                return u_c4;
+            }
+
+            vec3 ramp(float x){
+                float f = clamp(x, 0.0, 1.0) * (u_colorCount - 1.0);
+                float fr = fract(f);
+                fr = fr * fr * (3.0 - 2.0 * fr);
+                vec3 a = pick(floor(f)), b = pick(min(floor(f) + 1.0, u_colorCount - 1.0));
+                return sqrt(mix(a * a, b * b, fr));
+            }
+
+            void main(){
+                float aspect = u_res.x / max(u_res.y, 1.0);
+                vec2 uv = vec2(v_uv.x * aspect, v_uv.y);
+                float t = u_time * u_speed;
+                float e = 1.0 / max(u_res.y, 1.0);
+
+                float mAct = u_mouseStr * u_mouseAct;
+                float mAmp = mAct * 7.5 / max(u_density, 4.0);
+                float mR = 0.085 + 0.050 * mAct;
+                float mR2 = mR * mR;
+
+                vec2 q = vec2(fbm2(uv * 0.8 + vec2(2.3, 9.1), t * 0.55), fbm2(uv * 0.8 + vec2(8.7, 3.9), t * 0.50));
+                vec2 wOff = (q - 0.5) * u_warp;
+
+                float h0 = height(uv, wOff, t, mAmp, mR2);
+                float hx = height(uv + vec2(e, 0.0), wOff, t, mAmp, mR2);
+                float hy = height(uv + vec2(0.0, e), wOff, t, mAmp, mR2);
+                vec2 slope = vec2(hx - h0, hy - h0) / e;
+
+                float N = u_density;
+                float H = h0 * N;
+                float gradPx = length(vec2(hx - h0, hy - h0)) * N;
+                float spacing = 1.0 / max(gradPx, 1e-4);
+                float dInt = 0.5 - abs(fract(H) - 0.5);
+                float dPx = dInt / max(gradPx, 1e-4);
+
+                float ie = max(u_idxEvery, 2.0);
+                float idx = floor(H + 0.5);
+                float hasIdx = (u_idxEvery > 1.5) ? 1.0 : 0.0;
+                float isIdx = hasIdx * (1.0 - step(0.5, mod(idx, ie)));
+
+                float aa = 0.65;
+                float halfW = u_lineW * mix(0.50, 0.50 + 0.62 * u_idxWeight, isIdx);
+                float line = 1.0 - smoothstep(halfW - aa, halfW + aa, dPx);
+                line *= smoothstep(2.1, 4.6, spacing);
+                float inkA = line * mix(0.55, 1.0, isIdx);
+
+                vec2 mrel = uv - u_mouse;
+                inkA = min(inkA * (1.0 + 0.30 * mAct * exp(-dot(mrel, mrel) / (mR2 * 5.0))), 1.0);
+
+                float bandN = mix(1.0, ie, hasIdx);
+                float Hi = H / bandN;
+                float fi = fract(Hi);
+                float stepAA = clamp(fi * bandN / max(gradPx * 1.5, 1e-4), 0.0, 1.0);
+                float lev = clamp(((floor(Hi) + stepAA) * bandN / N + 0.18) * 0.78, 0.0, 1.0);
+                vec3 fill = mix(u_bg, ramp(lev), u_tint);
+
+                float shade = dot(slope, vec2(-0.51, 0.86));
+                fill *= 1.0 + u_relief * clamp(shade * 0.13, -0.20, 0.24);
+
+                float mot = noise(gl_FragCoord.xy * 0.055) * 0.65 + noise(gl_FragCoord.xy * 0.21 + 7.3) * 0.35;
+                fill *= 1.0 + u_paper * (mot - 0.5) * 0.075;
+                fill += u_paper * (hash(gl_FragCoord.xy) - 0.5) * 0.024;
+
+                float vig = smoothstep(0.42, 0.85, length((v_uv - 0.5) * vec2(1.15, 1.0)));
+                fill *= 1.0 - 0.05 * vig;
+
+                vec3 inkCol = mix(u_ink0, u_ink1, isIdx);
+                vec3 col = mix(fill, inkCol, inkA);
+
+                col += (hash(gl_FragCoord.xy + fract(t * 3.7) * vec2(31.7, 17.3)) - 0.5) * 0.007;
+                col = clamp(col, 0.0, 1.0);
+
+                float alpha = max(u_bgalpha, clamp(inkA + u_tint * 0.4 * smoothstep(0.05, 0.6, lev), 0.0, 1.0));
+                gl_FragColor = vec4(col, alpha);
+            }
+        `;
+
+        const createShader = (type, source) => {
+            const shader = gl.createShader(type);
+            gl.shaderSource(shader, source);
+            gl.compileShader(shader);
+            if (!gl.getShaderParameter(shader, gl.COMPILE_STATUS)) {
+                console.warn(gl.getShaderInfoLog(shader));
+                gl.deleteShader(shader);
+                return null;
+            }
+            return shader;
+        };
+
+        const vs = createShader(gl.VERTEX_SHADER, vsSource);
+        const fs = createShader(gl.FRAGMENT_SHADER, fsSource);
+        if (!vs || !fs) return;
+
+        const program = gl.createProgram();
+        gl.attachShader(program, vs);
+        gl.attachShader(program, fs);
+        gl.linkProgram(program);
+        if (!gl.getProgramParameter(program, gl.LINK_STATUS)) {
+            console.warn(gl.getProgramInfoLog(program));
+            return;
+        }
+
+        gl.useProgram(program);
+
+        // Fullscreen quad triangle buffer
+        const buffer = gl.createBuffer();
+        gl.bindBuffer(gl.ARRAY_BUFFER, buffer);
+        gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1, -1, 3, -1, -1, 3]), gl.STATIC_DRAW);
+
+        const aPos = gl.getAttribLocation(program, 'a_pos');
+        gl.enableVertexAttribArray(aPos);
+        gl.vertexAttribPointer(aPos, 2, gl.FLOAT, false, 0, 0);
+
+        gl.enable(gl.BLEND);
+        gl.blendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA);
+
+        const uniforms = {};
+        const getUniform = (name) => {
+            if (!(name in uniforms)) uniforms[name] = gl.getUniformLocation(program, name);
+            return uniforms[name];
+        };
+
+        const hexToRgb = (hex) => {
+            let c = hex.replace('#', '');
+            if (c.length === 3) c = c.split('').map(x => x + x).join('');
+            const n = parseInt(c, 16);
+            return [(n >> 16 & 255) / 255, (n >> 8 & 255) / 255, (n & 255) / 255];
+        };
+
+        // EXACT PREVIOUS CONFIGURATION VALUES:
+        // colors="#f7f7f5,#f7f7f5,#f7f7f5,#f7f7f5"
+        // bg="#f7f7f5"
+        // speed="0.66"
+        // density="11"
+        // index-every="0"
+        // index-weight="1.35"
+        // line-weight="0.4"
+        // tint="0"
+        // relief="0"
+        // scale="1.02"
+        // warp="0"
+        // paper="0.28"
+        // mouse="0.34"
+
+        const bgRgb = hexToRgb('#f7f7f5');
+        const ink0Rgb = hexToRgb('#6a543b');
+        const ink1Rgb = hexToRgb('#3e3226');
+        const c0Rgb = hexToRgb('#f7f7f5');
+
+        gl.uniform3f(getUniform('u_bg'), bgRgb[0], bgRgb[1], bgRgb[2]);
+        gl.uniform3f(getUniform('u_ink0'), ink0Rgb[0], ink0Rgb[1], ink0Rgb[2]);
+        gl.uniform3f(getUniform('u_ink1'), ink1Rgb[0], ink1Rgb[1], ink1Rgb[2]);
+        gl.uniform3f(getUniform('u_c0'), c0Rgb[0], c0Rgb[1], c0Rgb[2]);
+        gl.uniform3f(getUniform('u_c1'), c0Rgb[0], c0Rgb[1], c0Rgb[2]);
+        gl.uniform3f(getUniform('u_c2'), c0Rgb[0], c0Rgb[1], c0Rgb[2]);
+        gl.uniform3f(getUniform('u_c3'), c0Rgb[0], c0Rgb[1], c0Rgb[2]);
+        gl.uniform3f(getUniform('u_c4'), c0Rgb[0], c0Rgb[1], c0Rgb[2]);
+
+        gl.uniform1f(getUniform('u_colorCount'), 4.0);
+        gl.uniform1f(getUniform('u_bgalpha'), 1.0);
+        gl.uniform1f(getUniform('u_speed'), 0.66);
+        gl.uniform1f(getUniform('u_density'), 11.0);
+        gl.uniform1f(getUniform('u_idxEvery'), 0.0);
+        gl.uniform1f(getUniform('u_idxWeight'), 1.35);
+        gl.uniform1f(getUniform('u_lineW'), 0.4);
+        gl.uniform1f(getUniform('u_tint'), 0.0);
+        gl.uniform1f(getUniform('u_relief'), 0.0);
+        gl.uniform1f(getUniform('u_scale'), 1.02);
+        gl.uniform1f(getUniform('u_warp'), 0.0);
+        gl.uniform1f(getUniform('u_paper'), 0.28);
+        gl.uniform1f(getUniform('u_mouseStr'), 0.34);
+
+        const resize = () => {
+            const dpr = Math.min(window.devicePixelRatio || 1, 1.5);
+            const w = Math.max(1, Math.round(window.innerWidth * dpr));
+            const h = Math.max(1, Math.round(window.innerHeight * dpr));
+            if (canvas.width !== w || canvas.height !== h) {
+                canvas.width = w;
+                canvas.height = h;
+                gl.viewport(0, 0, w, h);
+                gl.uniform2f(getUniform('u_res'), w, h);
+            }
+        };
+
+        window.addEventListener('resize', resize, { passive: true });
+        resize();
+
+        let mouseX = 0.5, mouseY = 0.5;
+        let smoothX = 0.5, smoothY = 0.5;
+        let mouseAct = 0;
+        let lastMove = -1e9;
+
+        window.addEventListener('pointermove', (e) => {
+            mouseX = e.clientX / window.innerWidth;
+            mouseY = e.clientY / window.innerHeight;
+            lastMove = performance.now();
+        }, { passive: true });
+
+        const startTime = performance.now();
+        let animId = null;
+
+        const render = () => {
+            if (document.hidden) {
+                animId = requestAnimationFrame(render);
+                return;
+            }
+
+            const now = performance.now();
+            const elapsed = (now - startTime) / 1000;
+
+            smoothX += (mouseX - smoothX) * 0.07;
+            smoothY += (mouseY - smoothY) * 0.07;
+            mouseAct += ((now - lastMove < 2500 ? 1 : 0) - mouseAct) * 0.045;
+
+            const aspect = canvas.width / Math.max(canvas.height, 1);
+            gl.uniform2f(getUniform('u_mouse'), smoothX * aspect, 1.0 - smoothY);
+            gl.uniform1f(getUniform('u_mouseAct'), mouseAct);
+            gl.uniform1f(getUniform('u_time'), elapsed);
+
+            gl.drawArrays(gl.TRIANGLES, 0, 3);
+            animId = requestAnimationFrame(render);
+        };
+
+        if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+            gl.uniform1f(getUniform('u_time'), 0);
+            gl.drawArrays(gl.TRIANGLES, 0, 3);
+        } else {
+            animId = requestAnimationFrame(render);
+        }
+    };
+    initTopoLines();
+
     // 1. Laptop Scroll Animation (Only for Desktop)
     const laptop = document.querySelector('.laptop');
     const laptopBlock = document.querySelector('.laptop-block');

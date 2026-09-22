@@ -3966,11 +3966,3 @@ video {
   color: inherit !important;
   text-shadow: none !important;
 }
-
-/* Hide AIDesigner Watermark Badge */
-[data-aifx-wm] {
-  display: none !important;
-  visibility: hidden !important;
-  opacity: 0 !important;
-  pointer-events: none !important;
-}
