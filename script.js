@@ -1,21 +1,24 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // Initialize Lenis Smooth Scroll
-    const lenis = new Lenis({
-        duration: 1.2,
-        easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-        orientation: 'vertical',
-        gestureOrientation: 'vertical',
-        smoothWheel: true,
-        wheelMultiplier: 1,
-        touchMultiplier: 2,
-        infinite: false,
-    });
+    // Initialize Lenis Smooth Scroll (with fallback if blocked or offline)
+    let lenis = null;
+    if (typeof Lenis !== 'undefined') {
+        lenis = new Lenis({
+            duration: 1.2,
+            easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+            orientation: 'vertical',
+            gestureOrientation: 'vertical',
+            smoothWheel: true,
+            wheelMultiplier: 1,
+            touchMultiplier: 2,
+            infinite: false,
+        });
 
-    function raf(time) {
-        lenis.raf(time);
+        function raf(time) {
+            lenis.raf(time);
+            requestAnimationFrame(raf);
+        }
         requestAnimationFrame(raf);
     }
-    requestAnimationFrame(raf);
 
     // Global non-draggable images utility
     const makeImagesNonDraggable = () => {
@@ -97,8 +100,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const handleScroll = () => {
             if (!isLaptopVisible || !introComplete) return;
-            // Use lenis.scroll for precise smooth scroll position tracking
-            targetProgress = Math.max(0, Math.min(1, lenis.scroll / 450));
+            // Use lenis.scroll or fallback to window.pageYOffset
+            const scrollPos = (lenis && typeof lenis.scroll === 'number') ? lenis.scroll : window.pageYOffset;
+            targetProgress = Math.max(0, Math.min(1, scrollPos / 450));
             if (!rafId) {
                 rafId = requestAnimationFrame(updateAnimation);
             }
@@ -109,9 +113,17 @@ document.addEventListener('DOMContentLoaded', () => {
                 isLaptopVisible = entry.isIntersecting;
                 if (isLaptopVisible) {
                     if (introComplete) handleScroll();
-                    lenis.on('scroll', handleScroll);
+                    if (lenis) {
+                        lenis.on('scroll', handleScroll);
+                    } else {
+                        window.addEventListener('scroll', handleScroll, { passive: true });
+                    }
                 } else {
-                    lenis.off('scroll', handleScroll);
+                    if (lenis) {
+                        lenis.off('scroll', handleScroll);
+                    } else {
+                        window.removeEventListener('scroll', handleScroll);
+                    }
                 }
             });
         }, { threshold: 0 });
