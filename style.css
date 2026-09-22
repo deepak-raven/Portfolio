@@ -87,6 +87,16 @@ img {
   transform: translate3d(0, 0, 0) rotateY(-90deg);
 }
 
+/* When fully open, collapse 3D perspective to 2D for crystal-clear vector font rendering */
+.laptop.laptop--opened {
+  perspective: none !important;
+}
+
+.laptop.laptop--opened .laptop-block {
+  transform: translate(0px, 0px) !important;
+  transform-style: flat !important;
+}
+
 .laptop-top {
   top: 50px;
   left: 390px;
@@ -122,7 +132,16 @@ img {
   background: #f8f8f8;
   /* Translate to center of 398x620 block, then rotate 90deg to be upright */
   transform: rotateZ(90deg);
-  backface-visibility: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+.font-tech-sans {
+  font-family: 'Plus Jakarta Sans', 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif !important;
+  font-weight: 800 !important;
+  letter-spacing: -0.04em !important;
+  line-height: 0.88 !important;
 }
 
 /* Glare Hover Component (React Bits Implementation) */
@@ -151,6 +170,94 @@ img {
 
 .glare-active .glare-overlay {
   opacity: 1;
+}
+
+/* Laptop Apple Hello Boot Overlay */
+#laptop-hello-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 40;
+  background-color: #0c0c0c;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+  transform: translateY(0);
+  transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: transform;
+}
+
+#laptop-hello-overlay.curtain-up {
+  transform: translateY(-100%);
+  visibility: hidden;
+  transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1), visibility 0s 0.8s;
+}
+
+#laptop-hello-overlay.curtain-up .apple-hello-svg {
+  transform: translateY(-20px);
+  opacity: 0.5;
+  transition: transform 0.6s ease, opacity 0.6s ease;
+}
+
+.apple-hello-svg {
+  width: 70%;
+  max-width: 340px;
+  color: #ffffff;
+  overflow: visible;
+  filter: drop-shadow(0 0 12px rgba(255, 255, 255, 0.22));
+  transition: transform 0.7s ease, opacity 0.7s ease;
+}
+
+.apple-hello-path-1 {
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-dasharray: 1000;
+  stroke-dashoffset: 1000;
+  opacity: 0;
+}
+
+.apple-hello-path-2 {
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-dasharray: 1000;
+  stroke-dashoffset: 1000;
+  opacity: 0;
+}
+
+#laptop-hello-overlay.writing .apple-hello-path-1 {
+  animation: appleHelloDraw1 0.8s cubic-bezier(0.42, 0, 0.58, 1) forwards;
+}
+
+#laptop-hello-overlay.writing .apple-hello-path-2 {
+  animation: appleHelloDraw2 2.2s cubic-bezier(0.42, 0, 0.58, 1) 0.65s forwards;
+}
+
+@keyframes appleHelloDraw1 {
+  0% {
+    stroke-dashoffset: 1000;
+    opacity: 0;
+  }
+  20% {
+    opacity: 1;
+  }
+  100% {
+    stroke-dashoffset: 0;
+    opacity: 1;
+  }
+}
+
+@keyframes appleHelloDraw2 {
+  0% {
+    stroke-dashoffset: 1000;
+    opacity: 0;
+  }
+  15% {
+    opacity: 1;
+  }
+  100% {
+    stroke-dashoffset: 0;
+    opacity: 1;
+  }
 }
 
 

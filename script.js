@@ -414,6 +414,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
 
             if (Math.abs(targetProgress - currentProgress) > 0.0001) {
+                laptop.classList.remove('laptop--opened');
                 rafId = requestAnimationFrame(updateAnimation);
             } else {
                 currentProgress = targetProgress;
@@ -422,6 +423,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (!introComplete && targetProgress === 0) {
                     introComplete = true;
                 }
+                if (currentProgress === 0) {
+                    laptop.classList.add('laptop--opened');
+                } else {
+                    laptop.classList.remove('laptop--opened');
+                }
             }
         };
 
@@ -429,6 +435,9 @@ document.addEventListener('DOMContentLoaded', () => {
             if (!isLaptopVisible || !introComplete) return;
             const scrollPos = (lenis && typeof lenis.scroll === 'number') ? lenis.scroll : window.pageYOffset;
             targetProgress = Math.max(0, Math.min(1, scrollPos / 450));
+            if (targetProgress > 0) {
+                laptop.classList.remove('laptop--opened');
+            }
             if (!rafId) {
                 rafId = requestAnimationFrame(updateAnimation);
             }
@@ -466,6 +475,26 @@ document.addEventListener('DOMContentLoaded', () => {
             if (!rafId) rafId = requestAnimationFrame(updateAnimation);
         }, 1400);
     }
+
+    // 1b. Apple "Hello" Boot Effect (Cursive handwriting on laptop screen + macOS Unlock Curtain)
+    const initLaptopHello = () => {
+        const overlay = document.getElementById('laptop-hello-overlay');
+        if (!overlay) return;
+
+        // Trigger handwriting animation as laptop begins to rotate open
+        setTimeout(() => {
+            overlay.classList.add('writing');
+        }, 1600);
+
+        // When writing finishes, slide up like a macOS lock screen curtain to reveal portfolio
+        setTimeout(() => {
+            overlay.classList.add('curtain-up');
+            setTimeout(() => {
+                overlay.style.display = 'none';
+            }, 900);
+        }, 4700);
+    };
+    initLaptopHello();
 
     // 2. Reveal Up Observer
     const revealObserver = new IntersectionObserver((entries) => {
@@ -555,12 +584,9 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         };
         (async () => {
-            await sleep(800);
-            await type("Hello", 100);
-            await sleep(1000);
-            await type("Hello", 60, true);
-            await sleep(400);
-            await type("I'm Deepak S", 100);
+            // Coordinate with laptop open + Apple Hello handwriting + macOS curtain lift
+            await sleep(5100);
+            await type("I'm Deepak S", 95);
         })();
     });
 

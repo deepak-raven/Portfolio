@@ -31,9 +31,9 @@
     <meta property="twitter:image" content="https://deepaksites-portfolio.vercel.app/images/profile.webp">
 
     <link rel="preload"
-        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;1,400&family=DM+Serif+Display:ital@0;1&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@600;700;800&family=Playfair+Display:ital,wght@0,400;1,400&family=DM+Serif+Display:ital@0;1&display=swap"
         as="style">
-    <link rel="preload" href="combined.css?v=2" as="style">
+    <link rel="preload" href="combined.css?v=5" as="style">
 
     <link rel="preload" as="image" href="./images/profile.webp" fetchpriority="high" media="(min-width: 768px)">
     <link rel="preload" as="image" href="./images/screen.webp" fetchpriority="high" media="(min-width: 768px)">
@@ -107,9 +107,9 @@
     </style>
 
     <link
-        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;1,400&family=DM+Serif+Display:ital@0;1&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@600;700;800&family=Playfair+Display:ital,wght@0,400;1,400&family=DM+Serif+Display:ital@0;1&display=swap"
         rel="stylesheet" media="print" onload="this.media='all'">
-    <link rel="stylesheet" href="combined.css?v=2">
+    <link rel="stylesheet" href="combined.css?v=5">
 
     <script type="application/ld+json">
     {
@@ -183,6 +183,22 @@
                             <!-- Screen Content Container -->
                             <div class="screen-content bg-white overflow-hidden">
                                 <div class="glare-overlay"></div>
+
+                                <!-- Apple Hello Boot Overlay -->
+                                <div id="laptop-hello-overlay" class="absolute inset-0 z-40 bg-[#0c0c0c] flex items-center justify-center pointer-events-none">
+                                    <svg class="apple-hello-svg w-[70%] max-w-[340px] text-white" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 638 200" fill="none" stroke="currentColor" stroke-width="14.8883" aria-hidden="true">
+                                        <title>hello</title>
+                                        <!-- h1 -->
+                                        <path class="apple-hello-path-1" pathLength="1000"
+                                            d="M8.69214 166.553C36.2393 151.239 61.3409 131.548 89.8191 98.0295C109.203 75.1488 119.625 49.0228 120.122 31.0026C120.37 17.6036 113.836 7.43883 101.759 7.43883C88.3598 7.43883 79.9231 17.6036 74.7122 40.9363C69.005 66.5793 64.7866 96.0036 54.1166 190.356"
+                                            stroke-linecap="round" />
+                                        <!-- h2, ello -->
+                                        <path class="apple-hello-path-2" pathLength="1000"
+                                            d="M55.1624 181.135C60.6251 133.114 81.4118 98.0479 107.963 98.0479C123.844 98.0479 133.937 110.703 131.071 128.817C129.457 139.487 127.587 150.405 125.408 163.06C122.869 178.941 130.128 191.348 152.122 191.348C184.197 191.348 219.189 173.523 237.097 145.915C243.198 136.509 245.68 128.073 245.928 119.884C246.176 104.996 237.739 93.8296 222.851 93.8296C203.992 93.8296 189.6 115.17 189.6 142.465C189.6 171.745 205.481 192.341 239.208 192.341C285.066 192.341 335.86 137.292 359.199 75.8585C365.788 58.513 368.26 42.4065 368.26 31.1512C368.26 17.8057 364.042 7.55823 352.131 7.55823C340.469 7.55823 332.777 16.6141 325.829 30.9129C317.688 47.4967 311.667 71.4162 309.203 98.4549C303 166.301 316.896 191.348 349.936 191.348C390 191.348 434.542 135.534 457.286 75.6686C463.803 58.513 466.275 42.4065 466.275 31.1512C466.275 17.8057 462.057 7.55823 450.146 7.55823C438.484 7.55823 430.792 16.6141 423.844 30.9129C415.703 47.4967 409.682 71.4162 407.218 98.4549C401.015 166.301 414.911 191.348 444.416 191.348C473.874 191.348 489.877 165.67 499.471 138.402C508.955 111.447 520.618 94.8221 544.935 94.8221C565.035 94.8221 580.916 109.71 580.916 137.75C580.916 168.768 560.792 192.093 535.362 192.341C512.984 192.589 498.285 174.475 499.774 147.179C501.511 116.907 519.873 94.8221 543.943 94.8221C557.839 94.8221 569.51 100.999 578.682 107.725C603.549 125.866 622.709 114.656 630.047 96.7186"
+                                            stroke-linecap="round" />
+                                    </svg>
+                                </div>
+
                                 <div class="h-full w-full relative overflow-y-auto no-scrollbar bg-[#f8f8f8]">
                                     <!-- Subtle noise overlay for the laptop screen -->
                                     <div class="absolute inset-0 opacity-[0.03] pointer-events-none z-0"
@@ -238,9 +254,9 @@
                                             </div>
                                             <div class="mt-4 md:mt-12">
                                                 <h2
-                                                    class="text-[24px] sm:text-[40px] md:text-[60px] lg:text-[70px] leading-[0.85] font-serif italic tracking-tighter text-black w-max pb-2 flex items-center min-h-[40px]">
+                                                    class="text-[24px] sm:text-[40px] md:text-[60px] lg:text-[70px] font-tech-sans text-black w-max pb-2 flex items-center min-h-[40px]">
                                                     <span class="typewriter-trigger"></span><span
-                                                        class="inline-block w-[2px] md:w-[4px] h-[20px] sm:h-[35px] md:h-[50px] lg:h-[60px] bg-black ml-1 md:ml-3 animate-[pulse_1s_ease-in-out_infinite]"></span>
+                                                        class="inline-block w-[2px] md:w-[4px] h-[20px] sm:h-[35px] md:h-[50px] lg:h-[60px] bg-black ml-1.5 md:ml-3 animate-[pulse_1s_ease-in-out_infinite]"></span>
                                                 </h2>
                                                 <p
                                                     class="mt-2 md:mt-6 ml-0.5 text-black border-l-2 border-black pl-3 max-w-[150px] md:max-w-[260px] text-[7px] md:text-[10px] leading-relaxed">
