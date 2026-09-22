@@ -1,25 +1,4 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // Initialize Lenis Smooth Scroll (with fallback if blocked or offline)
-    let lenis = null;
-    if (typeof Lenis !== 'undefined') {
-        lenis = new Lenis({
-            duration: 1.2,
-            easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-            orientation: 'vertical',
-            gestureOrientation: 'vertical',
-            smoothWheel: true,
-            wheelMultiplier: 1,
-            touchMultiplier: 2,
-            infinite: false,
-        });
-
-        function raf(time) {
-            lenis.raf(time);
-            requestAnimationFrame(raf);
-        }
-        requestAnimationFrame(raf);
-    }
-
     // Global non-draggable images utility
     const makeImagesNonDraggable = () => {
         document.querySelectorAll('img').forEach(img => {
@@ -100,9 +79,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const handleScroll = () => {
             if (!isLaptopVisible || !introComplete) return;
-            // Use lenis.scroll or fallback to window.pageYOffset
-            const scrollPos = (lenis && typeof lenis.scroll === 'number') ? lenis.scroll : window.pageYOffset;
-            targetProgress = Math.max(0, Math.min(1, scrollPos / 450));
+            targetProgress = Math.max(0, Math.min(1, window.pageYOffset / 450));
             if (!rafId) {
                 rafId = requestAnimationFrame(updateAnimation);
             }
@@ -113,17 +90,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 isLaptopVisible = entry.isIntersecting;
                 if (isLaptopVisible) {
                     if (introComplete) handleScroll();
-                    if (lenis) {
-                        lenis.on('scroll', handleScroll);
-                    } else {
-                        window.addEventListener('scroll', handleScroll, { passive: true });
-                    }
+                    window.addEventListener('scroll', handleScroll, { passive: true });
                 } else {
-                    if (lenis) {
-                        lenis.off('scroll', handleScroll);
-                    } else {
-                        window.removeEventListener('scroll', handleScroll);
-                    }
+                    window.removeEventListener('scroll', handleScroll);
                 }
             });
         }, { threshold: 0 });
