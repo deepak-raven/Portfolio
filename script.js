@@ -1,7 +1,10 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // Initialize Lenis Smooth Scroll
+    // Initialize Lenis Smooth Scroll only for desktop non-touch devices
     let lenis = null;
-    if (typeof Lenis !== 'undefined') {
+    const isTouchDevice = ('ontouchstart' in window) || (navigator.maxTouchPoints > 0) || window.matchMedia('(pointer: coarse)').matches;
+    const isDesktopScreen = window.innerWidth >= 768;
+
+    if (typeof Lenis !== 'undefined' && !isTouchDevice && isDesktopScreen) {
         lenis = new Lenis({
             duration: 1.2,
             easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
@@ -9,7 +12,7 @@ document.addEventListener('DOMContentLoaded', () => {
             gestureOrientation: 'vertical',
             smoothWheel: true,
             wheelMultiplier: 1,
-            touchMultiplier: 2,
+            touchMultiplier: 1,
             infinite: false,
         });
 
@@ -305,8 +308,12 @@ document.addEventListener('DOMContentLoaded', () => {
         gl.uniform1f(getUniform('u_paper'), 0.28);
         gl.uniform1f(getUniform('u_mouseStr'), 0.34);
 
+        const isMobileScreen = window.innerWidth < 768 || window.matchMedia('(pointer: coarse)').matches;
+
         const resize = () => {
-            const dpr = Math.min(window.devicePixelRatio || 1, 2.0);
+            // On mobile devices, cap DPR at 0.55 to drastically cut fragment shader operations by ~85-90%
+            // CSS smooth scaling upscales the contour curves smoothly with zero perceptible loss
+            const dpr = isMobileScreen ? 0.55 : Math.min(window.devicePixelRatio || 1, 1.75);
             const w = Math.max(1, Math.round(window.innerWidth * dpr));
             const h = Math.max(1, Math.round(window.innerHeight * dpr));
             if (canvas.width !== w || canvas.height !== h) {
@@ -325,22 +332,56 @@ document.addEventListener('DOMContentLoaded', () => {
         let mouseAct = 0;
         let lastMove = -1e9;
 
-        window.addEventListener('pointermove', (e) => {
-            mouseX = e.clientX / window.innerWidth;
-            mouseY = e.clientY / window.innerHeight;
-            lastMove = performance.now();
-        }, { passive: true });
+        // Only attach mouse/pointer listener if user has a precise pointer (desktop mouse/trackpad)
+        if (window.matchMedia('(pointer: fine)').matches) {
+            window.addEventListener('pointermove', (e) => {
+                mouseX = e.clientX / window.innerWidth;
+                mouseY = e.clientY / window.innerHeight;
+                lastMove = performance.now();
+            }, { passive: true });
+        }
+
+        // Active scroll detection for mobile: pause shader while user is actively swiping
+        let isTouchingOrScrolling = false;
+        let scrollPauseTimer = null;
+        const onScrollActive = () => {
+            isTouchingOrScrolling = true;
+            if (scrollPauseTimer) clearTimeout(scrollPauseTimer);
+            scrollPauseTimer = setTimeout(() => {
+                isTouchingOrScrolling = false;
+            }, 120);
+        };
+        if (isMobileScreen) {
+            window.addEventListener('scroll', onScrollActive, { passive: true });
+            window.addEventListener('touchmove', onScrollActive, { passive: true });
+        }
 
         const startTime = performance.now();
         let animId = null;
+        let lastFrameTime = 0;
+        const targetFrameInterval = isMobileScreen ? (1000 / 30) : 0; // Throttle to 30fps on mobile to save battery and GPU
 
-        const render = () => {
+        const render = (now) => {
             if (document.hidden) {
                 animId = requestAnimationFrame(render);
                 return;
             }
 
-            const now = performance.now();
+            // Skip rendering while user is touch-scrolling on mobile to guarantee 100% smooth 60/120fps scrolling
+            if (isMobileScreen && isTouchingOrScrolling) {
+                animId = requestAnimationFrame(render);
+                return;
+            }
+
+            if (isMobileScreen && targetFrameInterval > 0) {
+                const delta = now - lastFrameTime;
+                if (delta < targetFrameInterval) {
+                    animId = requestAnimationFrame(render);
+                    return;
+                }
+                lastFrameTime = now - (delta % targetFrameInterval);
+            }
+
             const elapsed = (now - startTime) / 1000;
 
             smoothX += (mouseX - smoothX) * 0.07;
@@ -683,7 +724,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         <figure class="tilted-card-figure select-none">
                             <div class="tilted-card-mobile-alert">Check on desktop for effects.</div>
                             <div class="tilted-card-inner select-none">
-                                <img src="${imageUrl}" alt="${project.title} - Project by Deepak S (Deepaksites)" class="tilted-card-img" draggable="false">
+                                <img src="${imageUrl}" alt="${project.title} - Project by Deepak S (Deepaksites)" class="tilted-card-img" draggable="false" loading="lazy" decoding="async">
                                 <div class="tilted-card-overlay">
                                     <h3 class="text-xl font-serif italic mb-1">${project.title}</h3>
                                     <p class="text-[10px] uppercase tracking-widest opacity-80">${project.category}</p>
@@ -770,57 +811,97 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         });
 
-        // Gyroscope Handling (Mobile) - Singleton Listener
+        // Gyroscope Handling (Mobile) - Optimized Singleton Listener
         if (isGyroInitialized) return;
 
         let smoothedX = 0;
         let smoothedY = 0;
         const smoothing = 0.1;
+        let mostCentralCard = null;
+        let isProjectsVisible = false;
+        let gyroRafId = null;
 
-        const handleOrientation = (e) => {
-            const targetX = Math.max(-1, Math.min(1, (e.beta - 45) / 30));
-            const targetY = Math.max(-1, Math.min(1, e.gamma / 30));
+        // Only run gyroscope calculations when projects section is intersecting viewport
+        const projectsSec = document.getElementById('projects');
+        if (projectsSec && 'IntersectionObserver' in window) {
+            const projObs = new IntersectionObserver((entries) => {
+                isProjectsVisible = entries[0].isIntersecting;
+            }, { rootMargin: '100px 0px' });
+            projObs.observe(projectsSec);
+        } else {
+            isProjectsVisible = true;
+        }
 
-            smoothedX += (targetX - smoothedX) * smoothing;
-            smoothedY += (targetY - smoothedY) * smoothing;
-
-            const rotateX = smoothedX * rotateAmplitude;
-            const rotateY = smoothedY * -rotateAmplitude;
-
-            // Find the most visible/central card
-            let mostCentralCard = null;
-            let minDistance = Infinity;
+        // Cache central card on scroll/resize rather than calculating bounding boxes inside 60Hz gyro callback
+        let centralCalcTimer = null;
+        const updateCentralCard = () => {
+            if (!isProjectsVisible || activeCards.length === 0) return;
             const viewportCenter = window.innerHeight / 2;
+            let minDistance = Infinity;
+            let candidate = null;
 
             activeCards.forEach(card => {
                 const rect = card.getBoundingClientRect();
-                const cardCenter = rect.top + rect.height / 2;
-                const distanceToCenter = Math.abs(cardCenter - viewportCenter);
-
-                // Check if card is at least partially visible
                 if (rect.top < window.innerHeight && rect.bottom > 0) {
-                    if (distanceToCenter < minDistance) {
-                        minDistance = distanceToCenter;
-                        mostCentralCard = card;
+                    const cardCenter = rect.top + rect.height / 2;
+                    const dist = Math.abs(cardCenter - viewportCenter);
+                    if (dist < minDistance) {
+                        minDistance = dist;
+                        candidate = card;
                     }
                 }
             });
 
-            activeCards.forEach(card => {
-                const inner = card.querySelector('.tilted-card-inner');
-                if (!inner) return;
-
-                if (card === mostCentralCard) {
-                    inner.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
-                    inner.style.transition = 'none'; // Fast tracking for active card
-                } else {
-                    // Smoothly reset others
-                    inner.style.transform = `rotateX(0deg) rotateY(0deg)`;
-                    inner.style.transition = 'transform 0.6s cubic-bezier(0.2, 0.8, 0.2, 1)';
+            if (candidate !== mostCentralCard) {
+                // If central card changed, smoothly reset previous card
+                if (mostCentralCard) {
+                    const prevInner = mostCentralCard.querySelector('.tilted-card-inner');
+                    if (prevInner) {
+                        prevInner.style.transform = 'rotateX(0deg) rotateY(0deg)';
+                        prevInner.style.transition = 'transform 0.4s ease';
+                    }
                 }
-            });
+                mostCentralCard = candidate;
+            }
         };
 
+        window.addEventListener('scroll', () => {
+            if (!centralCalcTimer) {
+                centralCalcTimer = setTimeout(() => {
+                    updateCentralCard();
+                    centralCalcTimer = null;
+                }, 100);
+            }
+        }, { passive: true });
+        window.addEventListener('resize', updateCentralCard, { passive: true });
+        setTimeout(updateCentralCard, 500);
+
+        const handleOrientation = (e) => {
+            if (!isProjectsVisible || !mostCentralCard || !e.beta) return;
+
+            const b = e.beta;
+            const g = e.gamma || 0;
+
+            if (!gyroRafId) {
+                gyroRafId = requestAnimationFrame(() => {
+                    gyroRafId = null;
+                    const targetX = Math.max(-1, Math.min(1, (b - 45) / 30));
+                    const targetY = Math.max(-1, Math.min(1, g / 30));
+
+                    smoothedX += (targetX - smoothedX) * smoothing;
+                    smoothedY += (targetY - smoothedY) * smoothing;
+
+                    const rotateX = smoothedX * rotateAmplitude;
+                    const rotateY = smoothedY * -rotateAmplitude;
+
+                    const inner = mostCentralCard.querySelector('.tilted-card-inner');
+                    if (inner) {
+                        inner.style.transform = `rotateX(${rotateX.toFixed(2)}deg) rotateY(${rotateY.toFixed(2)}deg)`;
+                        inner.style.transition = 'none';
+                    }
+                });
+            }
+        };
 
         if (window.DeviceOrientationEvent) {
             isGyroInitialized = true;
@@ -829,7 +910,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     DeviceOrientationEvent.requestPermission()
                         .then(response => {
                             if (response === 'granted') {
-                                window.addEventListener('deviceorientation', handleOrientation);
+                                window.addEventListener('deviceorientation', handleOrientation, { passive: true });
                             }
                         })
                         .catch(console.error);
@@ -839,7 +920,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 window.addEventListener('click', triggerPermission, { once: true });
                 window.addEventListener('touchstart', triggerPermission, { once: true });
             } else {
-                window.addEventListener('deviceorientation', handleOrientation);
+                window.addEventListener('deviceorientation', handleOrientation, { passive: true });
             }
         }
     };
@@ -890,11 +971,34 @@ document.addEventListener('DOMContentLoaded', () => {
 
             if (!isActive) {
                 isActive = true;
-                requestAnimationFrame(animate);
+                if ('IntersectionObserver' in window) {
+                    const loopObs = new IntersectionObserver((entries) => {
+                        isLoopVisible = entries[0].isIntersecting;
+                        if (isLoopVisible && !loopRafId) {
+                            lastTimestamp = null;
+                            loopRafId = requestAnimationFrame(animate);
+                        } else if (!isLoopVisible && loopRafId) {
+                            cancelAnimationFrame(loopRafId);
+                            loopRafId = null;
+                        }
+                    }, { threshold: 0.05 });
+                    loopObs.observe(loop);
+                } else {
+                    isLoopVisible = true;
+                    loopRafId = requestAnimationFrame(animate);
+                }
             }
         };
 
+        let isLoopVisible = false;
+        let loopRafId = null;
+
         const animate = (timestamp) => {
+            if (!isLoopVisible) {
+                loopRafId = null;
+                return;
+            }
+
             if (!lastTimestamp) lastTimestamp = timestamp;
             const deltaTime = Math.min((timestamp - lastTimestamp) / 1000, 0.1); // Cap delta to avoid jumps
             lastTimestamp = timestamp;
@@ -908,7 +1012,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 offset = offset % seqWidth;
                 track.style.transform = `translate3d(${-offset}px, 0, 0)`;
             }
-            requestAnimationFrame(animate);
+            loopRafId = requestAnimationFrame(animate);
         };
 
         // Hover events for pausing
