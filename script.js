@@ -54,10 +54,17 @@ document.addEventListener('DOMContentLoaded', () => {
             uniform float u_mouseAct, u_mouseStr;
             uniform vec3 u_bg, u_ink0, u_ink1, u_c0, u_c1, u_c2, u_c3, u_c4;
 
-            float hash(vec2 p){ return fract(sin(dot(p, vec2(127.1, 311.7))) * 43758.5453123); }
+            // Mobile-safe GPU hash (no trigonometric sin() precision loss on mobile GPUs)
+            float hash(vec2 p){
+                vec3 p3 = fract(vec3(p.xyx) * 0.1031);
+                p3 += dot(p3, p3.yzx + 33.33);
+                return fract((p3.x + p3.y) * p3.z);
+            }
+
+            // Quintic C2-continuous smooth noise to prevent derivative kinks
             float noise(vec2 p){
                 vec2 i = floor(p), f = fract(p);
-                f = f * f * (3.0 - 2.0 * f);
+                f = f * f * f * (f * (f * 6.0 - 15.0) + 10.0);
                 return mix(mix(hash(i), hash(i + vec2(1.0, 0.0)), f.x), mix(hash(i + vec2(0.0, 1.0)), hash(i + vec2(1.0, 1.0)), f.x), f.y);
             }
 
@@ -136,7 +143,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 float aspect = u_res.x / max(u_res.y, 1.0);
                 vec2 uv = vec2(v_uv.x * aspect, v_uv.y);
                 float t = u_time * u_speed;
-                float e = 1.0 / max(u_res.y, 1.0);
+                float e = max(1.5 / max(u_res.y, 1.0), 0.0008);
 
                 float mAct = u_mouseStr * u_mouseAct;
                 float mAmp = mAct * 7.5 / max(u_density, 4.0);
@@ -147,27 +154,30 @@ document.addEventListener('DOMContentLoaded', () => {
                 vec2 wOff = (q - 0.5) * u_warp;
 
                 float h0 = height(uv, wOff, t, mAmp, mR2);
-                float hx = height(uv + vec2(e, 0.0), wOff, t, mAmp, mR2);
-                float hy = height(uv + vec2(0.0, e), wOff, t, mAmp, mR2);
-                vec2 slope = vec2(hx - h0, hy - h0) / e;
+                float hx1 = height(uv + vec2(e, 0.0), wOff, t, mAmp, mR2);
+                float hx0 = height(uv - vec2(e, 0.0), wOff, t, mAmp, mR2);
+                float hy1 = height(uv + vec2(0.0, e), wOff, t, mAmp, mR2);
+                float hy0 = height(uv - vec2(0.0, e), wOff, t, mAmp, mR2);
+                vec2 slope = vec2(hx1 - hx0, hy1 - hy0) / (2.0 * e);
 
                 float N = u_density;
                 float H = h0 * N;
-                float gradPx = length(vec2(hx - h0, hy - h0)) * N;
-                float spacing = 1.0 / max(gradPx, 1e-4);
+                float gradPx = length(slope) * (1.0 / max(u_res.y, 1.0)) * N;
+                gradPx = max(gradPx, 1e-4);
+                float spacing = 1.0 / gradPx;
                 float dInt = 0.5 - abs(fract(H) - 0.5);
-                float dPx = dInt / max(gradPx, 1e-4);
+                float dPx = dInt / gradPx;
 
                 float ie = max(u_idxEvery, 2.0);
                 float idx = floor(H + 0.5);
                 float hasIdx = (u_idxEvery > 1.5) ? 1.0 : 0.0;
                 float isIdx = hasIdx * (1.0 - step(0.5, mod(idx, ie)));
 
-                float aa = 0.65;
-                float halfW = u_lineW * mix(0.50, 0.50 + 0.62 * u_idxWeight, isIdx);
+                float halfW = max(u_lineW * mix(0.5, 0.5 + 0.62 * u_idxWeight, isIdx), 0.35);
+                float aa = 0.75;
                 float line = 1.0 - smoothstep(halfW - aa, halfW + aa, dPx);
-                line *= smoothstep(2.1, 4.6, spacing);
-                float inkA = line * mix(0.55, 1.0, isIdx);
+                line *= smoothstep(0.8, 2.2, spacing);
+                float inkA = line * mix(0.65, 1.0, isIdx);
 
                 vec2 mrel = uv - u_mouse;
                 inkA = min(inkA * (1.0 + 0.30 * mAct * exp(-dot(mrel, mrel) / (mR2 * 5.0))), 1.0);
@@ -287,7 +297,7 @@ document.addEventListener('DOMContentLoaded', () => {
         gl.uniform1f(getUniform('u_density'), 11.0);
         gl.uniform1f(getUniform('u_idxEvery'), 0.0);
         gl.uniform1f(getUniform('u_idxWeight'), 1.35);
-        gl.uniform1f(getUniform('u_lineW'), 0.4);
+        gl.uniform1f(getUniform('u_lineW'), 0.6);
         gl.uniform1f(getUniform('u_tint'), 0.0);
         gl.uniform1f(getUniform('u_relief'), 0.0);
         gl.uniform1f(getUniform('u_scale'), 1.02);
@@ -296,7 +306,7 @@ document.addEventListener('DOMContentLoaded', () => {
         gl.uniform1f(getUniform('u_mouseStr'), 0.34);
 
         const resize = () => {
-            const dpr = Math.min(window.devicePixelRatio || 1, 1.5);
+            const dpr = Math.min(window.devicePixelRatio || 1, 2.0);
             const w = Math.max(1, Math.round(window.innerWidth * dpr));
             const h = Math.max(1, Math.round(window.innerHeight * dpr));
             if (canvas.width !== w || canvas.height !== h) {
