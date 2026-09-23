@@ -153,15 +153,16 @@ document.addEventListener('DOMContentLoaded', () => {
                 float mR = 0.085 + 0.050 * mAct;
                 float mR2 = mR * mR;
 
-                vec2 q = vec2(fbm2(uv * 0.8 + vec2(2.3, 9.1), t * 0.55), fbm2(uv * 0.8 + vec2(8.7, 3.9), t * 0.50));
-                vec2 wOff = (q - 0.5) * u_warp;
+                vec2 wOff = vec2(0.0);
+                if (u_warp > 0.001) {
+                    vec2 q = vec2(fbm2(uv * 0.8 + vec2(2.3, 9.1), t * 0.55), fbm2(uv * 0.8 + vec2(8.7, 3.9), t * 0.50));
+                    wOff = (q - 0.5) * u_warp;
+                }
 
                 float h0 = height(uv, wOff, t, mAmp, mR2);
-                float hx1 = height(uv + vec2(e, 0.0), wOff, t, mAmp, mR2);
-                float hx0 = height(uv - vec2(e, 0.0), wOff, t, mAmp, mR2);
-                float hy1 = height(uv + vec2(0.0, e), wOff, t, mAmp, mR2);
-                float hy0 = height(uv - vec2(0.0, e), wOff, t, mAmp, mR2);
-                vec2 slope = vec2(hx1 - hx0, hy1 - hy0) / (2.0 * e);
+                float hx = height(uv + vec2(e, 0.0), wOff, t, mAmp, mR2);
+                float hy = height(uv + vec2(0.0, e), wOff, t, mAmp, mR2);
+                vec2 slope = vec2(hx - h0, hy - h0) / e;
 
                 float N = u_density;
                 float H = h0 * N;
@@ -176,8 +177,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 float hasIdx = (u_idxEvery > 1.5) ? 1.0 : 0.0;
                 float isIdx = hasIdx * (1.0 - step(0.5, mod(idx, ie)));
 
-                float halfW = max(u_lineW * mix(0.5, 0.5 + 0.62 * u_idxWeight, isIdx), 0.35);
-                float aa = 0.75;
+                float halfW = max(u_lineW * mix(0.5, 0.5 + 0.62 * u_idxWeight, isIdx), 0.25);
+                float aa = 0.60;
                 float line = 1.0 - smoothstep(halfW - aa, halfW + aa, dPx);
                 line *= smoothstep(0.8, 2.2, spacing);
                 float inkA = line * mix(0.65, 1.0, isIdx);
@@ -300,7 +301,7 @@ document.addEventListener('DOMContentLoaded', () => {
         gl.uniform1f(getUniform('u_density'), 11.0);
         gl.uniform1f(getUniform('u_idxEvery'), 0.0);
         gl.uniform1f(getUniform('u_idxWeight'), 1.35);
-        gl.uniform1f(getUniform('u_lineW'), 0.6);
+        gl.uniform1f(getUniform('u_lineW'), 0.38);
         gl.uniform1f(getUniform('u_tint'), 0.0);
         gl.uniform1f(getUniform('u_relief'), 0.0);
         gl.uniform1f(getUniform('u_scale'), 1.02);
@@ -311,9 +312,9 @@ document.addEventListener('DOMContentLoaded', () => {
         const isMobileScreen = window.innerWidth < 768 || window.matchMedia('(pointer: coarse)').matches;
 
         const resize = () => {
-            // On mobile devices, cap DPR at 0.55 to drastically cut fragment shader operations by ~85-90%
-            // CSS smooth scaling upscales the contour curves smoothly with zero perceptible loss
-            const dpr = isMobileScreen ? 0.55 : Math.min(window.devicePixelRatio || 1, 1.75);
+            // Render at crisp 1:1 CSS resolution (DPR 1.0 on mobile, up to 1.5 on desktop)
+            // This ensures lines are razor-sharp, fine-pointed, and completely free of blurriness
+            const dpr = isMobileScreen ? 1.0 : Math.min(window.devicePixelRatio || 1, 1.5);
             const w = Math.max(1, Math.round(window.innerWidth * dpr));
             const h = Math.max(1, Math.round(window.innerHeight * dpr));
             if (canvas.width !== w || canvas.height !== h) {
@@ -341,47 +342,16 @@ document.addEventListener('DOMContentLoaded', () => {
             }, { passive: true });
         }
 
-        // Active scroll detection for mobile: pause shader while user is actively swiping
-        let isTouchingOrScrolling = false;
-        let scrollPauseTimer = null;
-        const onScrollActive = () => {
-            isTouchingOrScrolling = true;
-            if (scrollPauseTimer) clearTimeout(scrollPauseTimer);
-            scrollPauseTimer = setTimeout(() => {
-                isTouchingOrScrolling = false;
-            }, 120);
-        };
-        if (isMobileScreen) {
-            window.addEventListener('scroll', onScrollActive, { passive: true });
-            window.addEventListener('touchmove', onScrollActive, { passive: true });
-        }
-
         const startTime = performance.now();
         let animId = null;
-        let lastFrameTime = 0;
-        const targetFrameInterval = isMobileScreen ? (1000 / 30) : 0; // Throttle to 30fps on mobile to save battery and GPU
 
-        const render = (now) => {
+        const render = () => {
             if (document.hidden) {
                 animId = requestAnimationFrame(render);
                 return;
             }
 
-            // Skip rendering while user is touch-scrolling on mobile to guarantee 100% smooth 60/120fps scrolling
-            if (isMobileScreen && isTouchingOrScrolling) {
-                animId = requestAnimationFrame(render);
-                return;
-            }
-
-            if (isMobileScreen && targetFrameInterval > 0) {
-                const delta = now - lastFrameTime;
-                if (delta < targetFrameInterval) {
-                    animId = requestAnimationFrame(render);
-                    return;
-                }
-                lastFrameTime = now - (delta % targetFrameInterval);
-            }
-
+            const now = performance.now();
             const elapsed = (now - startTime) / 1000;
 
             smoothX += (mouseX - smoothX) * 0.07;
