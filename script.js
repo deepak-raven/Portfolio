@@ -1026,6 +1026,22 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     };
 
+    // Infinite Tilted Marquee Banner (Programmatic duplication for clean & DRY markup)
+    const initMarqueeBanner = () => {
+        const track1 = document.getElementById('marquee-track-1');
+        const track2 = document.getElementById('marquee-track-2');
+        if (!track1 || !track2) return;
+
+        // Prevent multiplying more than once
+        if (track1.children.length > 8) return;
+
+        const baseContent = track1.innerHTML;
+        const repeatedContent = baseContent.repeat(5);
+
+        track1.innerHTML = repeatedContent;
+        track2.innerHTML = repeatedContent;
+    };
+
     // 7. Aether Vortex 3D Particle Floor Effect in CTA Section (Horizontal 3D Plate at Shadow)
     const initAetherVortex = () => {
         const contactSec = document.getElementById('contact');
@@ -1390,6 +1406,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     loadProjects();
     initLogoLoop();
+    initMarqueeBanner();
     initAetherVortex();
 });
 

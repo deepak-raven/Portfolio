@@ -33,7 +33,7 @@
     <link rel="preload"
         href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@600;700;800&family=Playfair+Display:ital,wght@0,400;1,400&family=DM+Serif+Display:ital@0;1&display=swap"
         as="style">
-    <link rel="preload" href="combined.css?v=5" as="style">
+    <link rel="preload" href="combined.css?v=7" as="style">
 
     <link rel="preload" as="image" href="./images/profile.webp" fetchpriority="high" media="(min-width: 768px)">
     <link rel="preload" as="image" href="./images/screen.webp" fetchpriority="high" media="(min-width: 768px)">
@@ -118,7 +118,7 @@
     <link
         href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@600;700;800&family=Playfair+Display:ital,wght@0,400;1,400&family=DM+Serif+Display:ital@0;1&display=swap"
         rel="stylesheet" media="print" onload="this.media='all'">
-    <link rel="stylesheet" href="combined.css?v=5">
+    <link rel="stylesheet" href="combined.css?v=7">
 
     <script type="application/ld+json">
     {
@@ -357,13 +357,12 @@
             <section id="about" class="py-24 reveal-up">
                 <div class="grid grid-cols-1 md:grid-cols-12 gap-12" style="padding-top: 100px;">
                     <!-- Column 1: Text (Span 4) -->
-                    <div class="md:col-span-4 pr-8 reveal-up delay-100">
+                    <div class="md:col-span-4 pr-0 md:pr-8 reveal-up delay-100">
                         <span
                             class="text-[10px] font-bold uppercase tracking-[0.2em] text-black mb-4 block">About</span>
                         <h2 class="text-3xl font-serif italic mb-6">Who I am</h2>
-                        <p class="text-black/60 text-sm leading-7 mb-12 max-w-[280px]">
-                            Deepak S is a Computer Science Engineering student and Web Developer passionate about
-                            innovative web applications and high-performance engineering.
+                        <p class="text-black/60 text-[clamp(11.5px,3.2vw,14px)] sm:text-sm leading-relaxed sm:leading-7 mb-6 max-w-md">
+                            Deepak S is a Computer Science Engineering student<br>and Web Developer passionate about innovative web<br>applications and high-performance engineering.
                         </p>
                         <div class="hidden md:block mt-8">
                             <!-- Decorative Curved Arrow -->
@@ -459,8 +458,6 @@
 
                 <!-- Logo Loop Animation -->
                 <div class="logo-loop mt-12 mb-0 select-none" id="logo-loop">
-                    <div class="logo-loop-fade-left"></div>
-                    <div class="logo-loop-fade-right"></div>
                     <div class="logo-loop-track" id="logo-loop-track">
                         <ul class="logo-loop-list" id="logo-loop-seq">
                             <li class="logo-loop-item"><img
@@ -513,49 +510,6 @@
 
         </div>
 
-        <!-- Marquee Banner -->
-        <div class="w-full overflow-hidden my-16 md:my-24">
-            <div
-                class="relative overflow-hidden bg-[#111] text-white py-12 border-y border-white/20 transform -rotate-1 origin-center z-20 scale-105 pointer-events-none w-full marquee-container">
-                <!-- First Set -->
-                <div class="flex whitespace-nowrap animate-marquee shrink-0 items-center">
-                    <span
-                        class="text-[10px] md:text-sm font-bold uppercase tracking-[0.3em] px-12 text-white/50">Creative
-                        Design</span>
-                    <span class="w-16 md:w-24 h-[1px] bg-white opacity-20"></span>
-                    <span
-                        class="text-6xl md:text-8xl font-serif italic px-12 text-white tracking-tighter mix-blend-difference">Digital
-                        Strategy</span>
-                    <span class="w-16 md:w-24 h-[1px] bg-white opacity-20"></span>
-                    <span class="text-[10px] md:text-sm font-bold uppercase tracking-[0.3em] px-12 text-white/50">Brand
-                        Identity</span>
-                    <span class="w-16 md:w-24 h-[1px] bg-white opacity-20"></span>
-                    <span
-                        class="text-6xl md:text-8xl font-serif italic px-12 text-white tracking-tighter mix-blend-difference">Art
-                        Direction</span>
-                    <span class="w-16 md:w-24 h-[1px] bg-white opacity-20"></span>
-                </div>
-
-                <!-- Duplicated Set for Seamless Loop -->
-                <div class="flex whitespace-nowrap animate-marquee shrink-0 items-center" aria-hidden="true">
-                    <span
-                        class="text-[10px] md:text-sm font-bold uppercase tracking-[0.3em] px-12 text-white/50">Creative
-                        Design</span>
-                    <span class="w-16 md:w-24 h-[1px] bg-white opacity-20"></span>
-                    <span
-                        class="text-6xl md:text-8xl font-serif italic px-12 text-white tracking-tighter mix-blend-difference">Digital
-                        Strategy</span>
-                    <span class="w-16 md:w-24 h-[1px] bg-white opacity-20"></span>
-                    <span class="text-[10px] md:text-sm font-bold uppercase tracking-[0.3em] px-12 text-white/50">Brand
-                        Identity</span>
-                    <span class="w-16 md:w-24 h-[1px] bg-white opacity-20"></span>
-                    <span
-                        class="text-6xl md:text-8xl font-serif italic px-12 text-white tracking-tighter mix-blend-difference">Art
-                        Direction</span>
-                    <span class="w-16 md:w-24 h-[1px] bg-white opacity-20"></span>
-                </div>
-            </div>
-        </div>
 
         <!-- Experience Section -->
         <section id="experience" class="py-24 reveal-up max-w-[1440px] mx-auto px-6 md:px-12 overflow-hidden w-full">
@@ -583,12 +537,14 @@
                                     class="text-2xl sm:text-[26px] md:text-3xl font-serif italic mb-2 group-hover:pl-4 transition-all duration-300">
                                     Freelance Web Developer</h3>
                                 <p
-                                    class="text-black/60 text-xs font-bold uppercase tracking-widest mt-2 max-w-sm leading-relaxed">
-                                    Independent • Present <br>
-                                    <span
-                                        class="font-medium text-black/40 normal-case tracking-normal block mt-2">Building
-                                        business websites and web applications while developing my freelance
-                                        practice.</span>
+                                    class="text-black/60 text-[10px] sm:text-xs font-medium uppercase tracking-wider sm:tracking-widest mt-2 flex flex-wrap items-center gap-x-2 gap-y-0.5">
+                                    <span>Independent</span>
+                                    <span class="opacity-40">•</span>
+                                    <span class="whitespace-nowrap">Present</span>
+                                </p>
+                                <p
+                                    class="font-medium text-black/40 normal-case tracking-normal text-xs max-w-md leading-relaxed mt-2">
+                                    Building business websites and web applications while developing my freelance practice.
                                 </p>
                             </div>
                         </div>
@@ -615,12 +571,14 @@
                                     class="text-2xl sm:text-[26px] md:text-3xl font-serif italic mb-2 group-hover:pl-4 transition-all duration-300">
                                     Full-Stack Development Intern</h3>
                                 <p
-                                    class="text-black/60 text-xs font-bold uppercase tracking-widest mt-2 max-w-sm leading-relaxed">
-                                    Kotlerx Technologies Pvt. Ltd. • July 2026 - Present <br>
-                                    <span
-                                        class="font-medium text-black/40 normal-case tracking-normal block mt-2">Developing
-                                        scalable full-stack web applications, integrating APIs, and building responsive,
-                                        high-performance digital solutions.</span>
+                                    class="text-black/60 text-[10px] sm:text-xs font-medium uppercase tracking-wider sm:tracking-widest mt-2 flex flex-wrap items-center gap-x-2 gap-y-0.5">
+                                    <span>Kotlerx Technologies Pvt. Ltd.</span>
+                                    <span class="opacity-40 hidden sm:inline">•</span>
+                                    <span class="whitespace-nowrap text-black/50 sm:text-black/60">July 2026 - Present</span>
+                                </p>
+                                <p
+                                    class="font-medium text-black/40 normal-case tracking-normal text-xs max-w-md leading-relaxed mt-2">
+                                    Developing scalable full-stack web applications, integrating APIs, and building responsive, high-performance digital solutions.
                                 </p>
                             </div>
                         </div>
@@ -647,12 +605,14 @@
                                     class="text-2xl sm:text-[26px] md:text-3xl font-serif italic mb-2 group-hover:pl-4 transition-all duration-300">
                                     Web Development Intern</h3>
                                 <p
-                                    class="text-black/60 text-xs font-bold uppercase tracking-widest mt-2 max-w-sm leading-relaxed">
-                                    Slytherin Private Solution Limited • Aug 2025 - Present <br>
-                                    <span
-                                        class="font-medium text-black/40 normal-case tracking-normal block mt-2">Assisted
-                                        in developing interactive web applications. Wrote clean, reusable code, and
-                                        optimized performance.</span>
+                                    class="text-black/60 text-[10px] sm:text-xs font-medium uppercase tracking-wider sm:tracking-widest mt-2 flex flex-wrap items-center gap-x-2 gap-y-0.5">
+                                    <span>Slytherin Private Solution Limited</span>
+                                    <span class="opacity-40 hidden sm:inline">•</span>
+                                    <span class="whitespace-nowrap text-black/50 sm:text-black/60">Aug 2025 - Present</span>
+                                </p>
+                                <p
+                                    class="font-medium text-black/40 normal-case tracking-normal text-xs max-w-md leading-relaxed mt-2">
+                                    Assisted in developing interactive web applications. Wrote clean, reusable code, and optimized performance.
                                 </p>
                             </div>
                         </div>
@@ -671,6 +631,27 @@
                 </div>
             </div>
         </section>
+
+        <!-- Marquee Banner -->
+        <div class="w-full overflow-hidden my-12 md:my-16 py-6 md:py-8">
+            <div
+                class="relative overflow-hidden bg-[#111] text-white py-4 md:py-5 border-y border-white/20 z-20 pointer-events-none marquee-container">
+                <!-- Track 1: Canonical source defined once in HTML -->
+                <div class="flex whitespace-nowrap animate-marquee shrink-0 items-center" id="marquee-track-1">
+                    <span class="text-[9px] md:text-[11px] font-bold uppercase tracking-[0.25em] px-6 md:px-8 text-white/50 shrink-0">Creative Design</span>
+                    <span class="w-10 md:w-16 h-[1px] bg-white opacity-20 shrink-0"></span>
+                    <span class="text-2xl sm:text-3xl md:text-4xl font-serif italic px-6 md:px-8 text-white tracking-tight mix-blend-difference shrink-0">Digital Strategy</span>
+                    <span class="w-10 md:w-16 h-[1px] bg-white opacity-20 shrink-0"></span>
+                    <span class="text-[9px] md:text-[11px] font-bold uppercase tracking-[0.25em] px-6 md:px-8 text-white/50 shrink-0">Brand Identity</span>
+                    <span class="w-10 md:w-16 h-[1px] bg-white opacity-20 shrink-0"></span>
+                    <span class="text-2xl sm:text-3xl md:text-4xl font-serif italic px-6 md:px-8 text-white tracking-tight mix-blend-difference shrink-0">Art Direction</span>
+                    <span class="w-10 md:w-16 h-[1px] bg-white opacity-20 shrink-0"></span>
+                </div>
+
+                <!-- Track 2: Populated programmatically via JavaScript for seamless loop -->
+                <div class="flex whitespace-nowrap animate-marquee shrink-0 items-center" id="marquee-track-2" aria-hidden="true"></div>
+            </div>
+        </div>
 
 
         <!-- Contact / CTA Section with Aether Vortex Floor -->
@@ -817,7 +798,7 @@
     </footer>
 
     <script src="https://unpkg.com/lenis@1.1.18/dist/lenis.min.js"></script>
-    <script src="script.js?v=5" defer></script>
+    <script src="script.js?v=6" defer></script>
 </body>
 
 </html>
