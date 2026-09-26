@@ -1026,7 +1026,370 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     };
 
+    // 7. Aether Vortex 3D Particle Floor Effect in CTA Section (Horizontal 3D Plate at Shadow)
+    const initAetherVortex = () => {
+        const contactSec = document.getElementById('contact');
+        const container = document.getElementById('aether-vortex-container');
+        const canvas = document.getElementById('aether-vortex-canvas');
+        if (!contactSec || !container || !canvas) return;
+
+        const ctx = canvas.getContext('2d', { alpha: true });
+        if (!ctx) return;
+
+        let isRunning = true;
+        let isVisible = false;
+        let animId = null;
+        // Default to SINGULARITY_COLLAPSE when closed, ACCRETION_DISK when open
+        let topology = 'SINGULARITY_COLLAPSE';
+
+        const isEnvelopeOpen = () => {
+            const env = document.getElementById('envelope-wrapper');
+            const modal = document.getElementById('contact-modal');
+            if (!env) return false;
+            return (
+                env.matches(':hover') ||
+                env.classList.contains('is-open') ||
+                env.classList.contains('is-receiving') ||
+                (modal && modal.classList.contains('active'))
+            );
+        };
+
+        const mouse = {
+            targetX: 0,
+            targetY: 0,
+            currentX: 0,
+            currentY: 0,
+            pointerX: -1000,
+            pointerY: -1000,
+        };
+
+        let particles = [];
+        let width = 0;
+        let height = 0;
+        let floorX = 0;
+        let floorY = 0;
+        let plateBottom = 0;
+        let frameCount = 0;
+        let time = 0;
+
+        const updateFloorCenter = () => {
+            const shadow = document.querySelector('#envelope-wrapper .shadow');
+            if (shadow && contactSec) {
+                const sRect = shadow.getBoundingClientRect();
+                const cRect = contactSec.getBoundingClientRect();
+                if (sRect.width > 0 && cRect.width > 0) {
+                    floorX = (sRect.left - cRect.left) + (sRect.width / 2);
+                    plateBottom = sRect.bottom - cRect.top;
+                    // Position vortex center comfortably below the plate so the entire disc is below it
+                    floorY = plateBottom + 35;
+                    return;
+                }
+            }
+            floorX = width / 2;
+            floorY = height * 0.76;
+            plateBottom = floorY - 35;
+        };
+
+        const initParticles = (w, h) => {
+            const isMobile = w < 768;
+            const count = isMobile ? 360 : 680;
+            const newParticles = [];
+            const maxR = Math.min(Math.max(w * 0.32, 280), 380);
+
+            for (let i = 0; i < count; i++) {
+                const rNorm = Math.pow(Math.random(), 0.65);
+                const radius = 16 + rNorm * (maxR - 16);
+                newParticles.push({
+                    id: i,
+                    angle: Math.random() * Math.PI * 2,
+                    radius,
+                    baseRadius: radius,
+                    y: (Math.random() - 0.5) * 1.5,
+                    speed: (Math.random() * 0.007 + 0.003),
+                    mass: Math.random() * 1.1 + 0.45,
+                    phase: Math.random() * Math.PI * 2,
+                    prevX: undefined,
+                    prevY: undefined,
+                });
+            }
+            return newParticles;
+        };
+
+        const updateDimensions = () => {
+            const rect = contactSec.getBoundingClientRect();
+            if (rect.width === 0 || rect.height === 0) return;
+
+            const dpr = Math.min(window.devicePixelRatio || 1, 2);
+            width = rect.width;
+            height = rect.height;
+
+            canvas.width = Math.floor(width * dpr);
+            canvas.height = Math.floor(height * dpr);
+            canvas.style.width = `${width}px`;
+            canvas.style.height = `${height}px`;
+
+            ctx.setTransform(1, 0, 0, 1, 0, 0);
+            ctx.scale(dpr, dpr);
+
+            updateFloorCenter();
+            particles = initParticles(width, height);
+            ctx.clearRect(0, 0, width, height);
+        };
+
+        if (window.ResizeObserver) {
+            const ro = new ResizeObserver(() => updateDimensions());
+            ro.observe(contactSec);
+        } else {
+            window.addEventListener('resize', updateDimensions);
+        }
+        updateDimensions();
+
+        const render = () => {
+            if (!isVisible || !isRunning) {
+                animId = null;
+                return;
+            }
+
+            time += 0.005;
+            const t = time;
+
+            mouse.currentX += (mouse.targetX - mouse.currentX) * 0.05;
+            mouse.currentY += (mouse.targetY - mouse.currentY) * 0.05;
+
+            ctx.clearRect(0, 0, width, height);
+
+            // Periodically synchronize center with the shadow plate to stay locked even through layout/scroll shifts
+            frameCount++;
+            if (frameCount % 20 === 0 || floorY === 0) {
+                updateFloorCenter();
+            }
+
+            // Accretion animation when envelope is open, Collapse when closed
+            const open = isEnvelopeOpen();
+            const targetTopology = open ? 'ACCRETION_DISK' : 'SINGULARITY_COLLAPSE';
+            if (topology !== targetTopology) {
+                topology = targetTopology;
+                particles.forEach(p => {
+                    p.prevX = undefined;
+                    p.prevY = undefined;
+                });
+            }
+
+            const centerX = floorX || (width / 2);
+            const currentFloorY = floorY || (height * 0.76);
+
+            // 3D Perspective Plate parameters
+            // pitch = 1.47 (~84.2 degrees) tilts the disk much flatter to match the plate profile
+            const pitch = 1.47;
+            const cosP = Math.cos(pitch);
+            const sinP = Math.sin(pitch);
+            const fov = 650;
+            const cameraZ = 650;
+            const maxR = Math.min(Math.max(width * 0.32, 280), 380);
+
+            const projected = [];
+
+            for (let i = 0; i < particles.length; i++) {
+                const p = particles[i];
+                let x3D = 0;
+                let z3D = 0;
+                let y3D = 0;
+
+                if (topology === 'ACCRETION_DISK') {
+                    p.angle += p.speed * (80 / p.radius);
+                    p.radius += (p.baseRadius - p.radius) * 0.03;
+                    const wave = Math.sin(p.angle * 2 + t * 1.5) * 0.8;
+                    y3D = p.y + wave;
+                    x3D = Math.cos(p.angle) * p.radius;
+                    z3D = Math.sin(p.angle) * p.radius;
+                } else if (topology === 'SINGULARITY_COLLAPSE') {
+                    p.angle += p.speed * (120 / Math.max(p.radius, 10));
+                    p.radius *= 0.988;
+                    p.y *= 0.98;
+
+                    if (p.radius < 12) {
+                        const rNorm = Math.pow(Math.random(), 0.65);
+                        p.radius = 16 + rNorm * (maxR - 16);
+                        p.y = (Math.random() - 0.5) * 1.5;
+                        p.prevX = undefined;
+                        p.prevY = undefined;
+                    }
+                    y3D = p.y;
+                    x3D = Math.cos(p.angle) * p.radius;
+                    z3D = Math.sin(p.angle) * p.radius;
+                } else if (topology === 'PULSAR_JETS') {
+                    p.angle += p.speed * 1.4;
+                    if (p.radius > 20) {
+                        p.radius *= 0.96;
+                        p.y *= 0.94;
+                    } else {
+                        p.y += (p.id % 2 === 0 ? 1 : -1) * (p.speed * 280);
+                        if (Math.abs(p.y) > 95) {
+                            p.radius = p.baseRadius;
+                            p.y = (Math.random() - 0.5) * 1.5;
+                            p.prevX = undefined;
+                            p.prevY = undefined;
+                        }
+                    }
+                    y3D = p.y;
+                    x3D = Math.cos(p.angle) * p.radius;
+                    z3D = Math.sin(p.angle) * p.radius;
+                }
+
+                // Front of plate (z3D > 0) is closer to the viewer
+                const zCam = cameraZ - z3D * sinP - y3D * cosP;
+                if (zCam <= 50) continue;
+
+                const scale = fov / zCam;
+                let projX = centerX + x3D * scale;
+                let projY = currentFloorY + (z3D * cosP + y3D * sinP) * scale;
+
+                // Ensure particles are strictly below the plate and never overlap into or above it
+                if (projY < plateBottom + 4) {
+                    p.prevX = undefined;
+                    p.prevY = undefined;
+                    continue;
+                }
+
+                // 3D Depth metric: 0.0 (deep background) to 1.0 (closest foreground)
+                const depthFactor = Math.max(0, Math.min(1, (z3D + maxR) / (2 * maxR)));
+
+                // Depth-aware hover interaction:
+                // Foreground particles react dramatically; background particles stay distant and subtle
+                const depthWeight = 0.12 + Math.pow(depthFactor, 1.8) * 0.88;
+                const dx = projX - mouse.pointerX;
+                const dy = projY - mouse.pointerY;
+                const dist = Math.sqrt(dx * dx + dy * dy);
+                const hoverRadius = 75 + depthFactor * 65; // 75px at back, 140px in front
+
+                let interactiveScale = 1;
+                let interactiveAlpha = 0;
+
+                if (dist < hoverRadius) {
+                    const force = (hoverRadius - dist) / hoverRadius;
+                    // Strong physical deflection for foreground, minimal for background
+                    projX += dx * force * 0.42 * depthWeight;
+                    projY += dy * force * 0.42 * depthWeight;
+                    interactiveScale = 1 + force * 1.85 * depthWeight;
+                    interactiveAlpha = force * 0.35 * depthWeight;
+                }
+
+                // Atmospheric depth falloff: foreground particles are bold and dark; background particles are delicate and misty
+                const baseAlpha = 0.12 + Math.pow(depthFactor, 1.3) * 0.76;
+                const depthAlpha = Math.min(0.96, baseAlpha + interactiveAlpha);
+                const size = Math.max(0.65, p.mass * Math.pow(scale, 1.45) * 1.15 * interactiveScale);
+
+                projected.push({
+                    p,
+                    projX,
+                    projY,
+                    zCam,
+                    depthAlpha,
+                    size,
+                });
+            }
+
+            // Depth sorting (back-to-front) for realistic 3D plate rendering
+            projected.sort((a, b) => b.zCam - a.zCam);
+
+            for (let i = 0; i < projected.length; i++) {
+                const item = projected[i];
+                const { p, projX, projY, depthAlpha, size } = item;
+
+                if (p.prevX !== undefined && Math.hypot(projX - p.prevX, projY - p.prevY) < 32) {
+                    ctx.beginPath();
+                    ctx.moveTo(p.prevX, p.prevY);
+                    ctx.lineTo(projX, projY);
+                    ctx.strokeStyle = `rgba(0, 0, 0, ${Math.min(0.4, depthAlpha * 0.45)})`;
+                    ctx.lineWidth = Math.max(0.8, size * 0.85);
+                    ctx.stroke();
+                }
+
+                ctx.beginPath();
+                ctx.arc(projX, projY, size, 0, Math.PI * 2);
+                ctx.fillStyle = `rgba(0, 0, 0, ${Math.min(0.92, depthAlpha)})`;
+                ctx.fill();
+
+                p.prevX = projX;
+                p.prevY = projY;
+            }
+
+            animId = requestAnimationFrame(render);
+        };
+
+        if ('IntersectionObserver' in window) {
+            const io = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    isVisible = entry.isIntersecting;
+                    if (isVisible && !animId) {
+                        animId = requestAnimationFrame(render);
+                    }
+                });
+            }, { rootMargin: '120px' });
+            io.observe(contactSec);
+        } else {
+            isVisible = true;
+            animId = requestAnimationFrame(render);
+        }
+
+        contactSec.addEventListener('mousemove', (e) => {
+            const rect = contactSec.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+
+            mouse.pointerX = x;
+            mouse.pointerY = y;
+            mouse.targetX = (x - rect.width / 2) * 0.12;
+            mouse.targetY = (y - rect.height / 2) * 0.12;
+        });
+
+        contactSec.addEventListener('mouseleave', () => {
+            mouse.targetX = 0;
+            mouse.targetY = 0;
+            mouse.pointerX = -1000;
+            mouse.pointerY = -1000;
+        });
+
+        contactSec.addEventListener('touchmove', (e) => {
+            if (e.touches && e.touches.length > 0) {
+                const rect = contactSec.getBoundingClientRect();
+                const touch = e.touches[0];
+                const x = touch.clientX - rect.left;
+                const y = touch.clientY - rect.top;
+
+                mouse.pointerX = x;
+                mouse.pointerY = y;
+                mouse.targetX = (x - rect.width / 2) * 0.1;
+                mouse.targetY = (y - rect.height / 2) * 0.1;
+            }
+        }, { passive: true });
+
+        contactSec.addEventListener('touchend', () => {
+            mouse.targetX = 0;
+            mouse.targetY = 0;
+            mouse.pointerX = -1000;
+            mouse.pointerY = -1000;
+        }, { passive: true });
+
+        const envEl = document.getElementById('envelope-wrapper');
+        if (envEl) {
+            envEl.addEventListener('mouseenter', () => {
+                if (topology !== 'ACCRETION_DISK') {
+                    topology = 'ACCRETION_DISK';
+                    particles.forEach(p => { p.prevX = undefined; p.prevY = undefined; });
+                }
+            });
+            envEl.addEventListener('mouseleave', () => {
+                if (!isEnvelopeOpen() && topology !== 'SINGULARITY_COLLAPSE') {
+                    topology = 'SINGULARITY_COLLAPSE';
+                    particles.forEach(p => { p.prevX = undefined; p.prevY = undefined; });
+                }
+            });
+        }
+    };
+
     loadProjects();
     initLogoLoop();
+    initAetherVortex();
 });
 
