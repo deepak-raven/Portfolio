@@ -3108,6 +3108,14 @@ document.addEventListener('DOMContentLoaded', () => {
             modal.classList.add('sending');
             env.classList.add('is-receiving');
 
+            // Trigger smiling eyes in the footer!
+            window.__pendingEyesSmile = true;
+            if (typeof window.triggerAsciiEyesSmile === 'function') {
+                window.triggerAsciiEyesSmile();
+            } else if (typeof window.initAsciiEyes === 'function') {
+                window.initAsciiEyes();
+            }
+
             // Send to Google Form in the background
             try {
                 // Using 'no-cors' mode for Google Forms headless POST
