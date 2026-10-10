@@ -33,7 +33,7 @@
     <link rel="preload"
         href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@600;700;800&family=Playfair+Display:ital,wght@0,400;1,400&family=DM+Serif+Display:ital@0;1&display=swap"
         as="style">
-    <link rel="preload" href="combined.css?v=7" as="style">
+    <link rel="preload" href="combined.css?v=25" as="style">
 
     <link rel="preload" as="image" href="./images/profile.webp" fetchpriority="high" media="(min-width: 768px)">
     <link rel="preload" as="image" href="./images/screen.webp" fetchpriority="high" media="(min-width: 768px)">
@@ -113,12 +113,166 @@
                 z-index: 200;
             }
         }
+
+        /* Live Orb Mascot - Dynamic Trajectory */
+        #live-orb-mascot {
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: 60;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.75s cubic-bezier(0.16, 1, 0.3, 1);
+            will-change: transform, opacity;
+            transform-origin: center center;
+        }
+
+        #live-orb-mascot.orb-visible {
+            opacity: 1 !important;
+            pointer-events: auto !important;
+        }
+
+        #live-orb-wrapper {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            user-select: none;
+            line-height: 0;
+            transform: scale(0.7);
+            opacity: 0;
+            transition: transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.5s ease;
+        }
+
+        #live-orb-mascot.orb-visible #live-orb-wrapper {
+            transform: scale(1) !important;
+            opacity: 1 !important;
+        }
+
+        .live-orb-box {
+            width: 42px !important;
+            height: 42px !important;
+            min-width: 42px !important;
+            min-height: 42px !important;
+            max-width: 42px !important;
+            max-height: 42px !important;
+            position: relative;
+            border-radius: 9999px;
+            overflow: hidden;
+            flex-shrink: 0;
+            background: transparent;
+            filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.12));
+            transition: filter 0.15s ease-out;
+        }
+        #live-orb-shoes {
+            position: absolute !important;
+            left: 50% !important;
+            top: 40px;
+            transform: translateX(-50%);
+            width: 44px;
+            height: 16px;
+            pointer-events: none !important;
+            z-index: 5 !important;
+            transition: opacity 0.3s ease !important;
+            overflow: visible !important;
+        }
+
+        body:has(#live-orb-mascot:hover) .cursor-outline,
+        body:has(#live-orb-wrapper:hover) .cursor-outline {
+            opacity: 0 !important;
+            backdrop-filter: none !important;
+            -webkit-backdrop-filter: none !important;
+        }
+
+        #live-orb-canvas {
+            width: 100% !important;
+            height: 100% !important;
+            display: block;
+        }
+
+        .logo-loop-item {
+            cursor: pointer !important;
+            position: relative;
+        }
+
+        .logo-loop-item.orb-riding img {
+            filter: grayscale(0) opacity(1) !important;
+            transform: scale(1.22) !important;
+        }
+
+        /* Plain Black Hole Portals */
+        .portal-effect {
+            pointer-events: none;
+            will-change: transform, opacity;
+            transition: opacity 0.15s ease-out;
+        }
+
+                /* ASCII Eyes Art in Footer - Edge to Edge, Smooth Continuous Blend */
+        .ascii-eyes-container {
+            margin-top: 0;
+            margin-bottom: -2rem;
+            margin-left: -1.5rem;
+            margin-right: -1.5rem;
+            width: calc(100% + 3rem);
+            padding: 0 !important;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            box-sizing: border-box;
+            border-top: none;
+            line-height: 0;
+            position: relative;
+            -webkit-mask-image: linear-gradient(to bottom, transparent 0%, rgba(0, 0, 0, 0.2) 6%, rgba(0, 0, 0, 0.7) 14%, #000 28%);
+            mask-image: linear-gradient(to bottom, transparent 0%, rgba(0, 0, 0, 0.2) 6%, rgba(0, 0, 0, 0.7) 14%, #000 28%);
+        }
+
+        .ascii-eyes-container::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 28%;
+            background: linear-gradient(to bottom, #000000 0%, rgba(0, 0, 0, 0.6) 12%, transparent 100%);
+            pointer-events: none;
+            z-index: 2;
+        }
+
+        @media (min-width: 768px) {
+            .ascii-eyes-container {
+                margin-left: -3rem;
+                margin-right: -3rem;
+                width: calc(100% + 6rem);
+            }
+        }
+
+        .ascii-eyes-art {
+            font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+            font-size: calc(100vw / 158);
+            line-height: 1.0;
+            letter-spacing: 0px;
+            color: #52525b;
+            transition: color 0.4s ease;
+            white-space: pre;
+            margin: 0 !important;
+            padding: 0 !important;
+            user-select: none;
+            display: block;
+            width: fit-content;
+            text-align: left;
+            pointer-events: none;
+        }
+
+        .ascii-eyes-container:hover .ascii-eyes-art {
+            color: #d4d4d8;
+        }
     </style>
 
     <link
         href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@600;700;800&family=Playfair+Display:ital,wght@0,400;1,400&family=DM+Serif+Display:ital@0;1&display=swap"
         rel="stylesheet" media="print" onload="this.media='all'">
-    <link rel="stylesheet" href="combined.css?v=7">
+    <link rel="stylesheet" href="combined.css?v=25">
 
     <script type="application/ld+json">
     {
@@ -146,6 +300,8 @@
     <canvas id="topo-canvas" class="fixed inset-0 -z-10 pointer-events-none w-full h-full" aria-hidden="true"></canvas>
 
 
+
+
     <!-- Tactile Grain/Noise Overlay (Desktop Only - disabled on mobile to prevent GPU mix-blend compositing lag) -->
     <div
         class="hidden md:block fixed inset-0 pointer-events-none z-[100] mix-blend-multiply opacity-[0.04] bg-[url('data:image/svg+xml,%3Csvg viewBox=%220 0 200 200%22 xmlns=%22http://www.w3.org/2000/svg%22%3E%3Cfilter id=%22noiseFilter%22%3E%3CfeTurbulence type=%22fractalNoise%22 baseFrequency=%220.85%22 numOctaves=%223%22 stitchTiles=%22stitch%22/%3E%3C/filter%3E%3Crect width=%22100%25%22 height=%22100%25%22 filter=%22url(%23noiseFilter)%22/%3E%3C/svg%3E')]">
@@ -168,12 +324,104 @@
     <!-- Main Content Landmark -->
     <main id="main-content" class="w-full relative">
         <div
-            class="max-w-[1440px] mx-auto px-6 md:px-12 selection:bg-neutral-800 selection:text-white pb-20 relative z-10 overflow-x-clip">
+            class="max-w-[1440px] mx-auto px-6 md:px-12 selection:bg-neutral-800 selection:text-white pb-20 relative z-10">
             <!-- Visually Hidden H1 for SEO -->
             <h1 class="sr-only">Deepak S | Web Developer Portfolio</h1>
 
             <!-- Desktop Hero (Laptop Frame - Hidden on Mobile) -->
-            <div class="hidden md:block w-full" style="height: 100vh; position: relative;">
+            <div id="desktop-hero" class="hidden md:block w-full relative z-30" style="height: 100vh;">
+                <!-- Live Orb Mascot: Smooth dynamic transition from laptop screen to closed lid -->
+                <div id="live-orb-mascot" class="hidden md:block select-none" style="transform: translate3d(0, 0, 0);">
+                    <div id="live-orb-wrapper" class="relative group cursor-pointer flex items-center select-none"
+                        title="Live Orb: Noir — Click to switch style" role="button" tabindex="0"
+                        aria-label="Live Orb interactive mascot">
+                        <div class="live-orb-box relative rounded-full overflow-hidden" style="z-index: 10;">
+                            <div id="live-orb-fallback" aria-hidden="true"
+                                class="absolute inset-0 overflow-hidden rounded-full bg-[#18181B] transition-colors duration-300"
+                                style="display: none;">
+                                <span id="live-orb-fallback-eye-l"
+                                    class="absolute rounded-full bg-[#F4F4F5] w-[13%] h-[28%] left-[31%] top-[34%]"></span>
+                                <span id="live-orb-fallback-eye-r"
+                                    class="absolute rounded-full bg-[#F4F4F5] w-[13%] h-[28%] left-[56%] top-[34%]"></span>
+                            </div>
+                            <canvas id="live-orb-canvas" style="width: 42px; height: 42px; display: block;"></canvas>
+                        </div>
+                        <!-- Mini Shoes on Mascot (Cinematic Side Profile Sneakers) -->
+                        <div id="live-orb-shoes"
+                            style="position: absolute; left: 50%; top: 40px; transform: translateX(-50%); width: 44px; height: 16px; opacity: 0; pointer-events: none; z-index: 5; overflow: visible;">
+                            <svg width="44" height="16" viewBox="0 0 44 16" fill="none" style="overflow: visible;"
+                                xmlns="http://www.w3.org/2000/svg" class="w-full h-full block">
+                                <defs>
+                                    <filter id="cinematic-shadow-blur" x="-20%" y="-20%" width="140%" height="140%">
+                                        <feGaussianBlur stdDeviation="0.8" />
+                                    </filter>
+                                </defs>
+                                <!-- Ground Contact Shadows -->
+                                <ellipse class="shoe-shadow-l" cx="20.5" cy="15.2" rx="9" ry="1.6" fill="#000000" opacity="0.6" filter="url(#cinematic-shadow-blur)" />
+                                <ellipse class="shoe-shadow-r" cx="23.5" cy="15.2" rx="9" ry="1.6" fill="#000000" opacity="0.6" filter="url(#cinematic-shadow-blur)" />
+                                <!-- Left Shoe (Far Foot in Side Angle) -->
+                                <g class="mini-shoe-l" transform="translate(10.5, 0)">
+                                    <!-- Thick White Midsole with Crisp Edge -->
+                                    <path d="M 0.5 10.5 H 16.5 C 18 10.5 19.5 11.2 20.5 12.2 L 20.5 13.8 C 19.5 14.8 17.5 14.8 15.5 14.8 H 0.5 C 0.2 14.8 0 14.4 0 14 V 11.3 C 0 10.8 0.2 10.5 0.5 10.5 Z"
+                                        fill="#FFFFFF" stroke="#111111" stroke-width="1.2" />
+                                    <line x1="0.5" y1="12.6" x2="18.5" y2="12.6" stroke="#111111" stroke-width="0.6" stroke-opacity="0.4" />
+                                    <!-- Matte Dark Body -->
+                                    <path d="M 0.8 10.5 C 0.4 7.2 1.6 4.5 3.2 3.6 C 4.5 4.5 5.8 5.2 7.2 4.8 C 8.2 3.4 9.2 2 10.4 2 C 11.5 3.4 13.5 5.8 15.5 7.6 C 17.8 8.4 19.5 9.2 20.5 10.5 H 0.8 Z"
+                                        fill="#222226" stroke="#111111" stroke-width="0.8" />
+                                    <!-- White Toe Bumper Cap -->
+                                    <path d="M 16.5 10.5 C 17.5 9.2 19 9.8 20.5 10.5 L 20.5 12.2 C 19.5 11.2 18 10.6 16.5 10.5 Z"
+                                        fill="#FFFFFF" stroke="#111111" stroke-width="0.8" />
+                                    <!-- Side Racing Wave / Swoosh -->
+                                    <path d="M 3.5 7.6 C 7.8 7 12.2 7.6 16 9.4" stroke="#FFFFFF" stroke-width="1.3"
+                                        stroke-linecap="round" />
+                                    <!-- Angled Side Laces -->
+                                    <line x1="8.2" y1="4.2" x2="10.2" y2="5.6" stroke="#FFFFFF" stroke-width="1.1"
+                                        stroke-linecap="round" />
+                                    <line x1="10.4" y1="5.8" x2="12.6" y2="7.2" stroke="#FFFFFF" stroke-width="1.1"
+                                        stroke-linecap="round" />
+                                </g>
+                                <!-- Right Shoe (Near Foot in Side Angle) -->
+                                <g class="mini-shoe-r" transform="translate(13.5, 0)">
+                                    <!-- Thick White Midsole with Crisp Edge -->
+                                    <path d="M 0.5 10.5 H 16.5 C 18 10.5 19.5 11.2 20.5 12.2 L 20.5 13.8 C 19.5 14.8 17.5 14.8 15.5 14.8 H 0.5 C 0.2 14.8 0 14.4 0 14 V 11.3 C 0 10.8 0.2 10.5 0.5 10.5 Z"
+                                        fill="#FFFFFF" stroke="#111111" stroke-width="1.2" />
+                                    <line x1="0.5" y1="12.6" x2="18.5" y2="12.6" stroke="#111111" stroke-width="0.6" stroke-opacity="0.4" />
+                                    <!-- Matte Dark Body -->
+                                    <path d="M 0.8 10.5 C 0.4 7.2 1.6 4.5 3.2 3.6 C 4.5 4.5 5.8 5.2 7.2 4.8 C 8.2 3.4 9.2 2 10.4 2 C 11.5 3.4 13.5 5.8 15.5 7.6 C 17.8 8.4 19.5 9.2 20.5 10.5 H 0.8 Z"
+                                        fill="#111111" stroke="#111111" stroke-width="0.8" />
+                                    <!-- White Toe Bumper Cap -->
+                                    <path d="M 16.5 10.5 C 17.5 9.2 19 9.8 20.5 10.5 L 20.5 12.2 C 19.5 11.2 18 10.6 16.5 10.5 Z"
+                                        fill="#FFFFFF" stroke="#111111" stroke-width="0.8" />
+                                    <!-- Side Racing Wave / Swoosh -->
+                                    <path d="M 3.5 7.6 C 7.8 7 12.2 7.6 16 9.4" stroke="#FFFFFF" stroke-width="1.3"
+                                        stroke-linecap="round" />
+                                    <!-- Angled Side Laces -->
+                                    <line x1="8.2" y1="4.2" x2="10.2" y2="5.6" stroke="#FFFFFF" stroke-width="1.1"
+                                        stroke-linecap="round" />
+                                    <line x1="10.4" y1="5.8" x2="12.6" y2="7.2" stroke="#FFFFFF" stroke-width="1.1"
+                                        stroke-linecap="round" />
+                                </g>
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Screen Impact Ripple (Clean Expanding Shockwave) -->
+                <div id="screen-impact-overlay" class="pointer-events-none select-none"
+                    style="position: absolute; z-index: 55; opacity: 0; transform: translate(-50%, -50%) scale(0.6); transform-origin: center center; transition: opacity 0.08s ease-out; width: 440px; height: 440px;">
+                    <!-- Expanding Glass Shockwave Ring (Refractive dual-tone highlight & shadow) -->
+                    <div id="glass-shockwave-ring"
+                        style="position: absolute; top: 50%; left: 50%; width: 340px; height: 340px; transform: translate(-50%, -50%) scale(0.2); border-radius: 9999px; border: 3px solid rgba(15, 23, 42, 0.65); box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.95), 0 0 35px rgba(15, 23, 42, 0.25), inset 0 0 20px rgba(255, 255, 255, 0.45); opacity: 0;">
+                    </div>
+                </div>
+
+                <!-- Plain Black Hole 1 (Entry Hole below laptop) -->
+                <div id="portal-entry" class="portal-effect select-none"
+                    style="position: absolute; z-index: 45; opacity: 0; transform: translate(-50%, -50%) scale(0); transform-origin: center center; width: 120px; height: 48px; filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.22));">
+                    <svg viewBox="0 0 120 48" class="w-full h-full block">
+                        <ellipse cx="60" cy="24" rx="60" ry="24" fill="#000000" />
+                    </svg>
+                </div>
                 <div class="laptop-container select-none"
                     style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -100%) scale(1.75); transform-origin: center center;">
                     <!-- Fixed dimensions so rotation pivot is perfectly centered -->
@@ -219,7 +467,8 @@
                                     <!-- Inner Header -->
                                     <header
                                         class="flex justify-between items-center py-2 px-4 md:py-3 md:px-4 absolute top-0 left-0 right-0 z-30 pointer-events-none w-full border-b border-black/10">
-                                        <div></div>
+                                        <div id="laptop-orb-anchor"
+                                            class="w-[42px] h-[42px] shrink-0 pointer-events-none opacity-0"></div>
                                         <nav
                                             class="hidden md:flex items-center gap-4 text-[7px] md:text-[9px] font-bold uppercase tracking-widest text-black/60 pointer-events-auto">
                                             <a href="#projects" class="hover:text-black transition-colors">Projects</a>
@@ -361,10 +610,12 @@
                         <span
                             class="text-[10px] font-bold uppercase tracking-[0.2em] text-black mb-4 block">About</span>
                         <h2 class="text-3xl font-serif italic mb-6">Who I am</h2>
-                        <p class="text-black/60 text-[clamp(11.5px,3.2vw,14px)] sm:text-sm leading-relaxed sm:leading-7 mb-6 max-w-md">
-                            Deepak S is a Computer Science Engineering student<br>and Web Developer passionate about innovative web<br>applications and high-performance engineering.
+                        <p
+                            class="text-black/60 text-[clamp(11.5px,3.2vw,14px)] sm:text-sm leading-relaxed sm:leading-7 mb-6 max-w-md">
+                            Deepak S is a Computer Science Engineering student<br>and Web Developer passionate about
+                            innovative web<br>applications and high-performance engineering.
                         </p>
-                        <div class="hidden md:block mt-8">
+                        <div id="about-arrow-container" class="hidden md:block mt-8 relative">
                             <!-- Decorative Curved Arrow -->
                             <svg class="text-[#bfbfbf]" xmlns="http://www.w3.org/2000/svg" version="1.1"
                                 xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:svgjs="http://svgjs.dev/svgjs"
@@ -388,13 +639,22 @@
                                     </marker>
                                 </defs>
                             </svg>
+
+                            <!-- Plain Black Hole 2 (Exit Hole in About Section at Arrow Tail) -->
+                            <div id="portal-exit" class="portal-effect select-none"
+                                style="position: absolute; left: 52%; top: 83%; z-index: 25; opacity: 0; transform: translate(-50%, -50%) rotate(-26deg) scale(0); transform-origin: center center; width: 110px; height: 44px; filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.22));">
+                                <svg viewBox="0 0 110 44" class="w-full h-full block">
+                                    <ellipse cx="55" cy="22" rx="55" ry="22" fill="#000000" />
+                                </svg>
+                            </div>
                         </div>
                     </div>
 
                     <!-- Column 2: Stats Card & Portrait (Span 4) - Centered visual -->
                     <div class="md:col-span-4 relative flex flex-col items-center reveal-up delay-200">
                         <!-- 3+ Card - Brutalist effect -->
-                        <div class="bg-[#f7f7f5] p-6 w-full max-w-[200px] text-center z-10 -mb-12">
+                        <div id="about-stats-card"
+                            class="bg-[#f7f7f5] p-6 w-full max-w-[200px] text-center z-10 -mb-12">
                             <div class="flex justify-center mb-4 text-black">
                                 <span class="text-xl">✦</span>
                             </div>
@@ -406,7 +666,7 @@
                         </div>
 
                         <!-- Portrait Image -->
-                        <div
+                        <div id="about-portrait-box"
                             class="w-full max-w-[280px] aspect-[4/5] overflow-hidden border border-black/10 relative z-0 select-none">
                             <img src="./images/about.webp" alt="Deepak S" width="864" height="1184" loading="lazy"
                                 decoding="async"
@@ -512,7 +772,8 @@
 
 
         <!-- Experience Section -->
-        <section id="experience" class="py-24 reveal-up max-w-[1440px] mx-auto px-6 md:px-12 overflow-hidden w-full">
+        <section id="experience"
+            class="py-24 reveal-up max-w-[1440px] mx-auto px-6 md:px-12 overflow-hidden w-full relative">
             <div class="grid grid-cols-1 md:grid-cols-12 gap-16">
                 <!-- Title Column -->
                 <div class="md:col-span-4 reveal-up delay-100 border-r-0 md:border-r border-black/10 pr-0 md:pr-8">
@@ -544,7 +805,8 @@
                                 </p>
                                 <p
                                     class="font-medium text-black/40 normal-case tracking-normal text-xs max-w-md leading-relaxed mt-2">
-                                    Building business websites and web applications while developing my freelance practice.
+                                    Building business websites and web applications while developing my freelance
+                                    practice.
                                 </p>
                             </div>
                         </div>
@@ -574,11 +836,13 @@
                                     class="text-black/60 text-[10px] sm:text-xs font-medium uppercase tracking-wider sm:tracking-widest mt-2 flex flex-wrap items-center gap-x-2 gap-y-0.5">
                                     <span>Kotlerx Technologies Pvt. Ltd.</span>
                                     <span class="opacity-40 hidden sm:inline">•</span>
-                                    <span class="whitespace-nowrap text-black/50 sm:text-black/60">July 2026 - Present</span>
+                                    <span class="whitespace-nowrap text-black/50 sm:text-black/60">July 2026 -
+                                        Present</span>
                                 </p>
                                 <p
                                     class="font-medium text-black/40 normal-case tracking-normal text-xs max-w-md leading-relaxed mt-2">
-                                    Developing scalable full-stack web applications, integrating APIs, and building responsive, high-performance digital solutions.
+                                    Developing scalable full-stack web applications, integrating APIs, and building
+                                    responsive, high-performance digital solutions.
                                 </p>
                             </div>
                         </div>
@@ -608,11 +872,13 @@
                                     class="text-black/60 text-[10px] sm:text-xs font-medium uppercase tracking-wider sm:tracking-widest mt-2 flex flex-wrap items-center gap-x-2 gap-y-0.5">
                                     <span>Slytherin Private Solution Limited</span>
                                     <span class="opacity-40 hidden sm:inline">•</span>
-                                    <span class="whitespace-nowrap text-black/50 sm:text-black/60">Aug 2025 - Present</span>
+                                    <span class="whitespace-nowrap text-black/50 sm:text-black/60">Aug 2025 -
+                                        Present</span>
                                 </p>
                                 <p
                                     class="font-medium text-black/40 normal-case tracking-normal text-xs max-w-md leading-relaxed mt-2">
-                                    Assisted in developing interactive web applications. Wrote clean, reusable code, and optimized performance.
+                                    Assisted in developing interactive web applications. Wrote clean, reusable code, and
+                                    optimized performance.
                                 </p>
                             </div>
                         </div>
@@ -633,23 +899,35 @@
         </section>
 
         <!-- Marquee Banner -->
-        <div class="w-full overflow-hidden my-12 md:my-16 py-6 md:py-8">
+        <div class="w-full relative my-12 md:my-16 py-6 md:py-8" id="marquee-section-wrap">
+            <!-- Dynamic Wind Effect Streamlines Canvas: Flows right-to-left against the walking mascot -->
+            <canvas id="marquee-wind-canvas" class="absolute pointer-events-none z-30 select-none"
+                style="top: -140px; left: 0; width: 100%; height: calc(100% + 180px); opacity: 0; transition: opacity 0.3s ease;"></canvas>
             <div
                 class="relative overflow-hidden bg-[#111] text-white py-4 md:py-5 border-y border-white/20 z-20 pointer-events-none marquee-container">
                 <!-- Track 1: Canonical source defined once in HTML -->
                 <div class="flex whitespace-nowrap animate-marquee shrink-0 items-center" id="marquee-track-1">
-                    <span class="text-[9px] md:text-[11px] font-bold uppercase tracking-[0.25em] px-6 md:px-8 text-white/50 shrink-0">Creative Design</span>
+                    <span
+                        class="text-[9px] md:text-[11px] font-bold uppercase tracking-[0.25em] px-6 md:px-8 text-white/50 shrink-0">Creative
+                        Design</span>
                     <span class="w-10 md:w-16 h-[1px] bg-white opacity-20 shrink-0"></span>
-                    <span class="text-2xl sm:text-3xl md:text-4xl font-serif italic px-6 md:px-8 text-white tracking-tight mix-blend-difference shrink-0">Digital Strategy</span>
+                    <span
+                        class="text-2xl sm:text-3xl md:text-4xl font-serif italic px-6 md:px-8 text-white tracking-tight mix-blend-difference shrink-0">Digital
+                        Strategy</span>
                     <span class="w-10 md:w-16 h-[1px] bg-white opacity-20 shrink-0"></span>
-                    <span class="text-[9px] md:text-[11px] font-bold uppercase tracking-[0.25em] px-6 md:px-8 text-white/50 shrink-0">Brand Identity</span>
+                    <span
+                        class="text-[9px] md:text-[11px] font-bold uppercase tracking-[0.25em] px-6 md:px-8 text-white/50 shrink-0">Brand
+                        Identity</span>
                     <span class="w-10 md:w-16 h-[1px] bg-white opacity-20 shrink-0"></span>
-                    <span class="text-2xl sm:text-3xl md:text-4xl font-serif italic px-6 md:px-8 text-white tracking-tight mix-blend-difference shrink-0">Art Direction</span>
+                    <span
+                        class="text-2xl sm:text-3xl md:text-4xl font-serif italic px-6 md:px-8 text-white tracking-tight mix-blend-difference shrink-0">Art
+                        Direction</span>
                     <span class="w-10 md:w-16 h-[1px] bg-white opacity-20 shrink-0"></span>
                 </div>
 
                 <!-- Track 2: Populated programmatically via JavaScript for seamless loop -->
-                <div class="flex whitespace-nowrap animate-marquee shrink-0 items-center" id="marquee-track-2" aria-hidden="true"></div>
+                <div class="flex whitespace-nowrap animate-marquee shrink-0 items-center" id="marquee-track-2"
+                    aria-hidden="true"></div>
             </div>
         </div>
 
@@ -744,16 +1022,23 @@
         </div>
     </main>
 
-    <footer class="bg-black text-white py-20 px-6 md:px-12 reveal-up overflow-hidden w-full">
+    <footer class="bg-black text-white pt-16 pb-8 px-6 md:px-12 reveal-up overflow-hidden w-full">
         <div
-            class="flex flex-row flex-wrap justify-between items-start gap-y-12 gap-x-6 border-b border-gray-800 pb-12 mb-12">
+            class="flex flex-row flex-wrap justify-between items-start gap-y-10 gap-x-6 pb-2">
             <!-- Logo area -->
-            <div class="flex flex-col gap-4 w-full md:w-auto mb-4 md:mb-0">
+            <div class="flex flex-col gap-3 w-full md:w-auto mb-4 md:mb-0">
                 <div
                     class="w-10 h-10 bg-white text-black rounded-lg flex items-center justify-center font-bold text-xl">
                     DS</div>
-                <p class="text-gray-400 text-sm max-w-xs">Deepak Sites (Deepaksites) — Creating digital experiences that
+                <p class="text-gray-400 text-sm max-w-xs">Deepak Sites - Creating digital experiences that
                     matter.</p>
+                <div class="flex flex-col gap-1.5 text-xs text-gray-600 mt-2">
+                    <div class="flex gap-4">
+                        <a href="#" class="hover:text-gray-400 transition-colors">Privacy Policy</a>
+                        <a href="#" class="hover:text-gray-400 transition-colors">Terms & Conditions</a>
+                    </div>
+                    <span>© 2026 Deepak S. All rights reserved.</span>
+                </div>
             </div>
 
             <!-- Utility Navigation -->
@@ -788,17 +1073,50 @@
             </div>
         </div>
 
-        <div class="flex flex-col md:flex-row justify-between items-center text-xs text-gray-600">
-            <span>© 2026 Deepak S. All rights reserved.</span>
-            <div class="flex gap-6 mt-4 md:mt-0">
-                <a href="#" class="hover:text-gray-400 transition-colors">Privacy Policy</a>
-                <a href="#" class="hover:text-gray-400 transition-colors">Terms & Conditions</a>
-            </div>
+        <!-- ASCII Eyes Art -->
+        <div class="ascii-eyes-container group" id="asciiEyesContainer" aria-label="ASCII art of eyes" role="img">
+            <pre class="ascii-eyes-art font-mono" id="asciiEyesArt">:::=::=::===::::-::::=====++++=++++++++*++**###########%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%@%@@%@@%@@%@%@@%@%%@%%%%%%%%%%%%%%@%%%@%%%%%%%%%%%%@%%%%%%@%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%#########*+*****+=+++=+====+=====:::::=::::::::::--:
+:::====:=====::::=::====+===++====+++++=++**++***#***#####%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%@%@%@@%@%%%@@@%@@%@@%%%%%%%%@@%%%@%%@%%%%%%%@%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%#%%#####*#####****#+++++++:==+=::==::=+===::::==:::::::::::::
+============::::::======:===::=+=::::=:++++==+**##*###%##%%#########%%%%%%%%%%%%%%%%%%%%%%%%%%#%%%%%%%%%%@%%%%%%%%@%@@%@@%@@@@%@%@%%%%@%%%%%%%%%@@%@@%%@%%%%%%%%%%%%%%%%%%%%#@#%%%%#%%%###**#####*##********++++*#**=+===:::--::==::+===:::-::+====::::::==:::::::::
+===========::::=====::===:===:-,--:==::::::==+***+++***++++*++::=:=+==+***+*++#%%###%%%%%%%%%%%%%%%%%%%%%%%%%%%%@@%%%%@%%%%%%%%@@@@@@@%%%%%@%@%%%@%@%%%%%%%%%%%%%%%%#%%#%%%*##*%%####*=***##*+****+=+***++=++++++--:--:::===:-,-::::=:::-::::--=+=:::---:=::::::::::
+=========:=::===:::==+::-,,...,---,,-:====++++=::=---::--:--::=+===++++==+*=+=.-*##*+*###%%*%%%%#%%%%%%%%%%%%%%%%%%%%%%%%%%@@@@@%%%@%%%@%%@%%@%@%%%%%%%%%%%%%%%%%%#%%+%%%%*%+*%####+,:#+++=++:=::--==:::-,,--:--,,,,---,,.,.-::=:::=:=::--,,,--,-:=+=:--::::::::::::
+======:::=::==::===:,.....,-,-,,..,-::,,..,,,,,::---::,,,,,,-:--::+=:=+=,:**-+#=,-:*##*+=*#%*%%%*%%*%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%@%%%@%%%%%%%%%%%%%%%%%%%%%%%%#%%%=%%#*%-%%*++=.+#-,:-=,,::. -=+,.,,.,.,,,,,.:--,,,----,--:-,,,,..,.:=:-,,--,..-:=:--:::::::::::
+=:==::::=:-==:::-,,.  ..,,,..,,-:--:-,--==+::::=,......,-,,----,,-,-,-:=:..:*--*+,.,=##*,+*#%:*%%#@+%%%%%%%%%%%%%%%%%@%%%%%%%%%%%%%%%%%@@%%%%%%%%%%%%%%%%%%%%%%%%%%*#%:*%#%*,#+:*+,=+.=*.-,,:-..-:,,,,.,.,,,-:-:=:::=:-------,,--:=+*++--,,,----:-,..,:=:--:::::::::
+===::=::::==---,,.,,,,,...,,-:---:-,,.,,,...,.-,,----,,.,,..,,-,.,.,:::=:::.,+,.=*=, ,:#+.=#%*-#%%%:%%%%%#%%%%%%%%%%%%%%%%%%%%%@%%%%%%%%%%%%%%%%%%%%%%%#%%%%%%%#%%##%**#*#*:=*=:=-:--#: .=+,...,,,,,.,,,,,,-------::-:::::-::=:===::-,,,,----...,,,,...,-:-:::::::::
+==:=:::::::...........,-:==++++==::::=:-,--:-,,,,,.,-,,,..... ,--,.  .,--::=..=-.:**...:*+--*#++*#**##%%%%#%##%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%#%**%*%**+#+-#+=+-:+-,::. ,*-  -::-,,..,,,,.,,--,-----:::--::=::::::-,:::==:::,-:::-.....  . ,:=::::==:
+==::::::-........,--:=:--,,.,,-:+=:=:-::=++=:::==---,-,,,,,,,. .,,,,... .,--=-,=,..:#+..-=*:,*%*+#-%##%##%#####%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%#%%%%##%##%%###+=**%:-#+*=,=-:+:,.,=..,:-,.,,,-,,,.,,--,-,,,-:=:::=++:==++=+****##******+=====:,,.,..   -:::::=:
+=::=:---..,,..,,---:::=+++***+++++****####*++****##***++==:::--,.,,:-,--.. .,::,--,-,=:,,:+*=,+%##:=####%%#####%%%#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%####%#%%#######*#+=**#*,-**+:*=+=-,,--.-,,,,--,,,.,,,,-----:--:=:::===++++**####*#**###%%#####**+=+=:-,..,. .:::::=
+=:-:---....,,,--::---==+++**##########%%%#####***######**++**+++=:-,-:-----,..,-,-:::.,-::++*=,:#++*=##################%##%%%%%%%%%%%%%%%%%%%%%%%##%%%########**#*:+#*#:+:+*+*::=----,,-----,,,,,-,,------:==:===+++***********#####################**+:-,.,. .=::::
+::::--...,,,,---=+********##******######%#################*+*+++===::-:::--::--,-----:----:==**-+*=*++#*#*###############%%%%%%%%%%%%%%%%%%%%%%%%%%%#########****#*==+*=+:+==::::=::---:::---------::::==++++++*++**********#*########****########***++++=-,.. .,:==
+::---,,,---:==:==+++*###******#########*#*################*#****+++=====-:::-::----:-:::::::=-+*=++++++**+*########*####%%%%%%%%%%%%%%%%%%%%%%%%%%#########*#****+*+++*++=+==::::::::::----------::::==++*+*********###*#*********#############***#****++===:--.,-:=
+::::,,--===+==+**++******###########**##**############**#**********+++==:::::-------:-::::=:==:====+++++++=*+****#*######%%###%%%%%%%%%%#%%%%%%%%##########*****+++++++======:::::::-----:---::::======::------------::==++***##********###*#*******+++**=::-,-,,-:=
+::-,,--::::=++++++++++**********##########**++===:-:-,-,,-,,,,,,,.,,,,--:==::--:--::::::::::::=====+==+++=++=++**######*#####%%%%%%%%%%%%###%%###########***++++=+========:::::::-::-------:::::-,.... ..,,-:======+++==::----:::==+++++++*************+**+====:-,:=
+=:---:==+=+++**++***************+**+=:------:-:==++=++**+****+*:=::,,...   ..,-:-:-::::::::::::::::::===+++++=+****#**#########%%%%%#%%%%%%%%##%#####******++++=====:::::::::--::::------::-..    .,=+*############*#########**+=:::::===++++++**++*+++*+++++++==--:
+:--:::===+++=+++++++++++++++*++:...,,-::++***##%%#%%%%%%%%+*##%*+##*###*+:-.     .,----::::::::-:::::::::===::===++****#########%#%%%###############*****++====::::::-:---------::------,.    .-+***#**++***#####%###=#*+====++*****+=:---::=++=++++++++++++====:-,=
+::::===+++===++==++++++==+=:,...,-:+++*++****#****%%%+#%%*++#%%,#%#*#*+++**##+:,.   .,,,,----::::::::--------:::=+++**+**##########%%%%%%##########******+===:::::---:---------------.    .-=******+*###%%%@@%%%%%+#*+##%%*+%*+:===++++=::----:=+====++++==++====:::
+::::::===========++=====:, .,-===+==+++**+=++-,.  ..       .... .==,::++##**+++#*=:.   ..,,,------------:-:::=====++******#####%#%%#%%%%%%%%######*****+++====::::-:---------,,,,,..  .,=+***++*###%%#*#=+:-,....     .--:.-=++=##*+=:====::-:-,-====:==+++==+===:::
+:::================:::-. .-:====++*++*+,.               .  .           .,-:+******+**-. . ..,,,-------::::::==::::==++****######%%%%%%%%%%%######******++=:::::::-:---------,,,,..  ,=+**+****+*+--,,.        .                .,:+:+*=::===:--=-,-:=:====++++===:::
+:::====:============-. ,::::==++++:,       .,=,                    -%%=:.  ..,++++*#+*+=::. ..,,,------:::::::::::===++***########%%%%%%%%%%%####****+++=:::::::-:::::------,,. ..-+**+*##**=-,    ..                     ,:.       .,=+++::==:,::--::=====+++====::
+:===============::-. ,:--:====:,.      -*%%%%:          .  .        .#@@@%%#,.  .,=+****+=+=,.,,--,-------:-::::=+=+++++***#####%%%%%%%%%%%%%%###****++=:::::::-::::::----,-,..-+*+**#**+:,.  .--**%.                      :%%%*-.      ..,:::=:,,:::::============:
+=========:::==::-,,,::,-:::,.      .:*%@%%%@:   .      @@%@%:         %@@@@@@%#,,. ..,=+##+=#*-,,-:-:--:-----:::==+=++*****#####%%%%%%%%%%%%%###*#**++=====:::-:=:=:::-----,,:*##*##*=-,.. .=%@@@@%.       *@@@@.      .    +%%%%%#+,      .,---:---:::============:
+==========::::::::::,,-,..       .+%%@%%%%@#  . ....  .#%::%, @ .     :%@@@@@@@%%*,....,-+##=+##=-::::::::::::::==++++****#####%%%%%%%%%%%%%%####***+++======::::::::::::--=####%#+-....,=%@@@@@@%=    .   +#:-+ @@ .*      ,%@%%%%%#=,.      .,----::=============:
+===========:::::::----,.       ,+#%%@@@%%@@=                  . ,     .%@@@@@@@%%%%#=,....,+%#+#%#=:::=::==:=::===++++*****####%%%%%%%%%%%%%%#####**++=============::=+::=#%%%%*-,...,+*#%%@@@@@@@.               .  ,     .-%@%%@@%%#++,       ..,--::=============
+===========:::::::--,...   .. ,:+#%%@@@@%%@+           .    ,         -%@@@@@@@@%%%%%#+=,,,.,*%*+#%#*=+=:===:=====+++++****#####%%%%%%%%%%%%%###***++=============::=+=:#%%%%#:-,.,-=#%@@@@@@@@@@@=        .    ..        ...%@%%%@@%%**+. .    ..,,,-::============
+++=========::::---,....  ..-:.:=*%%%@@@%%%%%-                        .%@@@@@@@@@%%@@%%@%+:=:..-#%%##*++++==+======++++******####%%%%%%%%%%%%%%##***+++=++=+===========+###%%-.,:-,%%#%%%%@@@@@@@@@%.            .  .        *@@@@@@%%#=*+,,-,.    .,--:::======+====
++++++======:::---,......,,.,:==*###%%%%%@@@@%:   ,,,                ,%@@@@@@@@@@@%@%%@@%*#%%%+:-:#%%#***#*+++==+++++++******####%%%%%%%%%%%%%####***++====++==+++++:==+#%%=..*%%%*%@@%%%@@@@@@@@@@@%-             .*,      *@%@@@@%%#*+*+=:,.......,,--::::===++++==
++++++==::::----,-,,,-,,,,,,-:=+####%%%%@@@@@@%%-.                 .*@@@@@@@@@@@@@@%%@@%#%%%%#%%+*=*#%##**++++=+++*+++++****######%%%%%%%%%%%%#####**+==+==+===+=+++=+**#+:,,+++*##*#@@%@@@@@@@@@@@@@@+                  .:%@%%@@@@@%%#***+=--,..,,,,-:::====+++++++=
++++===-:-::----:--,--,,,,----:==*####%%%%@@@@@@@%-              -#@@@@@@@@@@%%%#*++**+==+*###%%@%%%%*#%**+++++++**+*++*****#*#####%%%%%%%#%######***++=+=+++++===+=***#+:*+=====:::-=:===+=+*##%@@@@@@%*,             ,*%@@@@@@@%%%##**+===:::-,,,--::===+++++++++++
++++==--=::::::::::::---,,-::=:====:+==+###%%%%%@@@%%#*=--,,-:+#%%%%%%%#%*+=======++*+##*#%%@@%@@@@%%**#*#*+*++++*+**+********######%%%%%%%%######***++==+=+++=++++++#++#*#%###%%%#%%%##**####*++=-=+==*#%#*::=-,--=*%%@@@%%%%%#***+*#=++=::---,,--:==+++++++++++*+++
+++========:========:::-----:::=::-:=**+=+**=***++***###*#%%%%%*==++:*#*##*+%%%%%#%%%#%%%%%%%%%%%%#%%###*****+++*+++**********######%%%%%%%######*****++=+++++==+++++++++##%%%%%%%%#%#%%%%#%%%%#%#%%%%+#=#%++###**####***#++++*==++=:=+=::=:-----::=++*************++
+=====++===+++++++++===::----::::+==**==*++*++##**++*###*###+#%%%#%@%%%%%##*#%##***#*#########%%%%%###*#***++++++++***********#######%%%%%%%######****++==++++++=++++++++=*#%%%%######***+*+**+++*##%*#*#%%*+%%**+##***:*++==:*#+===+:++=:-:---::===++**************+
+=====++=++*+**++*++++==:::---::==:+*=+**++*#*##*:=*#*+++*##++#+*#+*#*##+***++++**++****#%%%%%%%%%##*******+****++******+****#**#####%#####%%######***+++=+++++++++++++++*++##%%%#%###***+===**#*++++=::++:*:=#*:*+++*+=++#++++**++==::=::---::==++++***************+
+====+++++**+*****+++++====:::----::::+++=+**#**=***+*++*+*##*##+**+++++++++=+==+=+*##%%%%%%%%#%##*******+******************##*####%%%%%%%%%%%#####***+++++++++++++++++++++***##########*##**====+++*****+++==+*+=*#+**+=*++=++==+===-:---::==++++++****************+
++==+++++*******+++++++++=+===::::::::::::===++=+++++++****++*+*++*++++++====+***######%%%%%%#%###*******************+****###*####%%%%%%%%%%%%%####***+++++==++++++++++*+++*****########%#####***=:====+++***+++===++=++:+=+========::=:===++++**********************</pre>
         </div>
     </footer>
 
     <script src="https://unpkg.com/lenis@1.1.18/dist/lenis.min.js"></script>
-    <script src="script.js?v=6" defer></script>
+    <script src="script.js?v=143" defer></script>
 </body>
 
 </html>

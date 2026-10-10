@@ -383,7 +383,7 @@ body.cursor-hover .cursor-outline {
   height: 60px;
   background-color: rgba(0, 0, 0, 0.05);
   border-color: rgba(0, 0, 0, 0.1);
-  backdrop-filter: blur(2px);
+  backdrop-filter: none;
 }
 
 body.cursor-hover-dark .cursor-outline {
@@ -1539,6 +1539,8 @@ html {
   display: flex;
   align-items: center;
   justify-content: center;
+  cursor: pointer;
+  position: relative;
 }
 
 .logo-loop-item img,
@@ -1551,9 +1553,10 @@ html {
   transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.logo-loop-item:hover img {
-  filter: grayscale(0) opacity(1);
-  transform: scale(1.15);
+.logo-loop-item:hover img,
+.logo-loop-item.orb-riding img {
+  filter: grayscale(0) opacity(1) !important;
+  transform: scale(1.18) !important;
 }
 
 .logo-loop-fade-left,
@@ -1702,4 +1705,65 @@ html {
   background: transparent !important;
   color: inherit !important;
   text-shadow: none !important;
+}
+
+/* ASCII Eyes Art in Footer - Edge to Edge, Smooth Continuous Blend */
+.ascii-eyes-container {
+  margin-top: 0;
+  margin-bottom: -2rem;
+  margin-left: -1.5rem;
+  margin-right: -1.5rem;
+  width: calc(100% + 3rem);
+  padding: 0 !important;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  box-sizing: border-box;
+  border-top: none;
+  line-height: 0;
+  position: relative;
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0%, rgba(0, 0, 0, 0.2) 6%, rgba(0, 0, 0, 0.7) 14%, #000 28%);
+  mask-image: linear-gradient(to bottom, transparent 0%, rgba(0, 0, 0, 0.2) 6%, rgba(0, 0, 0, 0.7) 14%, #000 28%);
+}
+
+.ascii-eyes-container::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 28%;
+  background: linear-gradient(to bottom, #000000 0%, rgba(0, 0, 0, 0.6) 12%, transparent 100%);
+  pointer-events: none;
+  z-index: 2;
+}
+
+@media (min-width: 768px) {
+  .ascii-eyes-container {
+    margin-left: -3rem;
+    margin-right: -3rem;
+    width: calc(100% + 6rem);
+  }
+}
+
+.ascii-eyes-art {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  font-size: calc(100vw / 143);
+  line-height: 1.0;
+  letter-spacing: 0px;
+  color: #52525b;
+  transition: color 0.4s ease;
+  white-space: pre;
+  margin: 0 !important;
+  padding: 0 !important;
+  user-select: none;
+  display: block;
+  width: fit-content;
+  text-align: left;
+  pointer-events: none;
+}
+
+.ascii-eyes-container:hover .ascii-eyes-art {
+  color: #d4d4d8;
 }
