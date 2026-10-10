@@ -1902,7 +1902,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
                     // Ensure exit portal is hidden during Phase 2
                     if (portalExit) {
-                        portalExit.style.transform = 'translate(-50%, -50%) scale(0)';
+                        portalExit.style.opacity = '0';
+                        portalExit.style.transform = 'translate(-50%, -50%) rotate(-26deg) scale(0)';
                     }
 
                     if (jt <= 0.70) {
@@ -2447,13 +2448,6 @@ document.addEventListener('DOMContentLoaded', () => {
                     targetJump = 0;
                 }
 
-                // Phase 3: Emerge from hole 2 at arrow tail, shoot along arrow and land on marquee
-                if (scrollPos > 120) {
-                    targetTravel = 1;
-                } else if (scrollPos <= 40) {
-                    targetTravel = 0;
-                }
-
                 // Phase 4: Scroll through Selected Projects & Experience down to Running Marquee
                 const projectsSec = document.getElementById('projects');
                 const expSec = document.getElementById('experience');
@@ -2479,6 +2473,29 @@ document.addEventListener('DOMContentLoaded', () => {
                     } else {
                         pRange = Math.max(1200, (projectsSec.offsetHeight || 1400) + 600);
                     }
+                }
+
+                // Check whether the tech icon marquee (logo-loop) is visible on screen
+                const logoLoop = document.getElementById('logo-loop') || document.querySelector('.logo-loop');
+                const logoItem = document.querySelector('.logo-loop-item');
+                let isIconMarqueeVisible = false;
+                const winH = window.innerHeight || document.documentElement.clientHeight || 850;
+                if (logoItem) {
+                    const iRect = logoItem.getBoundingClientRect();
+                    // Icon items have entered from bottom and have not scrolled past top
+                    isIconMarqueeVisible = (iRect.top < winH - 10) && (iRect.bottom > 0);
+                } else if (logoLoop) {
+                    const lRect = logoLoop.getBoundingClientRect();
+                    isIconMarqueeVisible = (lRect.top < winH - 60) && (lRect.bottom > 0);
+                }
+
+                // Phase 3: Exit portal should ONLY open when the icon marquee is visible on screen
+                if (scrollPos <= 40) {
+                    targetTravel = 0;
+                } else if (isIconMarqueeVisible || (typeof pStart === 'number' && scrollPos >= pStart)) {
+                    targetTravel = 1;
+                } else {
+                    targetTravel = 0;
                 }
 
                 if (scrollPos > pStart) {
