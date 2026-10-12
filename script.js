@@ -46,6 +46,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Topographic Lines Background Effect (Exact WebGL implementation, self-hosted & zero dependencies)
     const initTopoLines = () => {
+        if (window.innerWidth < 768) return;
         const canvas = document.getElementById('topo-canvas');
         if (!canvas) return;
 
@@ -414,6 +415,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     let topoLinesStarted = false;
     const startTopoLines = () => {
+        if (window.innerWidth < 768) return;
         if (!topoLinesStarted) {
             topoLinesStarted = true;
             initTopoLines();
@@ -422,7 +424,11 @@ document.addEventListener('DOMContentLoaded', () => {
     window.addEventListener('pointermove', startTopoLines, { once: true, passive: true });
     window.addEventListener('scroll', startTopoLines, { once: true, passive: true });
     window.addEventListener('wheel', startTopoLines, { once: true, passive: true });
-    setTimeout(startTopoLines, 3200);
+    if ('requestIdleCallback' in window) {
+        requestIdleCallback(startTopoLines, { timeout: 7000 });
+    } else {
+        setTimeout(startTopoLines, 6000);
+    }
 
     const laptop = document.querySelector('.laptop');
     const laptopBlock = document.querySelector('.laptop-block');
@@ -2961,7 +2967,13 @@ document.addEventListener('DOMContentLoaded', () => {
             }, 2400);
         }
     };
-    setTimeout(initLaptopMascot, 0);
+    if (isDesktop) {
+        if ('requestIdleCallback' in window) {
+            requestIdleCallback(initLaptopMascot, { timeout: 2000 });
+        } else {
+            setTimeout(initLaptopMascot, 200);
+        }
+    }
 
     // 1b. Apple "Hello" Boot Effect (Cursive handwriting on laptop screen + macOS Unlock Curtain)
     const initLaptopHello = () => {
@@ -2987,7 +2999,9 @@ document.addEventListener('DOMContentLoaded', () => {
             revealLiveOrb();
         }, 5900);
     };
-    initLaptopHello();
+    if (isDesktop) {
+        initLaptopHello();
+    }
 
     // 2. Reveal Up Observer
     const revealObserver = new IntersectionObserver((entries) => {
@@ -4566,6 +4580,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     let liveOrbInitialized = false;
     const ensureLiveOrb = () => {
+        if (!isDesktop) return;
         if (!liveOrbInitialized) {
             liveOrbInitialized = true;
             initLiveOrb();
@@ -4573,10 +4588,12 @@ document.addEventListener('DOMContentLoaded', () => {
     };
     window.ensureLiveOrb = ensureLiveOrb;
 
-    if ('requestIdleCallback' in window) {
-        requestIdleCallback(ensureLiveOrb, { timeout: 3500 });
-    } else {
-        setTimeout(ensureLiveOrb, 3500);
+    if (isDesktop) {
+        if ('requestIdleCallback' in window) {
+            requestIdleCallback(ensureLiveOrb, { timeout: 5000 });
+        } else {
+            setTimeout(ensureLiveOrb, 5000);
+        }
     }
 
     // Lazy initialize below-the-fold canvas, marquee & heavy effects when scrolled near
@@ -4596,13 +4613,13 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     };
 
-    lazyInit('projects', loadProjects, '500px');
-    lazyInit('logo-loop', initLogoLoop, '400px');
+    lazyInit('projects', loadProjects, '150px');
+    lazyInit('logo-loop', initLogoLoop, '100px');
     lazyInit('marquee-section-wrap', () => {
         initMarqueeBanner();
         initMarqueeWind();
-    }, '500px');
-    lazyInit('contact', initAetherVortex, '600px');
-    lazyInit('asciiEyesContainer', initAsciiEyes, '400px');
+    }, '100px');
+    lazyInit('contact', initAetherVortex, '150px');
+    lazyInit('asciiEyesContainer', initAsciiEyes, '100px');
 });
 

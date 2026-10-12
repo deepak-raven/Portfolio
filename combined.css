@@ -1598,8 +1598,8 @@ html {
 /* Entrance keyframes */
 @keyframes mh-slide-up {
   from {
-    transform: translateY(110%);
-    opacity: 0;
+    transform: translateY(10px);
+    opacity: 0.96;
   }
 
   to {
@@ -1640,12 +1640,12 @@ html {
 }
 
 .mh-line1 {
-  animation: mh-slide-up 0.9s cubic-bezier(0.16, 1, 0.3, 1) 0.3s both;
+  animation: mh-slide-up 0.35s cubic-bezier(0.16, 1, 0.3, 1) 0s both;
   display: block;
 }
 
 .mh-line2 {
-  animation: mh-slide-up 0.9s cubic-bezier(0.16, 1, 0.3, 1) 0.45s both;
+  animation: mh-slide-up 0.35s cubic-bezier(0.16, 1, 0.3, 1) 0.08s both;
   display: block;
 }
 
@@ -1709,6 +1709,8 @@ html {
 
 /* ASCII Eyes Art in Footer - Edge to Edge, Smooth Continuous Blend */
 .ascii-eyes-container {
+  content-visibility: auto;
+  contain-intrinsic-size: 1px 320px;
   margin-top: 0;
   margin-bottom: -2rem;
   margin-left: -1.5rem;
