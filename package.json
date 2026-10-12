@@ -4,7 +4,6 @@
   "description": "",
   "main": "script.js",
   "scripts": {
-    "build": "npx esbuild script.js --minify --outfile=script.min.js; npx esbuild combined.css --minify --outfile=combined.min.css",
     "watch:css": "npx tailwindcss -i tailwind-input.css -o tailwind-build.css --watch",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
