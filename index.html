@@ -72,6 +72,14 @@
             #mobile-hero { display: none !important; }
             .md\:hidden { display: none !important; }
             .md\:block { display: block !important; }
+            .md\:flex { display: flex !important; }
+            .md\:inline-flex { display: inline-flex !important; }
+            .md\:inline { display: inline !important; }
+        }
+        @media (min-width: 640px) {
+            .sm\:inline { display: inline !important; }
+            .sm\:block { display: block !important; }
+            .sm\:flex { display: flex !important; }
         }
         @media (max-width: 767px) {
             #desktop-hero { display: none !important; }
@@ -524,14 +532,14 @@
                                         <div id="laptop-orb-anchor"
                                             class="w-[42px] h-[42px] shrink-0 pointer-events-none opacity-0"></div>
                                         <nav
-                                            class="hidden md:flex items-center gap-4 text-[7px] md:text-[9px] font-bold uppercase tracking-widest text-black/60 pointer-events-auto">
+                                            class="flex items-center gap-4 text-[7px] md:text-[9px] font-bold uppercase tracking-widest text-black/75 pointer-events-auto">
                                             <a href="#projects" class="hover:text-black transition-colors">Projects</a>
                                             <a href="#about" class="hover:text-black transition-colors">About</a>
                                             <a href="#experience"
                                                 class="hover:text-black transition-colors">Experience</a>
                                         </nav>
                                         <a href="#contact"
-                                            class="hidden md:inline-flex items-center justify-center px-3 py-1 border border-black text-[7px] md:text-[9px] font-bold uppercase tracking-widest hover:bg-black hover:text-white transition-all pointer-events-auto rounded-none">
+                                            class="inline-flex items-center justify-center px-3 py-1 border border-black text-[7px] md:text-[9px] font-bold uppercase tracking-widest hover:bg-black hover:text-white transition-all pointer-events-auto rounded-none">
                                             Get in touch
                                         </a>
                                     </header>
